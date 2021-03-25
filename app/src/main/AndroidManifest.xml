@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PIS_Entrega1">
+        <activity android:name=".TextNote"></activity>
+        <activity android:name=".PhotoNote" />
+        <activity android:name=".AudioNote" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
