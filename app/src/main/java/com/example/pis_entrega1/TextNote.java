@@ -2,6 +2,7 @@ package com.example.pis_entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -31,22 +32,39 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         startActivity(Intent.createChooser(intent,"Share using... "));
     }
 
+    public void goToRememberIntent(){
+        DatePickerFragment calendar = new DatePickerFragment();
+        calendar.show(getSupportFragmentManager(),"DatePicker");
+        TimePickerFragment hour = new TimePickerFragment();
+        hour.show(getSupportFragmentManager(),"HOUR");
+    }
+
+    public void goToMainIntent(){
+        Intent n = new Intent(this, MainActivity.class);
+        startActivity(n);
+    }
+
+    public void CheckList(){
+        Note = this.findViewById(R.id.editTextTextNote);
+        Note.setText(Note.getText().toString() + "\n -");
+    }
+
     @Override
     public void onClick(View v) {
         if (R.id.TextSaveButton == v.getId()){
 
         }
         if (R.id.TextCheckList == v.getId()){
-
+            CheckList();
         }
         if (R.id.TextRememberButton == v.getId()){
-
+            goToRememberIntent();
         }
         if (R.id.TextShareButton == v.getId()){
             goToShareIntent();
         }
         if (R.id.TextDeleteButton == v.getId()){
-
+            goToMainIntent();
         }
 
     }
