@@ -16,8 +16,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.AudioButton).setOnClickListener(this);
         findViewById(R.id.CameraButton).setOnClickListener(this);
     }
+
     public void goToTextNote(){
         Intent i = new Intent(this, TextNote.class);
+        startActivity(i);
+    }
+
+    public void goTOAudioNote(){
+        Intent i = new Intent(this, AudioNote.class);
+        startActivity(i);
+    }
+
+    public void goToCameraNote(){
+        Intent i = new Intent(this, PhotoNote.class);
         startActivity(i);
     }
 
@@ -27,10 +38,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             goToTextNote();
         }
         if(R.id.AudioButton == v.getId()){
-
+            goTOAudioNote();
         }
         if(R.id.CameraButton == v.getId()){
-
+            goToCameraNote();
         }
     }
 }
