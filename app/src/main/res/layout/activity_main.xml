@@ -69,7 +69,13 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="609dp">
+            android:layout_height="582dp">
+
+
+            <TableLayout
+                android:id="@+id/tableLayoutList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </ScrollView>
 

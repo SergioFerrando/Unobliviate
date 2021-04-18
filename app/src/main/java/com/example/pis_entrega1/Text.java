@@ -1,21 +1,23 @@
 package com.example.pis_entrega1;
 
+import android.widget.EditText;
+
 import java.util.Date;
 
 public class Text extends Notes{
 
-    private String text;
+    private EditText text;
 
-    public Text(long date, String name, String text) {
+    public Text(long date, EditText name, EditText text) {
         super(date, name);
         this.setText(text);
     }
 
-    public String getText() {
+    public EditText getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(EditText text) {
         this.text = text;
     }
 }

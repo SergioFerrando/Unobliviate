@@ -5,14 +5,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import java.io.Serializable;
+
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
-    EditText Title,Note;
+    EditText Title;
+    EditText Note;
+    private NotesContainer container = new NotesContainer();
+
+    public NotesContainer getContainer() {
+        return container;
+    }
+
+    public void setContainer(NotesContainer container) {
+        this.container = container;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setContainer((NotesContainer) getIntent().getParcelableExtra("MyClass"));
         setContentView(R.layout.activity_text_note);
         findViewById(R.id.TextSaveButton).setOnClickListener(this);
         findViewById(R.id.TextCheckList).setOnClickListener(this);
@@ -52,7 +69,14 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (R.id.TextSaveButton == v.getId()){
+            try {
+                Title = this.findViewById(R.id.editTextTitleTextNote);
+                Note = this.findViewById(R.id.editTextTextNote);
+                this.container.addTextNote(Title, Note);
 
+            } catch (Exception e) {
+
+            }
         }
         if (R.id.TextCheckList == v.getId()){
             CheckList();
@@ -67,5 +91,12 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
             goToMainIntent();
         }
 
+    }
+    @Override
+    public void onBackPressed(){
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("MyClass", (Parcelable) container);
+        startActivity(i);
+        finish();
     }
 }
