@@ -4,8 +4,6 @@ import android.media.Image;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.*;
-
 import com.example.pis_entrega1.*;
 
 public class NotesContainer {
