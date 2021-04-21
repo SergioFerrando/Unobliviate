@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.Date;
+
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
     EditText Title,Note;
     @Override
@@ -41,6 +43,7 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
 
     public void goToMainIntent(){
         Intent n = new Intent(this, MainActivity.class);
+        Text nueva = new Text(null, Title.getText().toString(), Note.getText().toString());
         startActivity(n);
     }
 
@@ -52,7 +55,9 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (R.id.TextSaveButton == v.getId()){
-
+            Intent n = new Intent(this, MainActivity.class);
+            Text nueva = new Text(null, Title.getText().toString(), Note.getText().toString());
+            startActivity(n);
         }
         if (R.id.TextCheckList == v.getId()){
             CheckList();

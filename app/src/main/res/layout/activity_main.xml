@@ -67,11 +67,9 @@
                 tools:srcCompat="@android:drawable/ic_input_add" />
         </LinearLayout>
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="609dp">
-
-        </ScrollView>
+            android:layout_height="606dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

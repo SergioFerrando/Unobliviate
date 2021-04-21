@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.View;
 
 public class AudioNote extends AppCompatActivity implements View.OnClickListener {
-    private MediaRecorder audio;
     private boolean permissionToRecordAccepted = false;
     private final String [] permissions = {Manifest.permission.RECORD_AUDIO};
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -23,7 +22,7 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_note);
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+        //ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
         findViewById(R.id.audioDirectButton).setOnClickListener(this);
         findViewById(R.id.AudioDeleteButton).setOnClickListener(this);
         findViewById(R.id.AudioRememberButton).setOnClickListener(this);

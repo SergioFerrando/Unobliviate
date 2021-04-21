@@ -1,12 +1,10 @@
 package com.example.pis_entrega1;
 
-import java.util.Date;
-
 public class Text extends Notes{
 
     private String text;
 
-    public Text(long date, String name, String text) {
+    public Text(Long date, String name, String text) {
         super(date, name);
         this.setText(text);
     }

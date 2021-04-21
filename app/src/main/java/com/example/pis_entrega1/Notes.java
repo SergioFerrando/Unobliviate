@@ -7,7 +7,7 @@ public class Notes {
     private String name;
     private Date deathLine;
 
-    public Notes(Long date, String name) {
+    public Notes(long date, String name) {
         Date d = new Date(date * 1000);
         this.date = d;
         this.name = name;

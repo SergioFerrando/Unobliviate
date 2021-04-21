@@ -14,4 +14,6 @@
     <string name="check_list_button">Check List Button</string>
     <string name="title_text_note">Title Text Note</string>
     <string name="notes">NOTES</string>
+    <string name="play_button_description" />
+    <string name="Audio_title" />
 </resources>
