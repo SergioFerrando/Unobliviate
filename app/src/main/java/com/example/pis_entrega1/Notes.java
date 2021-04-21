@@ -1,13 +1,15 @@
 package com.example.pis_entrega1;
 
+import android.widget.EditText;
+
 import java.util.Date;
 
 public class Notes {
     private Date date;
-    private String name;
+    private EditText name;
     private Date deathLine;
 
-    public Notes(Long date, String name) {
+    public Notes(Long date, EditText name) {
         Date d = new Date(date * 1000);
         this.date = d;
         this.name = name;
@@ -22,11 +24,11 @@ public class Notes {
         this.date = d;
     }
 
-    public String getName() {
+    public EditText getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(EditText name) {
         this.name = name;
     }
 
