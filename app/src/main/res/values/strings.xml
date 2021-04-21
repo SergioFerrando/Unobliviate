@@ -16,4 +16,7 @@
     <string name="notes">NOTES</string>
     <string name="play_button_description" />
     <string name="Audio_title" />
+    <string name="title">Title</string>
+    <string name="date">Date</string>
+    <string name="text">Text</string>
 </resources>

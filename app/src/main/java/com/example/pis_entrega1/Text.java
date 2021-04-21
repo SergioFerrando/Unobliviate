@@ -11,6 +11,8 @@ public class Text extends Notes{
     public Text(long date, EditText name, EditText text) {
         super(date, name);
         this.setText(text);
+        this.setContent("Text Note");
+        this.setType();
     }
 
     public EditText getText() {

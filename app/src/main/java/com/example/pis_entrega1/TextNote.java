@@ -9,7 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
-    EditText Title,Note;
+    EditText Title, Note;
+    NotesContainer nc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +22,7 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         findViewById(R.id.TextDeleteButton).setOnClickListener(this);
         Title = this.findViewById(R.id.editTextTitleTextNote);
         Note = this.findViewById(R.id.editTextTextNote);
+        this.getFromMainActivity();
     }
 
     public void goToShareIntent(){
@@ -52,7 +54,12 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (R.id.TextSaveButton == v.getId()){
-
+            this.Title = this.findViewById(R.id.editTextTitleTextNote);
+            this.Note = this.findViewById(R.id.editTextTextNote);
+            nc.addTextNote(Title, Note);
+            Intent i = new Intent(this, MainActivity.class);
+            i.putExtra("MyClass", nc);
+            startActivity(i);
         }
         if (R.id.TextCheckList == v.getId()){
             CheckList();
@@ -67,5 +74,12 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
             goToMainIntent();
         }
 
+    }
+
+    public void getFromMainActivity(){
+        NotesContainer notesContainer = getIntent().getExtras().getParcelable("MyClass");
+        if (notesContainer != null){
+            this.nc = notesContainer;
+        }
     }
 }

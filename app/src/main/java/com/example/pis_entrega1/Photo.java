@@ -11,6 +11,8 @@ public class Photo extends Notes {
     public Photo(long date, EditText name, Image image) {
         super(date, name);
         this.setPhoto(image);
+        this.setContent("Photo Note");
+        this.setType();
     }
 
     public Image getPhoto() {
