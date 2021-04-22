@@ -44,7 +44,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             Title = view.findViewById(R.id.titleView);
             Type = view.findViewById(R.id.typeView);
             Date = view.findViewById(R.id.dateView);
-            item = view.findViewById(R.id.itemView);
+            item = view.findViewById(R.id.TextButton);
 
             linearLayout = view.findViewById(R.id.linearLayout);
         }

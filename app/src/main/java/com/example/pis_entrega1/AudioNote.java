@@ -1,79 +1,105 @@
 package com.example.pis_entrega1;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class AudioNote extends AppCompatActivity implements View.OnClickListener {
-    private boolean permissionToRecordAccepted = false;
-    private final String [] permissions = {Manifest.permission.RECORD_AUDIO};
-    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    NotesContainer nc;
+    private MediaRecorder recorder;
     private boolean isRecording = false;
-    private Recording rec;
-
-
-    private NotesContainer container;
-
-    public AudioNote(NotesContainer nc) {
-        this.setContainer(nc);
-    }
-
-    public NotesContainer getContainer() {
-        return container;
-    }
-
-    public void setContainer(NotesContainer container) {
-        this.container = container;
-    }
+    Recording rec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_audio_note);
-        //ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
-        findViewById(R.id.audioDirectButton).setOnClickListener(this);
-        findViewById(R.id.AudioDeleteButton).setOnClickListener(this);
-        findViewById(R.id.AudioRememberButton).setOnClickListener(this);
-        findViewById(R.id.AudioSaveButton).setOnClickListener(this);
-        findViewById(R.id.AudioShareButton).setOnClickListener(this);
-
+        setContentView(R.layout.activity_text_note);
+        findViewById(R.id.TextSaveButton).setOnClickListener(this);
+        findViewById(R.id.TextCheckList).setOnClickListener(this);
+        findViewById(R.id.TextRememberButton).setOnClickListener(this);
+        findViewById(R.id.TextShareButton).setOnClickListener(this);
+        findViewById(R.id.TextDeleteButton).setOnClickListener(this);
+        rec.setName(this.findViewById(R.id.editTextTitleTextNote));
+        //this.getFromMainActivity();
+        //this.getFromMyAdapter();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
-            permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-        }
-        if (!permissionToRecordAccepted ) finish();
+    public void goToMainIntent(){
+        Intent n = new Intent(this, MainActivity.class);
+        startActivity(n);
+    }
+
+    public void goToAudioRecorded(){
+        Intent n1 = new Intent(this, Audio_Recorded.class);
+        n1.putExtra("Adress", rec.getAddress());
+        n1.putExtra("Container", nc);
+        startActivity(n1);
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.audioDirectButton){
-            /*if(rec.getIsReording()){
-                rec.stopRecording();
+        if (R.id.TextDeleteButton == v.getId()){
+            if(isRecording){
+                stopRecording();
+                goToMainIntent();
+            }else {
+                goToMainIntent();
+            }
+        }if(R.id.audioDirectButton == v.getId()){
+            if(isRecording){
+                stopRecording();
+                goToAudioRecorded();
             }else{
-                rec.startRecording();
-            }*/
+                startRecording();
+            }
         }
-        if(v.getId() == R.id.AudioDeleteButton){
+    }
 
+    private void stopRecording() {
+        recorder.stop();
+        recorder.release();
+        recorder = null;
+        isRecording = false;
+    }
+
+    private void startRecording() {
+        Log.d("startRecording", "startRecording");
+
+        recorder = new MediaRecorder();
+        DateFormat df = new SimpleDateFormat("yyMMddHHmmss", Locale.GERMANY);
+        String date = df.format(Calendar.getInstance().getTime());
+        rec.setAddress(getExternalCacheDir().getAbsolutePath()+ File.separator +date+".3gp");
+        Log.d("startRecording", rec.getAddress());
+
+        recorder.setOutputFile(rec.getAddress());
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            recorder.prepare();
+        } catch (IOException e) {
+            Log.d("startRecording", "prepare() failed");
         }
-        if(v.getId() == R.id.AudioRememberButton){
+        recorder.start();
+        isRecording = true;
+    }
 
-        }
-        if(v.getId() == R.id.AudioSaveButton){
-
-        }
-        if(v.getId() == R.id.AudioShareButton){
-
+    public void getFromMainActivity(){
+        NotesContainer notesContainer = getIntent().getExtras().getParcelable("MyClass");
+        if (notesContainer != null){
+            this.nc = notesContainer;
         }
     }
 }

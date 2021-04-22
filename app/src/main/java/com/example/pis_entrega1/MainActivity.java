@@ -25,9 +25,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private boolean permissionToRecordAccepted = true;
-    private final String[] permissions = {Manifest.permission.RECORD_AUDIO};
-    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private MyAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
@@ -56,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setAdapter(mAdapter);
 
         setLiveDataObservers();
-        //ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
     }
 
     public void setLiveDataObservers() {
@@ -69,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 myAdapter.notifyDataSetChanged();
             }
         };
-
     }
 
     public void goToTextNote() {

@@ -47,7 +47,12 @@ public class NotesContainer implements Parcelable {
         System.out.println(this.getContainer().get(0));
     }
 
-
+    void addAudioNote(EditText title, String Adress) {
+        Date d = new Date();
+        Recording t = new Recording(d.getTime(),title,Adress);
+        this.container.add(t);
+        System.out.println(this.getContainer().get(0));
+    }
 
     void addPhotoNote(EditText title, Image image) throws Exception {
         Date d = new Date();

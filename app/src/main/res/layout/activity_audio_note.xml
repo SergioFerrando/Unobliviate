@@ -38,39 +38,6 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/AudioSaveButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/save_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/disquete" />
-
-            <ImageButton
-                android:id="@+id/AudioRememberButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/remember_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/campana" />
-
-            <ImageButton
-                android:id="@+id/AudioShareButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/share_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/image_2021_03_08t10_27_42_655z" />
-
-            <ImageButton
                 android:id="@+id/AudioDeleteButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
