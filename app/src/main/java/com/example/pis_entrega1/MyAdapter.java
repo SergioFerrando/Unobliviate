@@ -1,9 +1,13 @@
 package com.example.pis_entrega1;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,14 +16,15 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    private ArrayList<Notes> container;
+    private NotesContainer container;
     private final Context parentContext;
 
-    public MyAdapter(ArrayList<Notes> container, Context parentContext) {
+    public MyAdapter(NotesContainer container, Context parentContext) {
         this.container = container;
         this.parentContext = parentContext;
     }
@@ -53,6 +58,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
 
         public ImageButton getPlayButton() {return item;}
+
     }
 
     @NonNull
@@ -71,19 +77,38 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // contents of the view with that element
         int color = ContextCompat.getColor(parentContext, R.color.white);
         viewHolder.getLayout().setBackgroundColor(color);
-        viewHolder.getTitle().setText((CharSequence) this.container.get(position).getName());
+        viewHolder.getTitle().setText((CharSequence) this.container.getContainer().get(position).getName());
 
         ImageButton playButton = viewHolder.getPlayButton();
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playAudio(position);
+                clicButton (playButton, position);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return container.size();
+        return container.getContainer().size();
+    }
+
+    public void clicButton(ImageButton playButton, int position){
+        if (playButton.getTag().equals("@drawable/tex")){
+            Intent intent = new Intent(parentContext, TextNote.class);
+            intent.putExtra("Text", (Parcelable) container.getContainer().get(position));
+            intent.putExtra("Container", container);
+            parentContext.startActivity(intent);
+        }else if (playButton.getTag().equals("@drawable/micro")){
+            Intent intent = new Intent(parentContext, AudioNote.class);
+            intent.putExtra("Audio", (Parcelable) container.getContainer().get(position));
+            intent.putExtra("Container", container);
+            parentContext.startActivity(intent);
+        }else if (playButton.getTag().equals("@drawable/camara")){
+            Intent intent = new Intent(parentContext, PhotoNote.class);
+            intent.putExtra("Photo", (Parcelable) container.getContainer().get(position));
+            intent.putExtra("Container", container);
+            parentContext.startActivity(intent);
+        }
     }
 }

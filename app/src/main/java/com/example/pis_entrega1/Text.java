@@ -1,25 +1,26 @@
 package com.example.pis_entrega1;
 
+import android.graphics.drawable.Drawable;
 import android.widget.EditText;
 
 import java.util.Date;
 
 public class Text extends Notes{
 
-    private EditText text;
+    private String text;
 
-    public Text(long date, EditText name, EditText text) {
+    public Text(long date, EditText name, String text) {
         super(date, name);
         this.setText(text);
         this.setContent("Text Note");
-        this.setType();
+        this.setType(R.drawable.tex);
     }
 
-    public EditText getText() {
+    public String getText() {
         return text;
     }
 
-    public void setText(EditText text) {
+    public void setText(String text) {
         this.text = text;
     }
 }

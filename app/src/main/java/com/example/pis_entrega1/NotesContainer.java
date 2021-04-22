@@ -40,7 +40,7 @@ public class NotesContainer implements Parcelable {
         }
     };
 
-    void addTextNote(EditText title, EditText text) {
+    void addTextNote(EditText title, String text) {
         Date d = new Date();
         Text t = new Text(d.getTime(), title, text);
         this.container.add(t);

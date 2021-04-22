@@ -1,5 +1,6 @@
 package com.example.pis_entrega1;
 
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.widget.EditText;
 
@@ -10,7 +11,7 @@ public class Notes {
     private EditText name;
     private Date deathLine;
     private String content;
-    private Image type;
+    private int type;
 
     public Notes(Long date, EditText name) {
         Date d = new Date(date * 1000);
@@ -51,11 +52,11 @@ public class Notes {
         this.content = content;
     }
 
-    public Image getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(Image type) {
+    public void setType(int type) {
         this.type = type;
     }
 }

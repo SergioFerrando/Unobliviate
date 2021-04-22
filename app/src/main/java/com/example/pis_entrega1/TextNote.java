@@ -2,15 +2,16 @@ package com.example.pis_entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
-    EditText Title, Note;
+    Text text;
     NotesContainer nc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,18 +21,19 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         findViewById(R.id.TextRememberButton).setOnClickListener(this);
         findViewById(R.id.TextShareButton).setOnClickListener(this);
         findViewById(R.id.TextDeleteButton).setOnClickListener(this);
-        Title = this.findViewById(R.id.editTextTitleTextNote);
-        Note = this.findViewById(R.id.editTextTextNote);
+        text.setName(this.findViewById(R.id.editTextTitleTextNote));
+        text.setText(this.findViewById(R.id.editTextTextNote).toString());
         this.getFromMainActivity();
+        this.getFromMyAdapter();
     }
 
     public void goToShareIntent(){
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        String shareBody = Note.getText().toString();
+        /*Intent intent = new Intent(Intent.ACTION_SEND);
+        String shareBody = ContactsContract.CommonDataKinds.Note.getText().toString();
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, "Text Note");
         intent.putExtra(Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(intent,"Share using... "));
+        startActivity(Intent.createChooser(intent,"Share using... "));*/
     }
 
     public void goToRememberIntent(){
@@ -47,16 +49,17 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void CheckList(){
-        Note = this.findViewById(R.id.editTextTextNote);
-        Note.setText(Note.getText().toString() + "\n -");
+        text.setText(this.findViewById(R.id.editTextTextNote).toString());
+        String temp = text.getText() + "\n -";
+        text.setText(temp);
     }
 
     @Override
     public void onClick(View v) {
         if (R.id.TextSaveButton == v.getId()){
-            this.Title = this.findViewById(R.id.editTextTitleTextNote);
-            this.Note = this.findViewById(R.id.editTextTextNote);
-            nc.addTextNote(Title, Note);
+            this.text.setName(this.findViewById(R.id.editTextTitleTextNote));
+            this.text.setText(this.findViewById(R.id.editTextTextNote).toString());
+            nc.addTextNote(this.text.getName(), this.text.getText());
             Intent i = new Intent(this, MainActivity.class);
             i.putExtra("MyClass", nc);
             startActivity(i);
@@ -80,6 +83,20 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         NotesContainer notesContainer = getIntent().getExtras().getParcelable("MyClass");
         if (notesContainer != null){
             this.nc = notesContainer;
+        }
+    }
+    public void getFromMyAdapter(){
+        NotesContainer notesContainer = getIntent().getExtras().getParcelable("Container");
+        if (notesContainer != null){
+            this.nc = notesContainer;
+        }
+        Text text = getIntent().getExtras().getParcelable("Text");
+        if (text != null){
+            this.text = text;
+            EditText et = (EditText) this.findViewById(R.id.editTextTitleTextNote);
+            et.setText((CharSequence) this.text.getName());
+            EditText te = (EditText) this.findViewById(R.id.editTextTextNote);
+            te.setText((CharSequence) this.text.getText());
         }
     }
 }

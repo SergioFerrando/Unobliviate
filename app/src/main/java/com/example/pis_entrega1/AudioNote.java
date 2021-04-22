@@ -57,11 +57,11 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.audioDirectButton){
-            if(rec.getIsReording()){
+            /*if(rec.getIsReording()){
                 rec.stopRecording();
             }else{
                 rec.startRecording();
-            }
+            }*/
         }
         if(v.getId() == R.id.AudioDeleteButton){
 

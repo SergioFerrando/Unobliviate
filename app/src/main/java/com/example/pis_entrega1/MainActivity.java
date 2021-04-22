@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.content.pm.PackageManager;
@@ -19,6 +20,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private boolean permissionToRecordAccepted = true;
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView mRecyclerView;
 
     public NotesContainer nc = new NotesContainer();
+    public Context parentContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (extras != null) {
             this.nc = extras;
         }
+        parentContext = this.getBaseContext();
         setContentView(R.layout.activity_main);
         findViewById(R.id.TextButton).setOnClickListener(this);
         findViewById(R.id.AudioButton).setOnClickListener(this);
@@ -46,10 +52,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new MyAdapter(nc.getContainer());
+        mAdapter = new MyAdapter(this.nc, this);
         mRecyclerView.setAdapter(mAdapter);
 
         //ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+    }
+
+    public void setLiveDataObservers() {
+        //Subscribe the activity to the observable
+        final androidx.lifecycle.Observer<NotesContainer> observer = new androidx.lifecycle.Observer<NotesContainer>() {
+            @Override
+            public void onChanged(NotesContainer notesContainer) {
+                MyAdapter myAdapter = new MyAdapter(notesContainer, parentContext);
+                mRecyclerView.swapAdapter(myAdapter, false);
+                myAdapter.notifyDataSetChanged();
+            }
+        };
+
     }
 
     public void goToTextNote() {

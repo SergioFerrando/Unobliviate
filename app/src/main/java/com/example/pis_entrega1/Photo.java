@@ -12,7 +12,7 @@ public class Photo extends Notes {
         super(date, name);
         this.setPhoto(image);
         this.setContent("Photo Note");
-        this.setType();
+        this.setType(R.drawable.camara);
     }
 
     public Image getPhoto() {

@@ -9,6 +9,6 @@ public class Recording extends Notes {
     public Recording(Long date, EditText name) {
         super(date, name);
         this.setContent("Audio Note");
-        this.setType();
+        this.setType(R.drawable.micro);
     }
 }
