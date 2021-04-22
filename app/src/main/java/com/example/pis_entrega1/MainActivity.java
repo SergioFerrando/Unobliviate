@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAdapter = new MyAdapter(this.nc, this);
         mRecyclerView.setAdapter(mAdapter);
 
+        setLiveDataObservers();
         //ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
     }
 
