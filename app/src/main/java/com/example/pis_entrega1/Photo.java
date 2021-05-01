@@ -8,7 +8,11 @@ import java.util.Date;
 public class Photo extends Notes {
     private Image photo;
 
-    public Photo(long date, EditText name, Image image) {
+    public Photo(){
+        super();
+    }
+
+    public Photo(long date, String name, Image image) {
         super(date, name);
         this.setPhoto(image);
         this.setContent("Photo Note");

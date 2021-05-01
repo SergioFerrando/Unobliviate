@@ -8,12 +8,17 @@ import java.util.Date;
 
 public class Notes {
     private Date date;
-    private EditText name;
+    private String name;
     private Date deathLine;
     private String content;
     private int type;
 
-    public Notes(Long date, EditText name) {
+    public Notes(){
+        this.name = "";
+        this.date = null;
+    }
+
+    public Notes(Long date, String name) {
         Date d = new Date(date * 1000);
         this.date = d;
         this.name = name;
@@ -28,11 +33,11 @@ public class Notes {
         this.date = d;
     }
 
-    public EditText getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(EditText name) {
+    public void setName(String name) {
         this.name = name;
     }
 

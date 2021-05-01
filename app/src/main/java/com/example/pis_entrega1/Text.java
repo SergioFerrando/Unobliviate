@@ -9,7 +9,11 @@ public class Text extends Notes{
 
     private String text;
 
-    public Text(long date, EditText name, String text) {
+    public Text(){
+        super();
+    }
+
+    public Text(long date, String name, String text) {
         super(date, name);
         this.setText(text);
         this.setContent("Text Note");

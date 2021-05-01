@@ -4,11 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.EditText;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class NotesContainer implements Parcelable {
-
     ArrayList<Notes> container;
 
     public NotesContainer() {
@@ -16,16 +16,6 @@ public class NotesContainer implements Parcelable {
     }
 
     protected NotesContainer(Parcel in) {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(container);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public static final Creator<NotesContainer> CREATOR = new Creator<NotesContainer>() {
@@ -40,21 +30,20 @@ public class NotesContainer implements Parcelable {
         }
     };
 
-    void addTextNote(EditText title, String text) {
+    void addTextNote(String title, String text) {
         Date d = new Date();
         Text t = new Text(d.getTime(), title, text);
         this.container.add(t);
-        System.out.println(this.getContainer().get(0));
     }
 
-    void addAudioNote(EditText title, String Adress) {
+    void addAudioNote(String title, String Adress) {
         Date d = new Date();
         Recording t = new Recording(d.getTime(),title,Adress);
         this.container.add(t);
         System.out.println(this.getContainer().get(0));
     }
 
-    void addPhotoNote(EditText title, Image image) throws Exception {
+    void addPhotoNote(String title, Image image) throws Exception {
         Date d = new Date();
         Photo p = new Photo(d.getTime(), title, image);
         this.container.add(p);
@@ -77,5 +66,14 @@ public class NotesContainer implements Parcelable {
 
     public void setContainer(ArrayList<Notes> container) {
         this.container = container;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
     }
 }

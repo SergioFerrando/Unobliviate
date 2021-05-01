@@ -8,7 +8,10 @@ import android.os.Parcelable;
 
 public class PhotoNote extends AppCompatActivity {
 
-    private NotesContainer container;
+    private NotesContainer container = new NotesContainer();
+    private Photo photo = new Photo();
+
+    public PhotoNote(){}
 
     public PhotoNote(NotesContainer nc) {
         this.setContainer(nc);

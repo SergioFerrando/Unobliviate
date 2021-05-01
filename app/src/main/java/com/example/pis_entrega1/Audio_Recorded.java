@@ -58,7 +58,7 @@ public class Audio_Recorded extends AppCompatActivity implements View.OnClickLis
             goToMainIntent();
         }
         if(R.id.AudioSaveButton == v.getId()){
-            this.rec.setName(this.findViewById(R.id.editTextTitleTextNote));
+            this.rec.setName(this.findViewById(R.id.editTextTitleTextNote).toString());
             nc.addAudioNote(this.rec.getName(), this.rec.getAddress());
             Intent i = new Intent(this, MainActivity.class);
             i.putExtra("MyClass", nc);

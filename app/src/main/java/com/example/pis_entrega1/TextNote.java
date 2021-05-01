@@ -8,11 +8,12 @@ import android.view.View;
 import android.widget.EditText;
 
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
-    Text text;
-    NotesContainer nc;
+    Text text = new Text();
+    NotesContainer nc = new NotesContainer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("entra en la nota de texto");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_note);
         findViewById(R.id.TextSaveButton).setOnClickListener(this);
@@ -20,8 +21,18 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         findViewById(R.id.TextRememberButton).setOnClickListener(this);
         findViewById(R.id.TextShareButton).setOnClickListener(this);
         findViewById(R.id.TextDeleteButton).setOnClickListener(this);
-        text.setName(this.findViewById(R.id.editTextTitleTextNote));
-        text.setText(this.findViewById(R.id.editTextTextNote).toString());
+        String titleTemp = this.findViewById(R.id.editTextTitleTextNote).toString();
+        if (titleTemp != null){
+            text.setName(titleTemp);
+        }else{
+            text.setName("");
+        }
+        String textTemp = this.findViewById(R.id.editTextTextNote).toString();
+        if (textTemp != null){
+            text.setText(textTemp);
+        }else{
+            text.setText("");
+        }
         this.getFromMainActivity();
         this.getFromMyAdapter();
     }
@@ -56,8 +67,18 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (R.id.TextSaveButton == v.getId()){
-            this.text.setName(this.findViewById(R.id.editTextTitleTextNote));
-            this.text.setText(this.findViewById(R.id.editTextTextNote).toString());
+            String titleTemp = this.findViewById(R.id.editTextTitleTextNote).toString();
+            if (titleTemp != null){
+                this.text.setName(titleTemp);
+            }else{
+                this.text.setName("");
+            }
+            String textTemp  = this.findViewById(R.id.editTextTextNote).toString();
+            if (textTemp != null){
+                this.text.setText(textTemp);
+            }else{
+                this.text.setText("");
+            }
             nc.addTextNote(this.text.getName(), this.text.getText());
             Intent i = new Intent(this, MainActivity.class);
             i.putExtra("MyClass", nc);

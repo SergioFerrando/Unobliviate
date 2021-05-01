@@ -16,10 +16,10 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class AudioNote extends AppCompatActivity implements View.OnClickListener {
-    NotesContainer nc;
+    NotesContainer nc = new NotesContainer();
     private MediaRecorder recorder;
     private boolean isRecording = false;
-    Recording rec;
+    Recording rec = new Recording();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,12 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         findViewById(R.id.TextRememberButton).setOnClickListener(this);
         findViewById(R.id.TextShareButton).setOnClickListener(this);
         findViewById(R.id.TextDeleteButton).setOnClickListener(this);
-        rec.setName(this.findViewById(R.id.editTextTitleTextNote));
+        String titleTemp = this.findViewById(R.id.editTextTitleTextNote).toString();
+        if (titleTemp != null){
+            this.rec.setName(titleTemp);
+        }else{
+            rec.setName("");
+        }
         //this.getFromMainActivity();
         //this.getFromMyAdapter();
     }

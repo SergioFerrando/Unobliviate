@@ -7,9 +7,13 @@ public class Recording extends Notes {
     private String AudioTitle;
     private String address;
 
-    public Recording(Long date, EditText name, String address) {
+    public Recording(){
+        super();
+    }
+
+    public Recording(Long date, String name, String address) {
         super(date, name);
-        AudioTitle = name.getText().toString();
+        AudioTitle = name;
         this.address = address;
         this.setContent("Audio Note");
         this.setType(R.drawable.micro);

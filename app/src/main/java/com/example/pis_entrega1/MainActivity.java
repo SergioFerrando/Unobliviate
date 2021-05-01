@@ -34,25 +34,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NotesContainer extras = getIntent().getExtras().getParcelable("MyClass");
-        if (extras != null) {
-            this.nc = extras;
-        }
+
         parentContext = this.getBaseContext();
         setContentView(R.layout.activity_main);
         findViewById(R.id.TextButton).setOnClickListener(this);
         findViewById(R.id.AudioButton).setOnClickListener(this);
         findViewById(R.id.CameraButton).setOnClickListener(this);
+        System.out.println("punto 1");
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
+        System.out.println("punto 2");
 
         mAdapter = new MyAdapter(this.nc, this);
         mRecyclerView.setAdapter(mAdapter);
+        System.out.println("punto 3");
 
         setLiveDataObservers();
+        /*if ((NotesContainer) getIntent().getExtras().getSerializable("MyClass") != null) {
+            this.nc = (NotesContainer) getIntent().getExtras().getSerializable("MyClass");
+        }*/
     }
 
     public void setLiveDataObservers() {
