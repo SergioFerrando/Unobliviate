@@ -1,8 +1,12 @@
 package com.example.pis_entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,10 +32,15 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         findViewById(R.id.audioDirectButton).setOnClickListener(this);
         findViewById(R.id.AudioDeleteButton).setOnClickListener(this);
         String titleTemp = this.findViewById(R.id.editTextAudioNote).toString();
-        if (titleTemp != null){
+        if (titleTemp != null) {
             this.rec.setName(titleTemp);
-        }else{
+        } else {
             rec.setName("");
+        }if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{
+                    Manifest.permission.RECORD_AUDIO
+            },100);
         }
         //this.getFromMainActivity();
         //this.getFromMyAdapter();

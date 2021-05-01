@@ -1,17 +1,24 @@
 package com.example.pis_entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +26,7 @@ import java.util.Date;
 public class photo_taken extends AppCompatActivity implements View.OnClickListener{
 
     private NotesContainer container;
-    Photo p;
+    Photo p = new Photo();
     ImageView miniatura;
     EditText title;
 
@@ -37,10 +44,16 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
     }
 
     public void goFromPhotoNote(){
-        p.setMiniatura((Bitmap) getIntent().getExtras().get("img"));
+        byte[] byteArray = ((byte[]) getIntent().getExtras().get("photo"));
+        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        miniatura.post(new Runnable() {
+            @Override
+            public void run() {
+                miniatura.setImageBitmap(Bitmap.createScaledBitmap(bmp, miniatura.getWidth(), miniatura.getHeight(), false));
+            }
+        });
         container = (NotesContainer) getIntent().getExtras().get("Container");
-        miniatura.setImageBitmap(p.getMiniatura());
-        p.setPhotoTitle(title.getText().toString());
+        //p.setPhotoTitle(title.getText().toString());
     }
 
     public void goToMainIntentNoSave(){
@@ -50,6 +63,8 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
 
     public void goToMainIntentSave(){
         try {
+            p.setMiniatura(miniatura);
+            p.setName(title.getText().toString());
             container.addPhotoNote(this.p.getName(),p);
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,7 +77,37 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
             goToMainIntentNoSave();
         }if(v.getId() == R.id.PhotoSaveButton){
             goToMainIntentSave();
+        }if(v.getId() == R.id.PhotoShareButton){
+            goToShareIntent();
+        }if(v.getId() == R.id.PhotoRememberButton){
+
         }
 
+    }
+
+    private void goToShareIntent() {
+        /*
+        Drawable drawable=miniatura.getDrawable();
+        Bitmap bitmap=((BitmapDrawable)drawable).getBitmap();
+
+        try {
+            File file = new File(getApplicationContext().getExternalCacheDir(), File.separator +"image that you wants to share");
+            FileOutputStream fOut = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+            file.setReadable(true, false);
+            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Uri photoURI = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID +".provider", file);
+
+            intent.putExtra(Intent.EXTRA_STREAM, photoURI);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setType("image/jpg");
+
+            startActivity(Intent.createChooser(intent, "Share image via"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
     }
 }

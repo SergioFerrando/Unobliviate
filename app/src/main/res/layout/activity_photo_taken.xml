@@ -24,7 +24,7 @@
         <ImageView
             android:id="@+id/Foto"
             android:layout_width="match_parent"
-            android:layout_height="640dp"
+            android:layout_height="565dp"
             app:srcCompat="@android:drawable/ic_menu_crop" />
 
         <LinearLayout

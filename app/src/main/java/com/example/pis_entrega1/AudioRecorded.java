@@ -12,7 +12,7 @@ import android.widget.EditText;
 import java.io.IOException;
 
 public class AudioRecorded extends AppCompatActivity implements View.OnClickListener{
-    public Recording rec;
+    public Recording rec = new Recording();
     public NotesContainer nc;
     EditText name;
 

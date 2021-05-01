@@ -3,6 +3,7 @@ package com.example.pis_entrega1;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.util.Date;
 
@@ -10,7 +11,7 @@ public class Photo extends Notes {
     private Image photo;
     private String PhotoTitle;
     private String address;
-    private Bitmap miniatura;
+    private ImageView miniatura;
 
     public Photo(){
         super();
@@ -24,11 +25,11 @@ public class Photo extends Notes {
         this.setType(R.drawable.camara);
     }
 
-    public Bitmap getMiniatura() {
+    public ImageView getMiniatura() {
         return miniatura;
     }
 
-    public void setMiniatura(Bitmap miniatura) {
+    public void setMiniatura(ImageView miniatura) {
         this.miniatura = miniatura;
     }
 
