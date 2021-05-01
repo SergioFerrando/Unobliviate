@@ -83,6 +83,9 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
             Intent i = new Intent(this, MainActivity.class);
             i.putExtra("MyClass", nc);
             startActivity(i);
+            /*for(int j = 0; j < this.nc.getContainer().size(); j++ ){
+                System.out.println(this.nc.getContainer().get(j).getName());
+            }*/
         }
         if (R.id.TextCheckList == v.getId()){
             CheckList();

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class NotesContainer implements Parcelable {
-    ArrayList<Notes> container;
+    ArrayList<Notes> container = new ArrayList<>();
 
     public NotesContainer() {
         container = new ArrayList<>();
