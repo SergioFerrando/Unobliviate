@@ -25,7 +25,7 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.AudioShareButton).setOnClickListener(this);
         findViewById(R.id.AudioRememberButton).setOnClickListener(this);
         findViewById(R.id.play_button).setOnClickListener(this);
-        name = this.findViewById(R.id.editTextTitleTextNote);
+        name = this.findViewById(R.id.editTextAudioRecordedNote);
         goFromAudioRecord();
     }
     public void goFromAudioRecord(){

@@ -27,7 +27,7 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_audio_note);
         findViewById(R.id.audioDirectButton).setOnClickListener(this);
         findViewById(R.id.AudioDeleteButton).setOnClickListener(this);
-        String titleTemp = this.findViewById(R.id.editTextTitleTextNote).toString();
+        String titleTemp = this.findViewById(R.id.editTextAudioNote).toString();
         if (titleTemp != null){
             this.rec.setName(titleTemp);
         }else{
