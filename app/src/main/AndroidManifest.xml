@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PIS_Entrega1">
-        <activity android:name=".TextNote"></activity>
+        <activity android:name=".AudioRecorded"></activity>
+        <activity android:name=".photo_taken" />
+        <activity android:name=".TextNote" />
         <activity android:name=".PhotoNote" />
         <activity android:name=".AudioNote" />
         <activity android:name=".MainActivity">

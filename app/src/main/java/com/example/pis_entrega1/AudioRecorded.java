@@ -1,32 +1,33 @@
 package com.example.pis_entrega1;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import java.io.IOException;
 
-
-public class Audio_Recorded extends AppCompatActivity implements View.OnClickListener {
+public class AudioRecorded extends AppCompatActivity implements View.OnClickListener{
     public Recording rec;
     public NotesContainer nc;
+    EditText name;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_audio_recorded);
         findViewById(R.id.AudioDeleteButton).setOnClickListener(this);
         findViewById(R.id.AudioSaveButton).setOnClickListener(this);
         findViewById(R.id.AudioShareButton).setOnClickListener(this);
         findViewById(R.id.AudioRememberButton).setOnClickListener(this);
         findViewById(R.id.play_button).setOnClickListener(this);
+        name = this.findViewById(R.id.editTextTitleTextNote);
         goFromAudioRecord();
     }
-
     public void goFromAudioRecord(){
         rec.setAddress(getIntent().getExtras().get("Adress").toString());
         nc = (NotesContainer) getIntent().getExtras().get("Container");
@@ -58,7 +59,7 @@ public class Audio_Recorded extends AppCompatActivity implements View.OnClickLis
             goToMainIntent();
         }
         if(R.id.AudioSaveButton == v.getId()){
-            this.rec.setName(this.findViewById(R.id.editTextTitleTextNote).toString());
+            this.rec.setName(name.getText().toString());
             nc.addAudioNote(this.rec.getName(), this.rec.getAddress());
             Intent i = new Intent(this, MainActivity.class);
             i.putExtra("MyClass", nc);

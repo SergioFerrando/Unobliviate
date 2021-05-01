@@ -43,9 +43,8 @@ public class NotesContainer implements Parcelable {
         System.out.println(this.getContainer().get(0));
     }
 
-    void addPhotoNote(String title, Image image) throws Exception {
+    void addPhotoNote(String title, Photo p) throws Exception {
         Date d = new Date();
-        Photo p = new Photo(d.getTime(), title, image);
         this.container.add(p);
     }
 

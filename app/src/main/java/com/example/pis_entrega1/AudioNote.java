@@ -24,12 +24,9 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_text_note);
-        findViewById(R.id.TextSaveButton).setOnClickListener(this);
-        findViewById(R.id.TextCheckList).setOnClickListener(this);
-        findViewById(R.id.TextRememberButton).setOnClickListener(this);
-        findViewById(R.id.TextShareButton).setOnClickListener(this);
-        findViewById(R.id.TextDeleteButton).setOnClickListener(this);
+        setContentView(R.layout.activity_audio_note);
+        findViewById(R.id.audioDirectButton).setOnClickListener(this);
+        findViewById(R.id.AudioDeleteButton).setOnClickListener(this);
         String titleTemp = this.findViewById(R.id.editTextTitleTextNote).toString();
         if (titleTemp != null){
             this.rec.setName(titleTemp);
@@ -46,7 +43,7 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
     }
 
     public void goToAudioRecorded(){
-        Intent n1 = new Intent(this, Audio_Recorded.class);
+        Intent n1 = new Intent(this, AudioRecorded.class);
         n1.putExtra("Adress", rec.getAddress());
         n1.putExtra("Container", nc);
         startActivity(n1);
