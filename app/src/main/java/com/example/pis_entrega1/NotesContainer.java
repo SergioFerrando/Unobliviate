@@ -15,6 +15,10 @@ public class NotesContainer implements Parcelable {
         container = new ArrayList<>();
     }
 
+    public NotesContainer(ArrayList<Notes> container){
+        this.container = container;
+    }
+
     protected NotesContainer(Parcel in) {
     }
 
@@ -30,9 +34,7 @@ public class NotesContainer implements Parcelable {
         }
     };
 
-    void addTextNote(String title, String text) {
-        Date d = new Date();
-        Text t = new Text(d.getTime(), title, text);
+    void addTextNote(Text t) {
         this.container.add(t);
     }
 

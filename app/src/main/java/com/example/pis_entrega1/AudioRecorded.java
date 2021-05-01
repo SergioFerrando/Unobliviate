@@ -60,10 +60,12 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
         }
         if(R.id.AudioSaveButton == v.getId()){
             this.rec.setName(name.getText().toString());
-            nc.addAudioNote(this.rec.getName(), this.rec.getAddress());
-            Intent i = new Intent(this, MainActivity.class);
-            i.putExtra("MyClass", nc);
-            startActivity(i);
+            Intent intent = new Intent();
+            intent.putExtra("title_audio", this.rec.getName());
+            intent.putExtra("date_audio", System.currentTimeMillis());
+            intent.putExtra("Adress", this.rec.getAddress());
+            setResult(RESULT_OK, intent);
+            finish();
         }
         if(R.id.AudioShareButton == v.getId()){
             goToShareIntent();

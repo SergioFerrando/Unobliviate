@@ -64,9 +64,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_item, parent, false);
-
+        TextView v = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }

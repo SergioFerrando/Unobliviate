@@ -4,12 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.EditText;
 
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
     Text text = new Text();
-    NotesContainer nc = new NotesContainer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,6 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         }else{
             text.setText("");
         }
-        this.getFromMainActivity();
-        this.getFromMyAdapter();
     }
 
     public void goToShareIntent(){
@@ -79,13 +77,15 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
             }else{
                 this.text.setText("");
             }
-            nc.addTextNote(this.text.getName(), this.text.getText());
-            Intent i = new Intent(this, MainActivity.class);
-            i.putExtra("MyClass", nc);
-            startActivity(i);
-            /*for(int j = 0; j < this.nc.getContainer().size(); j++ ){
-                System.out.println(this.nc.getContainer().get(j).getName());
-            }*/
+            long millis = System.currentTimeMillis();
+            Text text_temp = new Text(millis, this.text.getName(), this.text.getText());
+            //nc.addTextNote(this.text.getName(), this.text.getText());
+            Intent intent = new Intent();
+            intent.putExtra("title", this.text.getName());
+            intent.putExtra("text", this.text.getText());
+            intent.putExtra("date", System.currentTimeMillis());
+            setResult(RESULT_OK, intent);
+            finish();
         }
         if (R.id.TextCheckList == v.getId()){
             CheckList();
@@ -100,26 +100,5 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
             goToMainIntent();
         }
 
-    }
-
-    public void getFromMainActivity(){
-        NotesContainer notesContainer = getIntent().getExtras().getParcelable("MyClass");
-        if (notesContainer != null){
-            this.nc = notesContainer;
-        }
-    }
-    public void getFromMyAdapter(){
-        NotesContainer notesContainer = getIntent().getExtras().getParcelable("Container");
-        if (notesContainer != null){
-            this.nc = notesContainer;
-        }
-        Text text = getIntent().getExtras().getParcelable("Text");
-        if (text != null){
-            this.text = text;
-            EditText et = (EditText) this.findViewById(R.id.editTextTitleTextNote);
-            et.setText((CharSequence) this.text.getName());
-            EditText te = (EditText) this.findViewById(R.id.editTextTextNote);
-            te.setText((CharSequence) this.text.getText());
-        }
     }
 }

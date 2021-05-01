@@ -65,6 +65,12 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
         try {
             p.setMiniatura(miniatura);
             p.setName(title.getText().toString());
+            Intent intent = new Intent();
+            intent.putExtra("title_photo", this.p.getName());
+            intent.putExtra("date_audio", System.currentTimeMillis());
+            //intent.putExtra("photo", );
+            setResult(RESULT_OK, intent);
+            finish();
             container.addPhotoNote(this.p.getName(),p);
         } catch (Exception e) {
             e.printStackTrace();

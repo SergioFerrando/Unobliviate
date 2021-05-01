@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Text text = new Text();
+        text.setName("hola");
+        nc.addTextNote(text);
         parentContext = this.getBaseContext();
         setContentView(R.layout.activity_main);
         findViewById(R.id.TextButton).setOnClickListener(this);
@@ -47,8 +49,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAdapter = new MyAdapter(this.nc, this);
         mRecyclerView.setAdapter(mAdapter);
         setLiveDataObservers();
-        if (savedInstanceState != null) {
-            this.nc = savedInstanceState.getParcelable("MyClass");
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                if (intent.getStringExtra("title") != null){
+                    Text text_temp = new Text(intent.getLongExtra("date", 0), intent.getStringExtra("title"), intent.getStringExtra("text"));
+                    this.nc.addTextNote(text_temp);
+                } else if (intent.getStringExtra("title_audio") != null){
+                    Recording recordingTemp = new Recording(intent.getLongExtra("date_audio", 0), intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"));
+                } else{
+                    //Photo photo = new Photo
+                }
+                System.out.println(this.nc.getContainer().size());
+            }
         }
     }
 
@@ -67,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void goToTextNote() {
         Intent i = new Intent(this, TextNote.class);
         i.putExtra("MyClass", nc);
-        startActivity(i);
+        startActivityForResult(i, 1);
     }
 
     public void goTOAudioNote() {
