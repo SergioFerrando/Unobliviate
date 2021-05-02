@@ -90,7 +90,7 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         recorder = new MediaRecorder();
         DateFormat df = new SimpleDateFormat("yyMMddHHmmss", Locale.GERMANY);
         String date = df.format(Calendar.getInstance().getTime());
-        rec.setAddress(getExternalCacheDir().getAbsolutePath()+ File.separator +date+".3gp");
+        rec.setAddress(getExternalCacheDir().getAbsolutePath()+ File.separator +date+".mp3");
         Log.d("startRecording", rec.getAddress());
 
         recorder.setOutputFile(rec.getAddress());

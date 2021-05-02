@@ -29,6 +29,7 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
     Photo p = new Photo();
     ImageView miniatura;
     EditText title;
+    Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,12 +93,11 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
     }
 
     private void goToShareIntent() {
-        /*
         Drawable drawable=miniatura.getDrawable();
         Bitmap bitmap=((BitmapDrawable)drawable).getBitmap();
 
         try {
-            File file = new File(getApplicationContext().getExternalCacheDir(), File.separator +"image that you wants to share");
+            File file = new File(getApplicationContext().getExternalCacheDir(), File.separator + title.getText().toString() + ".jpg");
             FileOutputStream fOut = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
             fOut.flush();
@@ -114,6 +114,6 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
             startActivity(Intent.createChooser(intent, "Share image via"));
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }
