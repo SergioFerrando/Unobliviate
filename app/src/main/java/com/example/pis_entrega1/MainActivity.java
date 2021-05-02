@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Photo photoTemp = new Photo(intent.getLongExtra("date_photo_main", 0), intent.getStringExtra("title_photo_main"), miniatura);
                     this.nc.addPhotoNote(photoTemp);
                 }
-                System.out.println(this.nc.getContainer().size());
             }
         }
     }

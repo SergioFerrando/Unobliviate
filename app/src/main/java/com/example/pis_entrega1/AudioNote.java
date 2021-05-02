@@ -47,7 +47,6 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                System.out.println("result OK");
                 String nameTemp = intent.getStringExtra("title_audio");
                 long dateTemp = intent.getLongExtra("date_audio", 0);
                 String adressTemp = intent.getStringExtra("Adress");

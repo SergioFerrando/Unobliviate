@@ -49,11 +49,9 @@ public class NotesContainer implements Parcelable {
     private boolean exists(EditText name) {
         for (int i = 0; i < container.size(); i++){
             if (this.container.get(i).getName().equals(name)){
-                System.out.println("false");
                 return false;
             }
         }
-        System.out.println("true");
         return true;
     }
 
