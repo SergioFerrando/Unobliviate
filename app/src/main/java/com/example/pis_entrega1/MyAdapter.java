@@ -25,11 +25,11 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements View.OnClickListener{
 
     private NotesContainer mNotesContainer;
     private LayoutInflater mInflater;
-    private ItemClickListener mItemClickListener;
+    private View.OnClickListener listener;
 
     // data is passed into the constructor
 
@@ -42,6 +42,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.row_item, parent, false);
+        view.setOnClickListener(this);
         return new ViewHolder(view);
     }
 
@@ -72,8 +73,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         return mNotesContainer.getContainer().size();
     }
 
+    public void setOnClickListener(View.OnClickListener listener){
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(listener!= null){
+            listener.onClick(v);
+        }
+    }
+
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder{
         TextView Title;
         TextView Type;
         TextView Date;
@@ -85,12 +97,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             Type = itemView.findViewById(R.id.typeView);
             Date = itemView.findViewById(R.id.dateView);
             item = itemView.findViewById(R.id.image);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (mItemClickListener != null) mItemClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 
@@ -102,13 +108,4 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     void setmNotesContainer(NotesContainer mNotesContainer){
         this.mNotesContainer = mNotesContainer;
     }
-
-    void setmItemClickListener(ItemClickListener itemClickListener){
-        this.mItemClickListener = itemClickListener;
-    }
-
-    public interface ItemClickListener{
-        void onItemClick(View view, int position);
-    }
-
 }

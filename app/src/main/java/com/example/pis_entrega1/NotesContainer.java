@@ -63,6 +63,8 @@ public class NotesContainer implements Parcelable {
         this.container = container;
     }
 
+    public Notes get(int p){return container.get(p);}
+
     @Override
     public int describeContents() {
         return 0;

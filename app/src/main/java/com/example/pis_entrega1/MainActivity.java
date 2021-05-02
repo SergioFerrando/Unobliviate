@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, MyAdapter.ItemClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private RecyclerView mRecyclerView;
 
     private MyAdapter mAdapter;
@@ -92,13 +92,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MyAdapter(this, nc);
-        mAdapter.setmItemClickListener(this);
+        mAdapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Selección: "+ nc.get(recyclerView.getChildAdapterPosition(v)).getName(),Toast.LENGTH_SHORT).show();
+            }
+        });
         recyclerView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You Clicked " + mAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
 
     /*@Override
