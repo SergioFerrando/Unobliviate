@@ -95,10 +95,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (nc.get(recyclerView.getChildAdapterPosition(v)) instanceof Text){
+                    passDataText((Text) nc.get(recyclerView.getChildAdapterPosition(v)));
+                }else if(nc.get(recyclerView.getChildAdapterPosition(v)) instanceof Recording){
+                    passDataAudio((Recording) nc.get(recyclerView.getChildAdapterPosition(v)));
+                }else{
+                    passDataPhoto((Photo) nc.get(recyclerView.getChildAdapterPosition(v)));
+                }
                 Toast.makeText(getApplicationContext(),"Selección: "+ nc.get(recyclerView.getChildAdapterPosition(v)).getName(),Toast.LENGTH_SHORT).show();
             }
         });
         recyclerView.setAdapter(mAdapter);
+    }
+
+    void passDataText (Text text) {
+        Intent i = new Intent(this, TextNote.class);
+        i.putExtra("newTitleText", text.getName());
+        i.putExtra("newTextText", text.getContent());
+        startActivityForResult(i, 1);
+    }
+
+    void passDataAudio (Recording recording){
+        Intent n1 = new Intent(this, AudioRecorded.class);
+        n1.putExtra("Adress", recording.getAddress());
+        startActivityForResult(n1, 1);
+    }
+
+    void passDataPhoto (Photo photo){
+        Intent n = new Intent(this, PhotoTaken.class);
+        n.putExtra("photo", photo.miniatura);
+        startActivityForResult(n, 1);
     }
 
     /*@Override

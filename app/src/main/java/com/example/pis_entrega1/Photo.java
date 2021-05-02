@@ -11,7 +11,7 @@ public class Photo extends Notes {
     private Image photo;
     private String PhotoTitle;
     private String address;
-    private byte[] miniatura;
+    public byte[] miniatura;
 
     public Photo(){
         super();
