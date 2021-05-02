@@ -1,16 +1,18 @@
 package com.example.pis_entrega1;
 
-import androidx.annotation.NonNull;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, MyAdapter.ItemClickListener{
     private MyAdapter mAdapter;
@@ -44,12 +46,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Text text_temp = new Text(intent.getLongExtra("date", 0), intent.getStringExtra("title"), intent.getStringExtra("text"));
                     this.nc.addTextNote(text_temp);
                     this.refreshTableNotes();
-                } else if (intent.getStringExtra("title_audio") != null){
-                    Recording recordingTemp = new Recording(intent.getLongExtra("date_audio", 0), intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"));
+                } else if (intent.getStringExtra("title_audio_main") != null){
+                    Recording recordingTemp = new Recording(intent.getLongExtra("date_audio_main", 0), intent.getStringExtra("title_audio_main"), intent.getStringExtra("Adress_main"));
                     this.nc.addAudioNote(recordingTemp);
                     this.refreshTableNotes();
                 } else{
-                    //Photo photo = new Photo
+                    byte[] data = intent.getByteArrayExtra("byteImage_main");
+                    Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    ImageView miniatura = null;
+                    miniatura.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            miniatura.setImageBitmap(Bitmap.createScaledBitmap(bmp, miniatura.getWidth(), miniatura.getHeight(), false));
+                        }
+                    });
+                    Photo photoTemp = new Photo(intent.getLongExtra("date_photo_main", 0), intent.getStringExtra("title_photo_main"), miniatura);
+                    this.nc.addPhotoNote(photoTemp);
                 }
                 System.out.println(this.nc.getContainer().size());
             }
@@ -58,20 +70,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void goToTextNote() {
         Intent i = new Intent(this, TextNote.class);
-        i.putExtra("MyClass", nc);
         startActivityForResult(i, 1);
     }
 
     public void goTOAudioNote() {
         Intent i = new Intent(this, AudioNote.class);
-        i.putExtra("MyClass", nc);
-        startActivity(i);
+        startActivityForResult(i, 1);
     }
 
     public void goToCameraNote() {
         Intent i = new Intent(this, PhotoNote.class);
-        i.putExtra("MyClass", nc);
-        startActivity(i);
+        startActivityForResult(i, 1);
     }
 
     @Override
@@ -90,8 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void setTable () {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new MyAdapter(this, nc);
-        mAdapter.setClickListener((MyAdapter.ItemClickListener) this);
+        mAdapter = new MyAdapter(this, nc, this);
+        mAdapter.setClickListener(this);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -102,6 +111,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemClick(View view, int position) {
-
+        if (mAdapter.getItem(position) instanceof Text){
+            Intent i = new Intent(this, TextNote.class);
+            i.putExtra("title_open_text", mAdapter.getItem(position).getName());
+            i.putExtra("content_open_text", mAdapter.getItem(position).getContent());
+            i.putExtra("date_open_text", mAdapter.getItem(position).getContent());
+            startActivityForResult(i, 1);
+        }
     }
 }

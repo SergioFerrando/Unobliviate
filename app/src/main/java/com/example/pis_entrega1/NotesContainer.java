@@ -42,7 +42,7 @@ public class NotesContainer implements Parcelable {
         this.container.add(recording);
     }
 
-    void addPhotoNote(Photo p) throws Exception {
+    void addPhotoNote(Photo p) {
         this.container.add(p);
     }
 

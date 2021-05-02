@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,7 +26,6 @@ import java.util.Date;
 
 public class photo_taken extends AppCompatActivity implements View.OnClickListener{
 
-    private NotesContainer container;
     Photo p = new Photo();
     ImageView miniatura;
     EditText title;
@@ -53,7 +53,6 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
                 miniatura.setImageBitmap(Bitmap.createScaledBitmap(bmp, miniatura.getWidth(), miniatura.getHeight(), false));
             }
         });
-        container = (NotesContainer) getIntent().getExtras().get("Container");
         //p.setPhotoTitle(title.getText().toString());
     }
 
@@ -63,19 +62,20 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
     }
 
     public void goToMainIntentSave(){
-        try {
-            p.setMiniatura(miniatura);
-            p.setName(title.getText().toString());
-            Intent intent = new Intent();
-            intent.putExtra("title_photo", this.p.getName());
-            intent.putExtra("date_audio", System.currentTimeMillis());
-            //intent.putExtra("photo", );
-            setResult(RESULT_OK, intent);
-            finish();
-            container.addPhotoNote(p);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        p.setMiniatura(miniatura);
+        p.setName(title.getText().toString());
+        Intent intent = new Intent();
+        intent.putExtra("title_photo", this.p.getName());
+        intent.putExtra("date_audio", System.currentTimeMillis());
+
+        Bitmap bitmap = ((BitmapDrawable)miniatura.getDrawable()).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,90, stream);
+        byte[] image = stream.toByteArray();
+
+        intent.putExtra("photo", image);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
@@ -87,15 +87,12 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
         }if(v.getId() == R.id.PhotoShareButton){
             goToShareIntent();
         }if(v.getId() == R.id.PhotoRememberButton){
-
         }
-
     }
 
     private void goToShareIntent() {
         Drawable drawable=miniatura.getDrawable();
         Bitmap bitmap=((BitmapDrawable)drawable).getBitmap();
-
         try {
             File file = new File(getApplicationContext().getExternalCacheDir(), File.separator + title.getText().toString() + ".jpg");
             FileOutputStream fOut = new FileOutputStream(file);

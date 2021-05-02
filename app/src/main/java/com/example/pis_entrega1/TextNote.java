@@ -11,10 +11,10 @@ import android.widget.EditText;
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
     Text text = new Text();
     EditText title, content;
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("entra en la nota de texto");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_note);
         findViewById(R.id.TextSaveButton).setOnClickListener(this);

@@ -15,7 +15,6 @@ import java.io.IOException;
 
 public class AudioRecorded extends AppCompatActivity implements View.OnClickListener{
     public Recording rec = new Recording();
-    public NotesContainer nc;
     EditText name;
 
     @Override
@@ -32,7 +31,6 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
     }
     public void goFromAudioRecord(){
         rec.setAddress(getIntent().getExtras().get("Adress").toString());
-        nc = (NotesContainer) getIntent().getExtras().get("Container");
     }
     public void goToMainIntent(){
         Intent i = new Intent(this,MainActivity.class);
@@ -62,7 +60,7 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
         }
         if(R.id.AudioSaveButton == v.getId()){
             this.rec.setName(name.getText().toString());
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent();
             intent.putExtra("title_audio", this.rec.getName());
             intent.putExtra("date_audio", System.currentTimeMillis());
             intent.putExtra("Adress", this.rec.getAddress());

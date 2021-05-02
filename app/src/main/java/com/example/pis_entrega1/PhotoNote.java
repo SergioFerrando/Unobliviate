@@ -18,17 +18,14 @@ import android.widget.ImageView;
 import java.io.ByteArrayOutputStream;
 
 public class PhotoNote extends AppCompatActivity implements View.OnClickListener {
-    private NotesContainer container = new NotesContainer();
     private Photo photo = new Photo();
     ImageView prueba;
 
-    public PhotoNote(){}
 
-    Photo p;
+    public PhotoNote(){}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.setContainer((NotesContainer) getIntent().getParcelableExtra("MyClass"));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_note);
         findViewById(R.id.photoDirectButton).setOnClickListener(this);
@@ -42,37 +39,18 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-    public PhotoNote(NotesContainer nc) {
-        this.setContainer(nc);
-    }
-
-    public NotesContainer getContainer() {
-        return container;
-    }
-
-    public void setContainer(NotesContainer container) {
-        this.container = container;
-    }
-
     public void goToMainIntent(){
-        Intent n = new Intent(this, MainActivity.class);
-        startActivity(n);
-    }
-
-
-    @Override
-    public void onBackPressed(){
-        Intent i = new Intent(this, MainActivity.class);
-        i.putExtra("MyClass", (Parcelable) container);
-        startActivity(i);
         finish();
     }
 
+    @Override
+    public void onBackPressed(){
+        finish();
+    }
 
     public void goToPhotoTaken(){
-        p.setMiniatura(prueba);
+        photo.setMiniatura(prueba);
         Intent n = new Intent(this, photo_taken.class);
-        n.putExtra("Container", container);
         startActivity(n);
     }
 
@@ -98,10 +76,22 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG,90, stream);
             byte[] image = stream.toByteArray();
+
             Intent n = new Intent(this, photo_taken.class);
             n.putExtra("photo", image);
-            n.putExtra("Container", container);
-            startActivity(n);
+            startActivityForResult(n, 1);
+        } if (requestCode == 1){
+            if (resultCode == RESULT_OK) {
+                String nameTemp = data.getStringExtra("title_photo");
+                long dateTemp = data.getLongExtra("date_photo", 0);
+                byte[] byteImage = data.getByteArrayExtra("byteImage");
+                Intent i = new Intent();
+                i.putExtra("title_photo_main", nameTemp);
+                i.putExtra("date_photo_main", dateTemp);
+                i.putExtra("byteImage_main", byteImage);
+                setResult(RESULT_OK, i);
+                finish();
+            }
         }
     }
 }

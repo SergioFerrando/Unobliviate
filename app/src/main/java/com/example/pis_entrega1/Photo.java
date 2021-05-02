@@ -17,9 +17,9 @@ public class Photo extends Notes {
         super();
     }
 
-    public Photo(long date, String name, Image image) {
+    public Photo(long date, String name, ImageView image) {
         super(date, name);
-        this.setPhoto(image);
+        this.setMiniatura(image);
         this.PhotoTitle = name;
         this.setContent("Photo Note");
         this.setType(R.drawable.camara);

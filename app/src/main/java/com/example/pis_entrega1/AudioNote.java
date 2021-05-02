@@ -20,7 +20,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class AudioNote extends AppCompatActivity implements View.OnClickListener {
-    NotesContainer nc = new NotesContainer();
     private MediaRecorder recorder;
     private boolean isRecording = false;
     Recording rec = new Recording();
@@ -42,8 +41,24 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
                     Manifest.permission.RECORD_AUDIO
             },100);
         }
-        //this.getFromMainActivity();
-        //this.getFromMyAdapter();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                System.out.println("result OK");
+                String nameTemp = intent.getStringExtra("title_audio");
+                long dateTemp = intent.getLongExtra("date_audio", 0);
+                String adressTemp = intent.getStringExtra("Adress");
+                Intent i = new Intent();
+                i.putExtra("title_audio_main", nameTemp);
+                i.putExtra("date_audio_main", dateTemp);
+                i.putExtra("Adress_main", adressTemp);
+                setResult(RESULT_OK, i);
+                finish();
+            }
+        }
     }
 
     public void goToMainIntent(){
@@ -54,8 +69,8 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
     public void goToAudioRecorded(){
         Intent n1 = new Intent(this, AudioRecorded.class);
         n1.putExtra("Adress", rec.getAddress());
-        n1.putExtra("Container", nc);
-        startActivity(n1);
+        startActivityForResult(n1, 1);
+        //finish();
     }
 
     @Override
@@ -105,12 +120,5 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         }
         recorder.start();
         isRecording = true;
-    }
-
-    public void getFromMainActivity(){
-        NotesContainer notesContainer = getIntent().getExtras().getParcelable("MyClass");
-        if (notesContainer != null){
-            this.nc = notesContainer;
-        }
     }
 }
