@@ -11,15 +11,14 @@
         android:layout_height="90dp"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/TextButton"
+        <ImageView
+            android:id="@+id/image"
             android:layout_width="114dp"
             android:layout_height="90dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:background="#FFFFFF"
-            android:contentDescription="@string/audio_button"
             android:scaleType="centerInside"
             app:srcCompat="@drawable/tex" />
 

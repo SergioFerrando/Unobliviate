@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,13 +52,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         holder.Title.setText(nota.getName());
         if (nota instanceof Text){
             holder.Type.setText("Text");
-            holder.item.setImageAlpha(nota.getType());
+            holder.item.setImageResource(R.drawable.tex);
         }else if (nota instanceof Recording){
             holder.Type.setText("Recording");
-            holder.item.setImageAlpha(nota.getType());
+            holder.item.setImageResource(R.drawable.micro);
         }else{
             holder.Type.setText("Photo");
-            holder.item.setImageAlpha(nota.getType());
+            holder.item.setImageResource(R.drawable.camara);
         }
         if (nota.getDate() != null){
             DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.GERMANY);
@@ -76,14 +77,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         TextView Title;
         TextView Type;
         TextView Date;
-        ImageButton item;
+        ImageView item;
 
         public ViewHolder(View itemView) {
             super(itemView);
             Title = itemView.findViewById(R.id.titleView);
             Type = itemView.findViewById(R.id.typeView);
             Date = itemView.findViewById(R.id.dateView);
-            item = itemView.findViewById(R.id.TextButton);
+            item = itemView.findViewById(R.id.image);
             itemView.setOnClickListener(this);
         }
 
