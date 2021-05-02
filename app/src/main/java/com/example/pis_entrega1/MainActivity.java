@@ -8,6 +8,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,8 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, MyAdapter.ItemClickListener{
-    private MyAdapter mAdapter;
     private RecyclerView mRecyclerView;
+
+    private MyAdapter mAdapter;
 
     public NotesContainer nc;
     public Context parentContext;
@@ -34,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(mAdapter);
         this.setTable();
     }
 
@@ -45,11 +46,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (intent.getStringExtra("title") != null){
                     Text text_temp = new Text(intent.getLongExtra("date", 0), intent.getStringExtra("title"), intent.getStringExtra("text"));
                     this.nc.addTextNote(text_temp);
-                    this.refreshTableNotes();
+                    this.setTable();
                 } else if (intent.getStringExtra("title_audio_main") != null){
                     Recording recordingTemp = new Recording(intent.getLongExtra("date_audio_main", 0), intent.getStringExtra("title_audio_main"), intent.getStringExtra("Adress_main"));
                     this.nc.addAudioNote(recordingTemp);
-                    this.refreshTableNotes();
+                    this.setTable();
                 } else{
                     byte[] data = intent.getByteArrayExtra("byteImage_main");
                     Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
@@ -99,17 +100,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void setTable () {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new MyAdapter(this, nc, this);
-        mAdapter.setClickListener(this);
+        mAdapter = new MyAdapter(this, nc);
+        mAdapter.setmItemClickListener(this);
         recyclerView.setAdapter(mAdapter);
     }
 
-    void refreshTableNotes(){
-        mAdapter.setmNotesContainer(this.nc);
-        mAdapter.notifyDataSetChanged();
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(this, "You Clicked " + mAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
+    /*@Override
     public void onItemClick(View view, int position) {
         if (mAdapter.getItem(position) instanceof Text){
             Intent i = new Intent(this, TextNote.class);
@@ -118,5 +119,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             i.putExtra("date_open_text", mAdapter.getItem(position).getContent());
             startActivityForResult(i, 1);
         }
-    }
+    }*/
 }

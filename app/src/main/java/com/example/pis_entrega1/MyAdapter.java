@@ -24,29 +24,24 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     private NotesContainer mNotesContainer;
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private ItemClickListener mItemClickListener;
 
     // data is passed into the constructor
 
-    MyAdapter(Context context, NotesContainer data, ItemClickListener mClickListener) {
-        this.mClickListener = mClickListener;
+    MyAdapter(Context context, NotesContainer data) {
         this.mInflater = LayoutInflater.from(context);
         this.mNotesContainer = data;
     }
     // inflates the row layout from xml when needed
 
-    public void addNota (Notes nota){
-        mNotesContainer.getContainer().add(nota);
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.row_item, parent, false);
-        return new ViewHolder(view, mClickListener);
+        return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
@@ -76,18 +71,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return mNotesContainer.getContainer().size();
     }
 
-
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ItemClickListener clickListener;
         TextView Title;
         TextView Type;
         TextView Date;
         ImageButton item;
 
-        public ViewHolder(View itemView, ItemClickListener clickListener) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            this.clickListener = clickListener;
             Title = itemView.findViewById(R.id.titleView);
             Type = itemView.findViewById(R.id.typeView);
             Date = itemView.findViewById(R.id.dateView);
@@ -97,7 +89,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            mClickListener.onItemClick(view, getAdapterPosition());
+            if (mItemClickListener != null) mItemClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 
@@ -110,13 +102,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         this.mNotesContainer = mNotesContainer;
     }
 
-    // allows clicks events to be caught
-    void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
+    void setmItemClickListener(ItemClickListener itemClickListener){
+        this.mItemClickListener = itemClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
+    public interface ItemClickListener{
         void onItemClick(View view, int position);
     }
+
 }

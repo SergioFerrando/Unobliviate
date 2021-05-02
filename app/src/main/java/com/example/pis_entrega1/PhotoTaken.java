@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class photo_taken extends AppCompatActivity implements View.OnClickListener{
+public class PhotoTaken extends AppCompatActivity implements View.OnClickListener{
 
     Photo p = new Photo();
     ImageView miniatura;

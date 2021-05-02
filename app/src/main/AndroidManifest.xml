@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PIS_Entrega1">
         <activity android:name=".AudioRecorded"></activity>
-        <activity android:name=".photo_taken" />
+        <activity android:name=".PhotoTaken" />
         <activity android:name=".TextNote" />
         <activity android:name=".PhotoNote" />
         <activity android:name=".AudioNote" />
