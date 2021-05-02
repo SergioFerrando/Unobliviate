@@ -72,7 +72,7 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
             //intent.putExtra("photo", );
             setResult(RESULT_OK, intent);
             finish();
-            container.addPhotoNote(this.p.getName(),p);
+            container.addPhotoNote(p);
         } catch (Exception e) {
             e.printStackTrace();
         }

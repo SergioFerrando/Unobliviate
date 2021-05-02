@@ -12,7 +12,7 @@ public class NotesContainer implements Parcelable {
     ArrayList<Notes> container = new ArrayList<>();
 
     public NotesContainer() {
-        container = new ArrayList<>();
+
     }
 
     public NotesContainer(ArrayList<Notes> container){
@@ -38,15 +38,11 @@ public class NotesContainer implements Parcelable {
         this.container.add(t);
     }
 
-    void addAudioNote(String title, String Adress) {
-        Date d = new Date();
-        Recording t = new Recording(d.getTime(),title,Adress);
-        this.container.add(t);
-        System.out.println(this.getContainer().get(0));
+    void addAudioNote(Recording recording) {
+        this.container.add(recording);
     }
 
-    void addPhotoNote(String title, Photo p) throws Exception {
-        Date d = new Date();
+    void addPhotoNote(Photo p) throws Exception {
         this.container.add(p);
     }
 
