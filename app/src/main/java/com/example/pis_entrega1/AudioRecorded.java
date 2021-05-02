@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -38,12 +40,12 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
     }
 
     public void goToShareIntent(){
-        /*Intent intent = new Intent(Intent.ACTION_SEND);
-        String shareBody = ContactsContract.CommonDataKinds.Note.getText().toString();
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Text Note");
-        intent.putExtra(Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(intent,"Share using... "));*/
+        String sharePath = rec.getAddress();
+        Uri uri = Uri.parse(sharePath);
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("audio/*");
+        share.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(Intent.createChooser(share, "Share Sound File"));
     }
 
     public void goToRememberIntent(){

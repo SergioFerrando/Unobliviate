@@ -29,6 +29,7 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
     Photo p = new Photo();
     ImageView miniatura;
     EditText title;
+    Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
