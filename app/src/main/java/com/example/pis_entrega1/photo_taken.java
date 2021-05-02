@@ -71,7 +71,7 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
             //intent.putExtra("photo", );
             setResult(RESULT_OK, intent);
             finish();
-            container.addPhotoNote(this.p.getName(),p);
+            container.addPhotoNote(p);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,12 +92,11 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
     }
 
     private void goToShareIntent() {
-        /*
         Drawable drawable=miniatura.getDrawable();
         Bitmap bitmap=((BitmapDrawable)drawable).getBitmap();
 
         try {
-            File file = new File(getApplicationContext().getExternalCacheDir(), File.separator +"image that you wants to share");
+            File file = new File(getApplicationContext().getExternalCacheDir(), File.separator + title.getText().toString() + ".jpg");
             FileOutputStream fOut = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
             fOut.flush();
@@ -114,6 +113,6 @@ public class photo_taken extends AppCompatActivity implements View.OnClickListen
             startActivity(Intent.createChooser(intent, "Share image via"));
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }
