@@ -61,7 +61,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             holder.item.setImageResource(R.drawable.camara);
         }
         if (nota.getDate() != null){
-            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.GERMANY);
+            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
             String date = df.format(Calendar.getInstance().getTime());
             holder.Date.setText(date);
         }

@@ -47,12 +47,6 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         finish();
     }
 
-    public void goToPhotoTaken(){
-        photo.setMiniatura(prueba);
-        Intent n = new Intent(this, PhotoTaken.class);
-        startActivity(n);
-    }
-
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.photoDeleteButton){
@@ -83,7 +77,7 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
             if (resultCode == RESULT_OK) {
                 String nameTemp = data.getStringExtra("title_photo");
                 long dateTemp = data.getLongExtra("date_photo", 0);
-                byte[] byteImage = data.getByteArrayExtra("byteImage");
+                byte[] byteImage = data.getByteArrayExtra("photo");
                 Intent i = new Intent();
                 i.putExtra("title_photo_main", nameTemp);
                 i.putExtra("date_photo_main", dateTemp);

@@ -11,13 +11,13 @@ public class Photo extends Notes {
     private Image photo;
     private String PhotoTitle;
     private String address;
-    private ImageView miniatura;
+    private byte[] miniatura;
 
     public Photo(){
         super();
     }
 
-    public Photo(long date, String name, ImageView image) {
+    public Photo(long date, String name, byte[] image) {
         super(date, name);
         this.setMiniatura(image);
         this.PhotoTitle = name;
@@ -25,11 +25,11 @@ public class Photo extends Notes {
         this.setType(R.drawable.camara);
     }
 
-    public ImageView getMiniatura() {
+    public byte[] getMiniatura() {
         return miniatura;
     }
 
-    public void setMiniatura(ImageView miniatura) {
+    public void setMiniatura(byte[] miniatura) {
         this.miniatura = miniatura;
     }
 

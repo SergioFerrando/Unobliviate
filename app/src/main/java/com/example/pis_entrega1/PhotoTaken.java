@@ -29,7 +29,7 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
     Photo p = new Photo();
     ImageView miniatura;
     EditText title;
-    Uri uri;
+    byte[] image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,8 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
     }
 
     public void goFromPhotoNote(){
-        byte[] byteArray = ((byte[]) getIntent().getExtras().get("photo"));
-        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        image = ((byte[]) getIntent().getExtras().get("photo"));
+        Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
         miniatura.post(new Runnable() {
             @Override
             public void run() {
@@ -62,17 +62,11 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
     }
 
     public void goToMainIntentSave(){
-        p.setMiniatura(miniatura);
+        p.setMiniatura(image);
         p.setName(title.getText().toString());
         Intent intent = new Intent();
         intent.putExtra("title_photo", this.p.getName());
         intent.putExtra("date_audio", System.currentTimeMillis());
-
-        Bitmap bitmap = ((BitmapDrawable)miniatura.getDrawable()).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,90, stream);
-        byte[] image = stream.toByteArray();
-
         intent.putExtra("photo", image);
         setResult(RESULT_OK, intent);
         finish();

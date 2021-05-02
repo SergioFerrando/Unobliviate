@@ -52,17 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     this.nc.addAudioNote(recordingTemp);
                     this.setTable();
                 } else{
-                    byte[] data = intent.getByteArrayExtra("byteImage_main");
-                    Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    ImageView miniatura = null;
-                    miniatura.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            miniatura.setImageBitmap(Bitmap.createScaledBitmap(bmp, miniatura.getWidth(), miniatura.getHeight(), false));
-                        }
-                    });
-                    Photo photoTemp = new Photo(intent.getLongExtra("date_photo_main", 0), intent.getStringExtra("title_photo_main"), miniatura);
+                    Photo photoTemp = new Photo(intent.getLongExtra("date_photo_main", 0), intent.getStringExtra("title_photo_main"), intent.getByteArrayExtra("byteImage_main"));
                     this.nc.addPhotoNote(photoTemp);
+                    this.setTable();
                 }
             }
         }
