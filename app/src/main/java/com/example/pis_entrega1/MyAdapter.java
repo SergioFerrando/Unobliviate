@@ -17,8 +17,10 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
@@ -61,8 +63,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             holder.item.setImageAlpha(nota.getType());
         }
         if (nota.getDate() != null){
-            SimpleDateFormat df2 = new SimpleDateFormat("dd/MM/yy");
-            String dateText = df2.format(nota.getDate());
+            DateFormat df = new SimpleDateFormat("HH:mm:ss dd:MM:yy");
+            String dateText = df.format(nota.getDate());
             holder.Date.setText(dateText);
         }
     }

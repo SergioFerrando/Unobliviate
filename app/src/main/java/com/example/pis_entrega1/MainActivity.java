@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         nc = new NotesContainer();
-        Text text = new Text();
-        text.setName("penepenepene");
-        nc.addTextNote(text);
         parentContext = this.getBaseContext();
         setContentView(R.layout.activity_main);
         findViewById(R.id.TextButton).setOnClickListener(this);
