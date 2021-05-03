@@ -45,12 +45,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (resultCode == RESULT_OK) {
                 if (intent.getStringExtra("title") != null){
                     Text text_temp = new Text(intent.getLongExtra("date", 0), intent.getStringExtra("title"), intent.getStringExtra("text"));
-                    System.out.println(intent.getIntExtra("positionText", -1));
                     this.nc.addTextNote(text_temp,intent.getIntExtra("positionText", -1));
                     this.setTable();
                 } else if (intent.getStringExtra("title_audio_main") != null){
                     Recording recordingTemp = new Recording(intent.getLongExtra("date_audio_main", 0), intent.getStringExtra("title_audio_main"), intent.getStringExtra("Adress_main"));
-                    this.nc.addAudioNote(recordingTemp);
+                    this.nc.addAudioNote(recordingTemp, intent.getIntExtra("positionAudio", -1));
                     this.setTable();
                 } else if (intent.getStringExtra("title_photo_main") != null){
                     Photo photoTemp = new Photo(intent.getLongExtra("date_photo_main", 0), intent.getStringExtra("title_photo_main"), intent.getByteArrayExtra("byteImage_main"));
@@ -113,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent i = new Intent(this, TextNote.class);
         i.putExtra("newTitleText", text.getName());
         i.putExtra("newTextText", text.getText());
-        System.out.println(text.getText());
         i.putExtra("positionText", position);
         startActivityForResult(i, 1);
     }

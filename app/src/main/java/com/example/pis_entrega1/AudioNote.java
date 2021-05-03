@@ -25,6 +25,8 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
     private MediaRecorder recorder;
     private boolean isRecording = false;
     Recording rec = new Recording();
+    int position = -1;
+    EditText titleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,22 +34,17 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_audio_note);
         findViewById(R.id.audioDirectButton).setOnClickListener(this);
         findViewById(R.id.AudioDeleteButton).setOnClickListener(this);
-        if (getIntent().getStringExtra("positionAudio") != null){
-            this.rec.setName(getIntent().getStringExtra("newTitleAudio"));
-            EditText titleView = this.findViewById(R.id.editTextAudioNote);
-            titleView.setText(this.rec.getName());
+        titleView = this.findViewById(R.id.editTextAudioNote);
+        String titleTemp = titleView.getText().toString();
+        if (titleTemp != null) {
+            this.rec.setName(titleTemp);
         } else {
-            String titleTemp = this.findViewById(R.id.editTextAudioNote).toString();
-            if (titleTemp != null) {
-                this.rec.setName(titleTemp);
-            } else {
-                rec.setName("");
-            }if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-                    != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(this,new String[]{
-                        Manifest.permission.RECORD_AUDIO
-                },100);
-            }
+            rec.setName("");
+        }if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{
+                    Manifest.permission.RECORD_AUDIO
+            },100);
         }
     }
 
@@ -59,6 +56,7 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
                 long dateTemp = intent.getLongExtra("date_audio", 0);
                 String adressTemp = intent.getStringExtra("Adress");
                 Intent i = new Intent();
+                i.putExtra("positionAudio", this.position);
                 i.putExtra("title_audio_main", nameTemp);
                 i.putExtra("date_audio_main", dateTemp);
                 i.putExtra("Adress_main", adressTemp);
@@ -76,6 +74,7 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
     public void goToAudioRecorded(){
         Intent n1 = new Intent(this, AudioRecorded.class);
         n1.putExtra("Adress", rec.getAddress());
+        n1.putExtra("titleAudio", this.rec.getName());
         startActivityForResult(n1, 1);
         //finish();
     }

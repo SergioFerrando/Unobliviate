@@ -16,6 +16,7 @@ import java.io.IOException;
 public class AudioRecorded extends AppCompatActivity implements View.OnClickListener{
     public Recording rec = new Recording();
     EditText name;
+    int position = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +31,16 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
         goFromAudioRecord();
     }
     public void goFromAudioRecord(){
-        rec.setAddress(getIntent().getExtras().get("Adress").toString());
-    }
-    public void goToMainIntent(){
-        Intent i = new Intent(this,MainActivity.class);
-        startActivity(i);
+        if (getIntent().getStringExtra("newTitleAudio") != null){
+            this.rec.setName(getIntent().getStringExtra("newTitleAudio"));
+            name.setText(this.rec.getName());
+            this.position = getIntent().getIntExtra("positionAudio", -1);
+        }
+        else{
+            rec.setAddress(getIntent().getExtras().get("Adress").toString());
+            rec.setName(getIntent().getStringExtra("titleAudio"));
+            name.setText(rec.getName());
+        }
     }
 
     public void goToShareIntent(){
@@ -56,7 +62,7 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if(R.id.AudioDeleteButton == v.getId()){
-            goToMainIntent();
+            finish();
         }
         if(R.id.AudioSaveButton == v.getId()){
             this.rec.setName(name.getText().toString());
