@@ -35,8 +35,7 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
             this.rec.setName(getIntent().getStringExtra("newTitleAudio"));
             name.setText(this.rec.getName());
             this.position = getIntent().getIntExtra("positionAudio", -1);
-        }
-        else{
+        } else{
             rec.setAddress(getIntent().getExtras().get("Adress").toString());
             rec.setName(getIntent().getStringExtra("titleAudio"));
             name.setText(rec.getName());

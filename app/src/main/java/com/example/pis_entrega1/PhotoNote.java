@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -19,7 +20,7 @@ import java.io.ByteArrayOutputStream;
 public class PhotoNote extends AppCompatActivity implements View.OnClickListener {
     private Photo photo = new Photo();
     ImageView prueba;
-
+    EditText title;
 
     public PhotoNote(){}
 
@@ -30,6 +31,7 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         findViewById(R.id.photoDirectButton).setOnClickListener(this);
         findViewById(R.id.photoDeleteButton).setOnClickListener(this);
         prueba = findViewById(R.id.Foto);
+        title = findViewById(R.id.editTextTitlePhotoNote);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{
@@ -70,8 +72,11 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
             bitmap.compress(Bitmap.CompressFormat.PNG,90, stream);
             byte[] image = stream.toByteArray();
 
+            photo.setName(title.getText().toString());
+
             Intent n = new Intent(this, PhotoTaken.class);
             n.putExtra("photo", image);
+            n.putExtra("titlePhoto", photo.getName());
             startActivityForResult(n, 1);
         } if (requestCode == 1){
             if (resultCode == RESULT_OK) {

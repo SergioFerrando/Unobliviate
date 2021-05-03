@@ -30,6 +30,7 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
     ImageView miniatura;
     EditText title;
     byte[] image;
+    int position = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
 
     public void goFromPhotoNote(){
         image = ((byte[]) getIntent().getExtras().get("photo"));
+        p.setName(getIntent().getStringExtra("titlePhoto"));
+        title.setText(p.getName());
         Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
         miniatura.post(new Runnable() {
             @Override
@@ -53,12 +56,15 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
                 miniatura.setImageBitmap(Bitmap.createScaledBitmap(bmp, miniatura.getWidth(), miniatura.getHeight(), false));
             }
         });
-        //p.setPhotoTitle(title.getText().toString());
+        if (getIntent().getStringExtra("newTitlePhoto") != null){
+            p.setName(getIntent().getStringExtra("newTitlePhoto"));
+            title.setText(p.getName());
+            this.position = getIntent().getIntExtra("positionPhoto", -1);
+        }
     }
 
     public void goToMainIntentNoSave(){
-        Intent n = new Intent(this,MainActivity.class);
-        startActivity(n);
+        finish();
     }
 
     public void goToMainIntentSave(){

@@ -25,7 +25,6 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
     private MediaRecorder recorder;
     private boolean isRecording = false;
     Recording rec = new Recording();
-    int position = -1;
     EditText titleView;
 
     @Override
@@ -56,7 +55,6 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
                 long dateTemp = intent.getLongExtra("date_audio", 0);
                 String adressTemp = intent.getStringExtra("Adress");
                 Intent i = new Intent();
-                i.putExtra("positionAudio", this.position);
                 i.putExtra("title_audio_main", nameTemp);
                 i.putExtra("date_audio_main", dateTemp);
                 i.putExtra("Adress_main", adressTemp);

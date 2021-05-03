@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void passDataPhoto (Photo photo, int position){
         Intent n = new Intent(this, PhotoTaken.class);
+        n.putExtra("newTitlePhoto", photo.getName());
         n.putExtra("photo", photo.miniatura);
         n.putExtra("positionPhoto", position);
         startActivityForResult(n, 1);
