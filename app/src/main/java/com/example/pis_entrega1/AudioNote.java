@@ -1,4 +1,4 @@
-package com.example.pis_entrega1;
+ package com.example.pis_entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -11,6 +11,8 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,16 +32,22 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_audio_note);
         findViewById(R.id.audioDirectButton).setOnClickListener(this);
         findViewById(R.id.AudioDeleteButton).setOnClickListener(this);
-        String titleTemp = this.findViewById(R.id.editTextAudioNote).toString();
-        if (titleTemp != null) {
-            this.rec.setName(titleTemp);
+        if (getIntent().getStringExtra("positionAudio") != null){
+            this.rec.setName(getIntent().getStringExtra("newTitleAudio"));
+            EditText titleView = this.findViewById(R.id.editTextAudioNote);
+            titleView.setText(this.rec.getName());
         } else {
-            rec.setName("");
-        }if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{
-                    Manifest.permission.RECORD_AUDIO
-            },100);
+            String titleTemp = this.findViewById(R.id.editTextAudioNote).toString();
+            if (titleTemp != null) {
+                this.rec.setName(titleTemp);
+            } else {
+                rec.setName("");
+            }if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                    != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this,new String[]{
+                        Manifest.permission.RECORD_AUDIO
+                },100);
+            }
         }
     }
 

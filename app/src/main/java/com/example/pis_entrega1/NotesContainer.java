@@ -34,8 +34,12 @@ public class NotesContainer implements Parcelable {
         }
     };
 
-    void addTextNote(Text t) {
-        this.container.add(t);
+    void addTextNote(Text t, int position) {
+        if (position == -1){
+            this.container.add(t);
+        }else{
+            this.container.add(position, t);
+        }
     }
 
     void addAudioNote(Recording recording) {

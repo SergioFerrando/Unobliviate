@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
     Text text = new Text();
     EditText title, content;
     int position;
+    boolean existente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,17 +24,30 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         findViewById(R.id.TextRememberButton).setOnClickListener(this);
         findViewById(R.id.TextShareButton).setOnClickListener(this);
         findViewById(R.id.TextDeleteButton).setOnClickListener(this);
-        title = this.findViewById(R.id.editTextTitleTextNote);
-        if (title != null){
-            text.setName(title.getText().toString());
+        if (getIntent().getStringExtra("newTitleText") != null){
+            title = this.findViewById(R.id.editTextTitleTextNote);
+            content = this.findViewById(R.id.editTextTextNote);
+            this.text.setName(getIntent().getStringExtra("newTitleText"));
+            this.text.setText(getIntent().getStringExtra("newTextText"));
+            System.out.println(getIntent().getStringExtra("newTextText"));
+            System.out.println(getIntent().getStringExtra("newTitleText"));
+            this.position = getIntent().getIntExtra("positionText", 0);
+            title.setText(this.text.getName());
+            content.setText(this.text.getText());
+            this.existente = true;
         }else{
-            text.setName("");
-        }
-        content = this.findViewById(R.id.editTextTextNote);
-        if (content.getText() != null){
-            text.setText(content.getText().toString());
-        }else{
-            text.setText("");
+            title = this.findViewById(R.id.editTextTitleTextNote);
+            if (title != null){
+                text.setName(title.getText().toString());
+            }else{
+                text.setName("");
+            }
+            content = this.findViewById(R.id.editTextTextNote);
+            if (content.getText() != null){
+                text.setText(content.getText().toString());
+            }else{
+                text.setText("");
+            }
         }
     }
 
@@ -78,15 +93,22 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
             }else{
                 this.text.setText("");
             }
-            long millis = System.currentTimeMillis();
-            Text text_temp = new Text(millis, this.text.getName(), this.text.getText());
-            //nc.addTextNote(this.text.getName(), this.text.getText());
-            Intent intent = new Intent();
-            intent.putExtra("title", this.text.getName());
-            intent.putExtra("text", this.text.getText());
-            intent.putExtra("date", System.currentTimeMillis());
-            setResult(RESULT_OK, intent);
-            finish();
+            if (existente){
+                Intent intent = new Intent();
+                intent.putExtra("titleTextExistente", this.text.getName());
+                intent.putExtra("text", this.text.getText());
+                intent.putExtra("date", System.currentTimeMillis());
+                intent.putExtra("positionText", this.position);
+                setResult(RESULT_OK, intent);
+                finish();
+            }else{
+                Intent intent = new Intent();
+                intent.putExtra("title", this.text.getName());
+                intent.putExtra("text", this.text.getText());
+                intent.putExtra("date", System.currentTimeMillis());
+                setResult(RESULT_OK, intent);
+                finish();
+            }
         }
         if (R.id.TextCheckList == v.getId()){
             CheckList();

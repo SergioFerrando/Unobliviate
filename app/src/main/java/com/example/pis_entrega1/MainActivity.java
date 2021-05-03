@@ -45,16 +45,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (resultCode == RESULT_OK) {
                 if (intent.getStringExtra("title") != null){
                     Text text_temp = new Text(intent.getLongExtra("date", 0), intent.getStringExtra("title"), intent.getStringExtra("text"));
-                    this.nc.addTextNote(text_temp);
+                    this.nc.addTextNote(text_temp, -1);
                     this.setTable();
                 } else if (intent.getStringExtra("title_audio_main") != null){
                     Recording recordingTemp = new Recording(intent.getLongExtra("date_audio_main", 0), intent.getStringExtra("title_audio_main"), intent.getStringExtra("Adress_main"));
                     this.nc.addAudioNote(recordingTemp);
                     this.setTable();
-                } else{
+                } else if (intent.getStringExtra("title_photo_main") != null){
                     Photo photoTemp = new Photo(intent.getLongExtra("date_photo_main", 0), intent.getStringExtra("title_photo_main"), intent.getByteArrayExtra("byteImage_main"));
                     this.nc.addPhotoNote(photoTemp);
                     this.setTable();
+                } else if (intent.getStringExtra("titleTextExistente") != null){
+                    Text text = new Text(intent.getLongExtra("date", 0), intent.getStringExtra("titleTextExistente"), intent.getStringExtra("text"));
+                    this.nc.addTextNote(text, intent.getIntExtra("positioinText", -1));
+                    mAdapter = new MyAdapter(this, nc);
+                    mAdapter.notifyDataSetChanged();
                 }
             }
         }
@@ -96,11 +101,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 if (nc.get(recyclerView.getChildAdapterPosition(v)) instanceof Text){
-                    passDataText((Text) nc.get(recyclerView.getChildAdapterPosition(v)));
+                    passDataText((Text) nc.get(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
                 }else if(nc.get(recyclerView.getChildAdapterPosition(v)) instanceof Recording){
-                    passDataAudio((Recording) nc.get(recyclerView.getChildAdapterPosition(v)));
+                    passDataAudio((Recording) nc.get(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
                 }else{
-                    passDataPhoto((Photo) nc.get(recyclerView.getChildAdapterPosition(v)));
+                    passDataPhoto((Photo) nc.get(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
                 }
                 Toast.makeText(getApplicationContext(),"Selección: "+ nc.get(recyclerView.getChildAdapterPosition(v)).getName(),Toast.LENGTH_SHORT).show();
             }
@@ -108,22 +113,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(mAdapter);
     }
 
-    void passDataText (Text text) {
+    void passDataText (Text text, int position) {
         Intent i = new Intent(this, TextNote.class);
         i.putExtra("newTitleText", text.getName());
-        i.putExtra("newTextText", text.getContent());
+        i.putExtra("newTextText", text.getText());
+        System.out.println(text.getText());
+        i.putExtra("positionText", position);
         startActivityForResult(i, 1);
     }
 
-    void passDataAudio (Recording recording){
+    void passDataAudio (Recording recording, int position){
         Intent n1 = new Intent(this, AudioRecorded.class);
+        n1.putExtra("newTitleAudio", recording.getName());
         n1.putExtra("Adress", recording.getAddress());
+        n1.putExtra("positionAudio", position);
         startActivityForResult(n1, 1);
     }
 
-    void passDataPhoto (Photo photo){
+    void passDataPhoto (Photo photo, int position){
         Intent n = new Intent(this, PhotoTaken.class);
         n.putExtra("photo", photo.miniatura);
+        n.putExtra("positionPhoto", position);
         startActivityForResult(n, 1);
     }
 
