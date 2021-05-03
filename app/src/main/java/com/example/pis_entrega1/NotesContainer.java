@@ -39,6 +39,7 @@ public class NotesContainer implements Parcelable {
             this.container.add(t);
         }else{
             this.container.add(position, t);
+            this.container.remove(position + 1);
         }
     }
 

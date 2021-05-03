@@ -12,7 +12,7 @@ import android.widget.TextView;
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
     Text text = new Text();
     EditText title, content;
-    int position;
+    int position = -1;
     boolean existente;
 
     @Override
@@ -93,22 +93,13 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
             }else{
                 this.text.setText("");
             }
-            if (existente){
-                Intent intent = new Intent();
-                intent.putExtra("titleTextExistente", this.text.getName());
-                intent.putExtra("text", this.text.getText());
-                intent.putExtra("date", System.currentTimeMillis());
-                intent.putExtra("positionText", this.position);
-                setResult(RESULT_OK, intent);
-                finish();
-            }else{
-                Intent intent = new Intent();
-                intent.putExtra("title", this.text.getName());
-                intent.putExtra("text", this.text.getText());
-                intent.putExtra("date", System.currentTimeMillis());
-                setResult(RESULT_OK, intent);
-                finish();
-            }
+            Intent intent = new Intent();
+            intent.putExtra("title", this.text.getName());
+            intent.putExtra("text", this.text.getText());
+            intent.putExtra("date", System.currentTimeMillis());
+            intent.putExtra("positionText", this.position);
+            setResult(RESULT_OK, intent);
+            finish();
         }
         if (R.id.TextCheckList == v.getId()){
             CheckList();
