@@ -64,6 +64,9 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
     }
 
     public void goToMainIntentNoSave(){
+        Intent intent = new Intent();
+        intent.putExtra("positionDelete", this.position);
+        setResult(RESULT_CANCELED, intent);
         finish();
     }
 

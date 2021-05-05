@@ -56,13 +56,8 @@ public class NotesContainer implements Parcelable {
         this.container.add(p);
     }
 
-    private boolean exists(EditText name) {
-        for (int i = 0; i < container.size(); i++){
-            if (this.container.get(i).getName().equals(name)){
-                return false;
-            }
-        }
-        return true;
+    void deleteNote(int position){
+        this.container.remove(position);
     }
 
     public ArrayList<Notes> getContainer() {

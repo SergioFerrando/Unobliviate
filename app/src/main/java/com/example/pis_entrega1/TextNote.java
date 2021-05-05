@@ -29,8 +29,6 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
             content = this.findViewById(R.id.editTextTextNote);
             this.text.setName(getIntent().getStringExtra("newTitleText"));
             this.text.setText(getIntent().getStringExtra("newTextText"));
-            System.out.println(getIntent().getStringExtra("newTextText"));
-            System.out.println(getIntent().getStringExtra("newTitleText"));
             this.position = getIntent().getIntExtra("positionText", 0);
             title.setText(this.text.getName());
             content.setText(this.text.getText());
@@ -68,8 +66,10 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void goToMainIntent(){
-        Intent n = new Intent(this, MainActivity.class);
-        startActivity(n);
+        Intent intent = new Intent();
+        intent.putExtra("positionDelete", this.position);
+        setResult(RESULT_CANCELED, intent);
+        finish();
     }
 
     public void CheckList(){

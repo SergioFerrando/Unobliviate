@@ -41,6 +41,9 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
     }
 
     public void goToMainIntent(){
+        Intent intent = new Intent();
+        intent.putExtra("positionDelete", -1);
+        setResult(RESULT_CANCELED, intent);
         finish();
     }
 

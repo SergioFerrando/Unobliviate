@@ -51,27 +51,20 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                String nameTemp = intent.getStringExtra("title_audio");
-                long dateTemp = intent.getLongExtra("date_audio", 0);
-                String adressTemp = intent.getStringExtra("Adress");
                 Intent i = new Intent();
-                i.putExtra("title_audio_main", nameTemp);
-                i.putExtra("date_audio_main", dateTemp);
-                i.putExtra("Adress_main", adressTemp);
+                i.putExtra("title_audio_main", intent.getStringExtra("title_audio"));
+                i.putExtra("date_audio_main", intent.getLongExtra("date_audio", 0));
+                i.putExtra("Adress_main", intent.getStringExtra("Adress"));
                 setResult(RESULT_OK, i);
                 finish();
             }
         }
     }
 
-    public void goToMainIntent(){
-        Intent n = new Intent(this, MainActivity.class);
-        startActivity(n);
-    }
-
     public void goToAudioRecorded(){
         Intent n1 = new Intent(this, AudioRecorded.class);
         n1.putExtra("Adress", rec.getAddress());
+        this.rec.setName(titleView.getText().toString());
         n1.putExtra("titleAudio", this.rec.getName());
         startActivityForResult(n1, 1);
         //finish();
@@ -80,12 +73,11 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if (R.id.TextDeleteButton == v.getId()){
-            if(isRecording){
-                stopRecording();
-                goToMainIntent();
-            }else {
-                goToMainIntent();
-            }
+            stopRecording();
+            Intent intent = new Intent();
+            intent.putExtra("positionDelete", -1);
+            setResult(RESULT_CANCELED, intent);
+            finish();
         }if(R.id.audioDirectButton == v.getId()){
             if(isRecording){
                 stopRecording();

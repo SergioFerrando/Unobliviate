@@ -61,6 +61,9 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if(R.id.AudioDeleteButton == v.getId()){
+            Intent intent = new Intent();
+            intent.putExtra("positionDelete", this.position);
+            setResult(RESULT_CANCELED, intent);
             finish();
         }
         if(R.id.AudioSaveButton == v.getId()){
