@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1062725916207",
+    "project_id": "unobliviate-bd8f8",
+    "storage_bucket": "unobliviate-bd8f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062725916207:android:1eb4f7a7ae0ec64451d8da",
+        "android_client_info": {
+          "package_name": "com.example.Unobliviate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062725916207-ucgtftaae7mq2id08vpiahiv7un1o6o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD3mujfDBwswukXB1UStvEVXJibEhYQQQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062725916207-ucgtftaae7mq2id08vpiahiv7un1o6o7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
