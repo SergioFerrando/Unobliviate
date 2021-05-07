@@ -46,6 +46,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         return new ViewHolder(view);
     }
 
+    public ArrayList<Notes> getLocalDataSet() {
+        return localDataSet;
+    }
+
+    public void setLocalDataSet(ArrayList<Notes> localDataSet) {
+        this.localDataSet = localDataSet;
+    }
+
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {

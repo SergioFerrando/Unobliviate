@@ -8,11 +8,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,19 +16,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.components.Lazy;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    private RecyclerView mRecyclerView;
+
+    private MyAdapter mAdapter;
+
+    public Context parentContext;
+    private MainActivityViewModel viewModel;
     boolean clicked;
     FloatingActionButton fabText, fabAudio, fabPhoto;
     ExtendedFloatingActionButton addNote;
@@ -41,20 +45,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
 
-    private RecyclerView mRecyclerView;
-
-    private MyAdapter mAdapter;
-
-    public NotesContainer nc;
-    public Context parentContext;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        nc = new NotesContainer();
         parentContext = this.getBaseContext();
+        viewModel = new MainActivityViewModel();
         setContentView(R.layout.activity_main);
-
         addNote = findViewById(R.id.add_fab);
 
         fabText = findViewById(R.id.TextButton);
@@ -122,8 +118,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
-        this.setTable();
+        //this.setTable();
+        //setLiveDataObservers();
     }
+    /*
+    public void setLiveDataObservers() {
+        //Subscribe the activity to the observable
+        viewModel = new ViewModelProvider(this, null).get(MainActivityViewModel.class);
+
+        final Observer<ArrayList<Notes>> observer = new Observer<ArrayList<Notes>>() {
+            @Override
+            public void onChanged(ArrayList<Notes> ac) {
+                MyAdapter newAdapter = new MyAdapter(parentContext, ac);
+                mRecyclerView.swapAdapter(newAdapter, false);
+                newAdapter.notifyDataSetChanged();
+            }
+        };
+
+        final Observer<String> observerToast = new Observer<String>() {
+            @Override
+            public void onChanged(String t) {
+                Toast.makeText(parentContext, t, Toast.LENGTH_SHORT).show();
+            }
+        };
+        viewModel.getListNotes().observe(this, observer);
+        viewModel.getToast().observe(this, observerToast);
+    }*/
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -131,21 +151,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (resultCode == RESULT_OK) {
                 if (intent.getStringExtra("title") != null) {
                     Text text_temp = new Text(intent.getLongExtra("date", 0), intent.getStringExtra("title"), intent.getStringExtra("text"));
-                    this.nc.addTextNote(text_temp, intent.getIntExtra("positionText", -1));
+                    text_temp.setPath(intent.getStringExtra("path"));
+                    this.viewModel.addTextNote(text_temp, intent.getIntExtra("positionText", -1));
                     this.setTable();
                 } else if (intent.getStringExtra("title_audio_main") != null) {
                     Recording recordingTemp = new Recording(intent.getLongExtra("date_audio_main", 0), intent.getStringExtra("title_audio_main"), intent.getStringExtra("Adress_main"));
-                    this.nc.addAudioNote(recordingTemp, intent.getIntExtra("positionAudio", -1));
+                    this.viewModel.addAudioNote(recordingTemp, intent.getIntExtra("positionAudio", -1));
                     this.setTable();
                 } else if (intent.getStringExtra("title_photo_main") != null) {
                     Photo photoTemp = new Photo(intent.getLongExtra("date_photo_main", 0), intent.getStringExtra("title_photo_main"), intent.getByteArrayExtra("byteImage_main"));
-                    this.nc.addPhotoNote(photoTemp);
+                    this.viewModel.addPhotoNote(photoTemp);
                     this.setTable();
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 if (intent.getIntExtra("positionDelete", -1) != -1){
-                    this.nc.deleteNote(intent.getIntExtra("positionDelete", -1));
-                    this.setTable();
+                    //this.viewModel.deleteNote(intent.getIntExtra("positionDelete", -1));
+                    //this.setTable();
                 }
             }
         }
@@ -182,18 +203,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void setTable () {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new MyAdapter(this, nc);
+        mAdapter = new MyAdapter(this, viewModel.getListNotes().getValue());
         mAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nc.get(recyclerView.getChildAdapterPosition(v)) instanceof Text){
-                    passDataText((Text) nc.get(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
-                }else if(nc.get(recyclerView.getChildAdapterPosition(v)) instanceof Recording){
-                    passDataAudio((Recording) nc.get(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
+                if (viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)) instanceof Text){
+                    passDataText((Text) viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
+                }else if(viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)) instanceof Recording){
+                    passDataAudio((Recording) viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
                 }else{
-                    passDataPhoto((Photo) nc.get(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
+                    passDataPhoto((Photo) viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
                 }
-                Toast.makeText(getApplicationContext(),"Selección: "+ nc.get(recyclerView.getChildAdapterPosition(v)).getName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Selección: "+ viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)).getName(),Toast.LENGTH_SHORT).show();
             }
         });
         recyclerView.setAdapter(mAdapter);
@@ -222,7 +243,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         n.putExtra("positionPhoto", position);
         startActivityForResult(n, 1);
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
@@ -245,15 +265,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int toPosition = target.getAdapterPosition();
             if (fromPosition < toPosition) {
                 for (int i = fromPosition; i < toPosition; i++) {
-                    Collections.swap(nc.getContainer(), i, i + 1);
+                    Collections.swap(viewModel.getListNotes().getValue(), i, i + 1);
                 }
             } else {
                 for (int i = fromPosition; i > toPosition; i--) {
-                    Collections.swap(nc.getContainer(), i, i - 1);
+                    Collections.swap(viewModel.getListNotes().getValue(), i, i - 1);
                 }
             }
-            nc.notifyItemMoved(fromPosition, toPosition);
-            mAdapter.setmNotesContainer(nc);
+            notifyItemMoved(fromPosition, toPosition);
+            mAdapter.setLocalDataSet(viewModel.getListNotes().getValue());
             return true;
         }
 
@@ -262,4 +282,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     });
+
+    public void notifyItemMoved(int fromPosition, int toPosition) {
+        Notes temp = viewModel.getNotesById(fromPosition);
+        viewModel.deleteNote(fromPosition);
+        viewModel.getListNotes().getValue().set(toPosition,temp);
+    }
 }
