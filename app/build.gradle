@@ -11,6 +11,7 @@ android {
         applicationId "com.example.Unobliviate"
         minSdkVersion 16
         targetSdkVersion 30
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
 
@@ -30,6 +31,7 @@ android {
 }
 
 dependencies {
+    implementation "androidx.multidex:multidex:2.0.1"
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-storage'
     implementation 'com.google.firebase:firebase-auth'

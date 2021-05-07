@@ -11,15 +11,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editPhotoTitleNote"
+        <TextView
+            android:id="@+id/PhotoTitleNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:inputType="textShortMessage"
-            android:text="@string/title_photo_note" />
+            android:text="TextView" />
 
         <ImageView
             android:id="@+id/Foto"

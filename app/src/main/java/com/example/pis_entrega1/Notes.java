@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import java.util.Date;
 
-public class Notes {
+public abstract class Notes {
     private Date date;
     private String name;
     private Date deathLine;
@@ -32,6 +32,8 @@ public class Notes {
         Date d = new Date(date * 1000);
         this.date = d;
     }
+
+    abstract void saveNote();
 
     public String getName() {
         return name;

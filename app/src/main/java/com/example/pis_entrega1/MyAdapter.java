@@ -27,15 +27,15 @@ import java.util.Locale;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements View.OnClickListener{
 
-    private NotesContainer mNotesContainer;
     private LayoutInflater mInflater;
     private View.OnClickListener listener;
+    private ArrayList<Notes> localDataSet = new ArrayList<Notes>();
 
     // data is passed into the constructor
 
-    MyAdapter(Context context, NotesContainer data) {
+    MyAdapter(Context context, ArrayList<Notes> data) {
         this.mInflater = LayoutInflater.from(context);
-        this.mNotesContainer = data;
+        this.localDataSet = data;
     }
     // inflates the row layout from xml when needed
 
@@ -49,7 +49,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Notes nota = mNotesContainer.getContainer().get(position);
+        Notes nota = localDataSet.get(position);
         holder.Title.setText(nota.getName());
         if (nota instanceof Text){
             holder.Type.setText("Text");
@@ -70,7 +70,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
     @Override
     public int getItemCount() {
-        return mNotesContainer.getContainer().size();
+        return localDataSet.size();
     }
 
     public void setOnClickListener(View.OnClickListener listener){
@@ -102,10 +102,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
     // convenience method for getting data at click position
     Notes getItem(int id) {
-        return mNotesContainer.getContainer().get(id);
+        return localDataSet.get(id);
     }
 
-    void setmNotesContainer(NotesContainer mNotesContainer){
-        this.mNotesContainer = mNotesContainer;
-    }
 }

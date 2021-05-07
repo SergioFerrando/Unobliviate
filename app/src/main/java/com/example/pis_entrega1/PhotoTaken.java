@@ -16,6 +16,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.firebase.BuildConfig;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,9 +31,10 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
 
     Photo p = new Photo();
     ImageView miniatura;
-    EditText title;
+    TextView title;
     byte[] image;
     int position = -1;
+    String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +45,14 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         findViewById(R.id.PhotoSaveButton).setOnClickListener(this);
         findViewById(R.id.PhotoShareButton).setOnClickListener(this);
         miniatura = findViewById(R.id.Foto);
-        title = findViewById(R.id.editPhotoTitleNote);
+        title = findViewById(R.id.PhotoTitleNote);
         goFromPhotoNote();
     }
 
     public void goFromPhotoNote(){
         image = ((byte[]) getIntent().getExtras().get("photo"));
+        path = getIntent().getStringExtra("path");
+        p.setAddress(path);
         p.setName(getIntent().getStringExtra("titlePhoto"));
         title.setText(p.getName());
         Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);

@@ -11,8 +11,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -20,14 +25,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private MyAdapter mAdapter;
 
-    public NotesContainer nc;
     public Context parentContext;
+    private MainActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        nc = new NotesContainer();
         parentContext = this.getBaseContext();
+        viewModel = new MainActivityViewModel();
         setContentView(R.layout.activity_main);
         findViewById(R.id.TextButton).setOnClickListener(this);
         findViewById(R.id.AudioButton).setOnClickListener(this);
@@ -36,8 +41,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
-        this.setTable();
+        //this.setTable();
+        //setLiveDataObservers();
     }
+    /*
+    public void setLiveDataObservers() {
+        //Subscribe the activity to the observable
+        viewModel = new ViewModelProvider(this, null).get(MainActivityViewModel.class);
+
+        final Observer<ArrayList<Notes>> observer = new Observer<ArrayList<Notes>>() {
+            @Override
+            public void onChanged(ArrayList<Notes> ac) {
+                MyAdapter newAdapter = new MyAdapter(parentContext, ac);
+                mRecyclerView.swapAdapter(newAdapter, false);
+                newAdapter.notifyDataSetChanged();
+            }
+        };
+
+        final Observer<String> observerToast = new Observer<String>() {
+            @Override
+            public void onChanged(String t) {
+                Toast.makeText(parentContext, t, Toast.LENGTH_SHORT).show();
+            }
+        };
+        viewModel.getListNotes().observe(this, observer);
+        viewModel.getToast().observe(this, observerToast);
+    }*/
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -45,20 +74,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (resultCode == RESULT_OK) {
                 if (intent.getStringExtra("title") != null) {
                     Text text_temp = new Text(intent.getLongExtra("date", 0), intent.getStringExtra("title"), intent.getStringExtra("text"));
-                    this.nc.addTextNote(text_temp, intent.getIntExtra("positionText", -1));
+                    text_temp.setPath(intent.getStringExtra("path"));
+                    this.viewModel.addTextNote(text_temp, intent.getIntExtra("positionText", -1));
                     this.setTable();
                 } else if (intent.getStringExtra("title_audio_main") != null) {
                     Recording recordingTemp = new Recording(intent.getLongExtra("date_audio_main", 0), intent.getStringExtra("title_audio_main"), intent.getStringExtra("Adress_main"));
-                    this.nc.addAudioNote(recordingTemp, intent.getIntExtra("positionAudio", -1));
+                    this.viewModel.addAudioNote(recordingTemp, intent.getIntExtra("positionAudio", -1));
                     this.setTable();
                 } else if (intent.getStringExtra("title_photo_main") != null) {
                     Photo photoTemp = new Photo(intent.getLongExtra("date_photo_main", 0), intent.getStringExtra("title_photo_main"), intent.getByteArrayExtra("byteImage_main"));
-                    this.nc.addPhotoNote(photoTemp);
+                    this.viewModel.addPhotoNote(photoTemp);
                     this.setTable();
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 if (intent.getIntExtra("positionDelete", -1) != -1){
-                    this.nc.deleteNote(intent.getIntExtra("positionDelete", -1));
+                    this.viewModel.deleteNote(intent.getIntExtra("positionDelete", -1));
                     this.setTable();
                 }
             }
@@ -96,18 +126,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void setTable () {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new MyAdapter(this, nc);
+        mAdapter = new MyAdapter(this, viewModel.getListNotes().getValue());
         mAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nc.get(recyclerView.getChildAdapterPosition(v)) instanceof Text){
-                    passDataText((Text) nc.get(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
-                }else if(nc.get(recyclerView.getChildAdapterPosition(v)) instanceof Recording){
-                    passDataAudio((Recording) nc.get(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
+                if (viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)) instanceof Text){
+                    passDataText((Text) viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
+                }else if(viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)) instanceof Recording){
+                    passDataAudio((Recording) viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
                 }else{
-                    passDataPhoto((Photo) nc.get(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
+                    passDataPhoto((Photo) viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
                 }
-                Toast.makeText(getApplicationContext(),"Selección: "+ nc.get(recyclerView.getChildAdapterPosition(v)).getName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Selección: "+ viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)).getName(),Toast.LENGTH_SHORT).show();
             }
         });
         recyclerView.setAdapter(mAdapter);
@@ -136,15 +166,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         n.putExtra("positionPhoto", position);
         startActivityForResult(n, 1);
     }
-
-    /*@Override
-    public void onItemClick(View view, int position) {
-        if (mAdapter.getItem(position) instanceof Text){
-            Intent i = new Intent(this, TextNote.class);
-            i.putExtra("title_open_text", mAdapter.getItem(position).getName());
-            i.putExtra("content_open_text", mAdapter.getItem(position).getContent());
-            i.putExtra("date_open_text", mAdapter.getItem(position).getContent());
-            startActivityForResult(i, 1);
-        }
-    }*/
 }

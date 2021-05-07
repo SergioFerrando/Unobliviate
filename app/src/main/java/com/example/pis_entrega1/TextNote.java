@@ -5,15 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.io.FileOutputStream;
 
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
     Text text = new Text();
     EditText title, content;
     int position = -1;
     boolean existente;
+    String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +97,30 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
             }else{
                 this.text.setText("");
             }
+            FileOutputStream fileOutputStream = null;
+
+            try {
+                fileOutputStream = openFileOutput(title.getText().toString(), MODE_PRIVATE);
+                fileOutputStream.write(text.getText().toString().getBytes());
+                this.path = getFilesDir() + "/" + title.getText().toString();
+                Log.d("TAG1", "Fichero Salvado en: " + getFilesDir() + "/" + title.getText().toString());
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                if(fileOutputStream != null){
+                    try{
+                        fileOutputStream.close();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
             Intent intent = new Intent();
             intent.putExtra("title", this.text.getName());
             intent.putExtra("text", this.text.getText());
             intent.putExtra("date", System.currentTimeMillis());
             intent.putExtra("positionText", this.position);
+            intent.putExtra("path", this.path);
             setResult(RESULT_OK, intent);
             finish();
         }

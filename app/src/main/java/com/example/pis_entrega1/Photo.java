@@ -2,6 +2,7 @@ package com.example.pis_entrega1;
 
 import android.graphics.Bitmap;
 import android.media.Image;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -12,9 +13,16 @@ public class Photo extends Notes {
     private String PhotoTitle;
     private String address;
     public byte[] miniatura;
+    private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
 
     public Photo(){
         super();
+    }
+
+    @Override
+    void saveNote() {
+        Log.d("saveAudioNote", "saveAudioNote-> saveDocument");
+        adapter.savePhotoDocumentWithFile(PhotoTitle, address);
     }
 
     public Photo(long date, String name, byte[] image) {
