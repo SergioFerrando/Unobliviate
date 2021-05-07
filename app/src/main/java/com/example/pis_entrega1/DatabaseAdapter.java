@@ -86,7 +86,7 @@ public class DatabaseAdapter {
 
 
     public void getCollection(){
-        Log.d(TAG,"updateNotes");
+        /*Log.d(TAG,"updateNotes");
         DatabaseAdapter.db.collection("Notes")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -106,7 +106,7 @@ public class DatabaseAdapter {
                         }
                     }
                 });
-
+*/
     }
 
 

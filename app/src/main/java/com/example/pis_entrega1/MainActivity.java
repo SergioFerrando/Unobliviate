@@ -6,16 +6,41 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.components.Lazy;
+
+import java.util.Collections;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    boolean clicked;
+    FloatingActionButton fabText, fabAudio, fabPhoto;
+    ExtendedFloatingActionButton addNote;
+    TextView addText, addAudio, addPhoto;
+
+    public DrawerLayout drawerLayout;
+    public ActionBarDrawerToggle actionBarDrawerToggle;
+
     private RecyclerView mRecyclerView;
 
     private MyAdapter mAdapter;
@@ -29,9 +54,70 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nc = new NotesContainer();
         parentContext = this.getBaseContext();
         setContentView(R.layout.activity_main);
-        findViewById(R.id.TextButton).setOnClickListener(this);
-        findViewById(R.id.AudioButton).setOnClickListener(this);
-        findViewById(R.id.CameraButton).setOnClickListener(this);
+
+        addNote = findViewById(R.id.add_fab);
+
+        fabText = findViewById(R.id.TextButton);
+        fabAudio = findViewById(R.id.AudioButton);
+        fabPhoto = findViewById(R.id.CameraButton);
+
+        addText = findViewById(R.id.addText);
+        addAudio = findViewById(R.id.addAudio);
+        addPhoto = findViewById(R.id.addPhoto);
+
+        fabText.setVisibility(View.GONE);
+        fabAudio.setVisibility(View.GONE);
+        fabPhoto.setVisibility(View.GONE);
+        addText.setVisibility(View.GONE);
+        addAudio.setVisibility(View.GONE);
+        addPhoto.setVisibility(View.GONE);
+
+        clicked = false;
+
+        addNote.shrink();
+
+        addNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!clicked) {
+
+                    fabText.show();
+                    fabAudio.show();
+                    fabPhoto.show();
+                    addText.setVisibility(View.VISIBLE);
+                    addAudio.setVisibility(View.VISIBLE);
+                    addPhoto.setVisibility(View.VISIBLE);
+
+                    addNote.extend();
+
+                    clicked = true;
+                } else {
+                    fabText.hide();
+                    fabAudio.hide();
+                    fabPhoto.hide();
+                    addText.setVisibility(View.GONE);
+                    addAudio.setVisibility(View.GONE);
+                    addPhoto.setVisibility(View.GONE);
+
+                    addNote.shrink();
+
+                    clicked = false;
+                }
+            }
+        });
+
+        fabText.setOnClickListener(this);
+        fabAudio.setOnClickListener(this);
+        fabPhoto.setOnClickListener(this);
+
+        drawerLayout = findViewById(R.id.my_drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -137,14 +223,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(n, 1);
     }
 
-    /*@Override
-    public void onItemClick(View view, int position) {
-        if (mAdapter.getItem(position) instanceof Text){
-            Intent i = new Intent(this, TextNote.class);
-            i.putExtra("title_open_text", mAdapter.getItem(position).getName());
-            i.putExtra("content_open_text", mAdapter.getItem(position).getContent());
-            i.putExtra("date_open_text", mAdapter.getItem(position).getContent());
-            startActivityForResult(i, 1);
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
-    }*/
+        return super.onOptionsItemSelected(item);
+    }
+
+    ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+        @Override
+        public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+            int dragFrlg = ItemTouchHelper.UP|ItemTouchHelper.DOWN;
+            return makeMovementFlags(dragFrlg, 0);
+        }
+
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            int fromPosition = viewHolder.getAdapterPosition();
+            // Obtenga el viewHolder del elemento arrastrado actualmente
+            int toPosition = target.getAdapterPosition();
+            if (fromPosition < toPosition) {
+                for (int i = fromPosition; i < toPosition; i++) {
+                    Collections.swap(nc.getContainer(), i, i + 1);
+                }
+            } else {
+                for (int i = fromPosition; i > toPosition; i--) {
+                    Collections.swap(nc.getContainer(), i, i - 1);
+                }
+            }
+            nc.notifyItemMoved(fromPosition, toPosition);
+            mAdapter.setmNotesContainer(nc);
+            return true;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    });
 }
