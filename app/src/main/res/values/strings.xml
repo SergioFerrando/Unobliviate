@@ -21,4 +21,6 @@
     <string name="text">Text</string>
     <string name="element_text">Item text</string>
     <string name="fab_content_desc">button</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
 </resources>

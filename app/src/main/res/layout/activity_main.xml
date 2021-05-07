@@ -1,120 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:ignore="HardcodedText">
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/navigation_menu" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        tools:context=".MainActivity">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/add_fab"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Actions"
+            app:icon="@drawable/ic_plus_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="16dp" />
 
-            <ImageButton
-                android:id="@+id/sortButton"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#00FFFFFF"
-                android:padding="20dp"
-                android:scaleType="center"
-                android:tint="#000000"
-                app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+            <!--Floating action button for add alarm-->
+            <!--Make sure that you are constraining this
+                button to the parent button-->
+            <!--Make sure to add backgroundTint attribute to match
+                 the entire application color-->
+            <!--because after changing the base application theme the color
+                 of the FAB is set Blue as default-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toTopOf="@+id/add_fab"
+            app:layout_constraintEnd_toEndOf="@+id/add_fab"
+            app:srcCompat="@drawable/ic_text"
+            tools:ignore="VectorDrawableCompat" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="358dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/notes"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+            <!--Action name text for the add alarm button-->
+            <!--Make sure that you are constraining this
+                Text to the add Alarm FAB button-->
+        <TextView
+            android:id="@+id/addText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Text Note"
+            app:layout_constraintBottom_toBottomOf="@+id/TextButton"
+            app:layout_constraintEnd_toStartOf="@+id/TextButton"
+            app:layout_constraintTop_toTopOf="@+id/TextButton"
+            android:layout_marginRight="8dp" />
 
-            <ImageButton
-                android:id="@+id/basuraButton"
-                android:layout_width="120dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#00FFFFFF"
-                android:contentDescription="@string/audio_button"
-                android:scaleType="centerInside"
-                android:tint="#000000"
-                app:srcCompat="@android:drawable/ic_menu_delete" />
+            <!--Floating action button for add person-->
+            <!--Make sure that you are constraining this button
+                to the add Alarm FAB button-->
+            <!--Make sure to add backgroundTint attribute to match
+                 the entire application color-->
+            <!--because after changing the base application theme
+                 the color of the FAB is set Blue as default-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/AudioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toTopOf="@+id/TextButton"
+            app:layout_constraintEnd_toEndOf="@+id/TextButton"
+            app:layout_constraintStart_toStartOf="@+id/TextButton"
+            app:srcCompat="@drawable/ic_audiotrack"
+            tools:ignore="VectorDrawableCompat" />
+            <!--Action name text for the add person button-->
+            <!--Make sure that you are constraining this Text
+                 to the add Person FAB button-->
+        <TextView
+            android:id="@+id/addAudio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Audio Note"
+            app:layout_constraintBottom_toBottomOf="@+id/AudioButton"
+            app:layout_constraintEnd_toStartOf="@+id/AudioButton"
+            app:layout_constraintTop_toTopOf="@+id/AudioButton"
+            android:layout_marginRight="8dp" />
 
-            <ImageButton
-                android:id="@+id/addButton"
-                android:layout_width="118dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#00FFFFFF"
-                android:padding="20dp"
-                android:scaleType="center"
-                android:tint="#000000"
-                tools:srcCompat="@android:drawable/ic_input_add" />
-        </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/CameraButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toTopOf="@+id/AudioButton"
+            app:layout_constraintEnd_toEndOf="@+id/AudioButton"
+            app:layout_constraintStart_toStartOf="@+id/AudioButton"
+            app:srcCompat="@drawable/ic_camera"
+            tools:ignore="VectorDrawableCompat" />
+        <!--Action name text for the add person button-->
+        <!--Make sure that you are constraining this Text
+             to the add Person FAB button-->
+        <TextView
+            android:id="@+id/addPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Photo Note"
+            app:layout_constraintBottom_toBottomOf="@+id/CameraButton"
+            app:layout_constraintEnd_toStartOf="@+id/CameraButton"
+            app:layout_constraintTop_toTopOf="@+id/CameraButton"
+            android:layout_marginRight="8dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="606dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="149dp" />
 
-            <ImageButton
-                android:id="@+id/TextButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/audio_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/tex" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
 
-            <ImageButton
-                android:id="@+id/AudioButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/audio_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/micro" />
 
-            <ImageButton
-                android:id="@+id/CameraButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/photo_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/camara" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>

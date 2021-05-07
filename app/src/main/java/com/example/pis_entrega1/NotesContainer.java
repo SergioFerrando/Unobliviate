@@ -78,4 +78,10 @@ public class NotesContainer implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
     }
+
+    public void notifyItemMoved(int fromPosition, int toPosition) {
+        Notes temp = this.getContainer().get(fromPosition);
+        this.getContainer().remove(temp);
+        this.getContainer().set(toPosition, temp);
+    }
 }
