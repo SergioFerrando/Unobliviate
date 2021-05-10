@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel;
 
 public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.vmInterface{
 
-
     private final MutableLiveData<ArrayList<Notes>> mNotes;
     private final MutableLiveData<String> mToast;
 
@@ -17,9 +16,10 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
 
     //Constructor
     public MainActivityViewModel(){
-
-        mNotes = new MutableLiveData<>();
-        mToast = new MutableLiveData<>();
+        ArrayList<Notes> n = new ArrayList<>();
+        mNotes = new MutableLiveData<ArrayList<Notes>>();
+        mNotes.setValue(n);
+        mToast = new MutableLiveData<String>();
         DatabaseAdapter da= new DatabaseAdapter(this);
         da.getCollection();
     }

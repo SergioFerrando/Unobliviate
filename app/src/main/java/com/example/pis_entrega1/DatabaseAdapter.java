@@ -1,7 +1,9 @@
 package com.example.pis_entrega1;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -28,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
-public class DatabaseAdapter {
+public class DatabaseAdapter extends Activity {
 
     public static final String TAG = "DatabaseAdapter";
 
@@ -58,22 +60,18 @@ public class DatabaseAdapter {
     public void initFirebase(){
 
         user = mAuth.getCurrentUser();
-
-        if (user == null) {
+        if(user == null) {
             mAuth.signInAnonymously()
-                    .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInAnonymously:success");
-                                listener.setToast("Authentication successful.");
-                                user = mAuth.getCurrentUser();
+                                FirebaseUser user = mAuth.getCurrentUser();
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInAnonymously:failure", task.getException());
-                                listener.setToast("Authentication failed.");
-
                             }
                         }
                     });
