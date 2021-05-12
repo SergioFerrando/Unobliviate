@@ -26,7 +26,7 @@ public class Photo extends Notes {
     }
 
     public Photo(long date, String name, byte[] image) {
-        super(date, name);
+        super(name);
         this.setMiniatura(image);
         this.PhotoTitle = name;
         this.setContent("Photo Note");

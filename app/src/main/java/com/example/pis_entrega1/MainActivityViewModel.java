@@ -2,6 +2,7 @@ package com.example.pis_entrega1;
 
 import java.util.ArrayList;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,6 +12,7 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
 
     private final MutableLiveData<ArrayList<Notes>> mNotes;
     private final MutableLiveData<String> mToast;
+    private DatabaseAdapter da;
 
     public static final String TAG = "ViewModel";
 
@@ -20,9 +22,11 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
         mNotes = new MutableLiveData<ArrayList<Notes>>();
         mNotes.setValue(n);
         mToast = new MutableLiveData<String>();
-        DatabaseAdapter da= new DatabaseAdapter(this);
+        da = DatabaseAdapter.databaseAdapter;
+        da.setInterface(this);
         da.getCollection();
     }
+
     void deleteNote(int position){
         this.mNotes.getValue().remove(position);
     }
@@ -71,7 +75,7 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
     //communicates user inputs and updates the result in the viewModel
     @Override
     public void setCollection(ArrayList<Notes> ac) {
-        mNotes.setValue(ac);
+        this.mNotes.setValue(ac);
     }
 
     public void setToast(String t) {

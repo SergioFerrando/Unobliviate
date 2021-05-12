@@ -18,9 +18,7 @@ public abstract class Notes {
         this.date = null;
     }
 
-    public Notes(Long date, String name) {
-        Date d = new Date(date * 1000);
-        this.date = d;
+    public Notes(String name) {
         this.name = name;
     }
 

@@ -20,7 +20,7 @@ public class Recording extends Notes {
     }
 
     public Recording(Long date, String name, String address) {
-        super(date, name);
+        super(name);
         AudioTitle = name;
         this.address = address;
         this.setContent("Audio Note");

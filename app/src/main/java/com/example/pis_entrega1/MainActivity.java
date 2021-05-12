@@ -2,13 +2,9 @@ package com.example.pis_entrega1;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +13,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -118,18 +113,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
-        //this.setTable();
-        //setLiveDataObservers();
+        setLiveDataObservers();
     }
-    /*
+
     public void setLiveDataObservers() {
         //Subscribe the activity to the observable
-        viewModel = new ViewModelProvider(this, null).get(MainActivityViewModel.class);
+        //viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         final Observer<ArrayList<Notes>> observer = new Observer<ArrayList<Notes>>() {
             @Override
             public void onChanged(ArrayList<Notes> ac) {
                 MyAdapter newAdapter = new MyAdapter(parentContext, ac);
+                newAdapter.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)) instanceof Text){
+                            passDataText((Text) viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)), mRecyclerView.getChildAdapterPosition(v));
+                        }else if(viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)) instanceof Recording){
+                            passDataAudio((Recording) viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)), mRecyclerView.getChildAdapterPosition(v));
+                        }else{
+                            passDataPhoto((Photo) viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)), mRecyclerView.getChildAdapterPosition(v));
+                        }
+                        Toast.makeText(getApplicationContext(),"Selección: "+ viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)).getName(),Toast.LENGTH_SHORT).show();
+                    }
+                });
                 mRecyclerView.swapAdapter(newAdapter, false);
                 newAdapter.notifyDataSetChanged();
             }
@@ -143,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
         viewModel.getListNotes().observe(this, observer);
         viewModel.getToast().observe(this, observerToast);
-    }*/
+    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -153,20 +160,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Text text_temp = new Text(intent.getLongExtra("date", 0), intent.getStringExtra("title"), intent.getStringExtra("text"));
                     text_temp.setPath(intent.getStringExtra("path"));
                     this.viewModel.addTextNote(text_temp, intent.getIntExtra("positionText", -1));
-                    this.setTable();
                 } else if (intent.getStringExtra("title_audio_main") != null) {
                     Recording recordingTemp = new Recording(intent.getLongExtra("date_audio_main", 0), intent.getStringExtra("title_audio_main"), intent.getStringExtra("Adress_main"));
                     this.viewModel.addAudioNote(recordingTemp, intent.getIntExtra("positionAudio", -1));
-                    this.setTable();
                 } else if (intent.getStringExtra("title_photo_main") != null) {
                     Photo photoTemp = new Photo(intent.getLongExtra("date_photo_main", 0), intent.getStringExtra("title_photo_main"), intent.getByteArrayExtra("byteImage_main"));
                     this.viewModel.addPhotoNote(photoTemp);
-                    this.setTable();
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 if (intent.getIntExtra("positionDelete", -1) != -1){
                     //this.viewModel.deleteNote(intent.getIntExtra("positionDelete", -1));
-                    //this.setTable();
                 }
             }
         }
@@ -199,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             goToCameraNote();
         }
     }
-
+    /*
     void setTable () {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -218,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         recyclerView.setAdapter(mAdapter);
-    }
+    }*/
 
     void passDataText (Text text, int position) {
         Intent i = new Intent(this, TextNote.class);

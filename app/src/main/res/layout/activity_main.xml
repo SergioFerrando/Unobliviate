@@ -33,13 +33,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginRight="16dp" />
 
-            <!--Floating action button for add alarm-->
-            <!--Make sure that you are constraining this
-                button to the parent button-->
-            <!--Make sure to add backgroundTint attribute to match
-                 the entire application color-->
-            <!--because after changing the base application theme the color
-                 of the FAB is set Blue as default-->
+        <!--Floating action button for add alarm-->
+        <!--Make sure that you are constraining this
+            button to the parent button-->
+        <!--Make sure to add backgroundTint attribute to match
+             the entire application color-->
+        <!--because after changing the base application theme the color
+             of the FAB is set Blue as default-->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/TextButton"
             android:layout_width="wrap_content"
@@ -51,9 +51,9 @@
             app:srcCompat="@drawable/ic_text"
             tools:ignore="VectorDrawableCompat" />
 
-            <!--Action name text for the add alarm button-->
-            <!--Make sure that you are constraining this
-                Text to the add Alarm FAB button-->
+        <!--Action name text for the add alarm button-->
+        <!--Make sure that you are constraining this
+            Text to the add Alarm FAB button-->
         <TextView
             android:id="@+id/addText"
             android:layout_width="wrap_content"
@@ -65,13 +65,13 @@
             app:layout_constraintTop_toTopOf="@+id/TextButton"
             android:layout_marginRight="8dp" />
 
-            <!--Floating action button for add person-->
-            <!--Make sure that you are constraining this button
-                to the add Alarm FAB button-->
-            <!--Make sure to add backgroundTint attribute to match
-                 the entire application color-->
-            <!--because after changing the base application theme
-                 the color of the FAB is set Blue as default-->
+        <!--Floating action button for add person-->
+        <!--Make sure that you are constraining this button
+            to the add Alarm FAB button-->
+        <!--Make sure to add backgroundTint attribute to match
+             the entire application color-->
+        <!--because after changing the base application theme
+             the color of the FAB is set Blue as default-->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/AudioButton"
             android:layout_width="wrap_content"
@@ -83,9 +83,9 @@
             app:layout_constraintStart_toStartOf="@+id/TextButton"
             app:srcCompat="@drawable/ic_audiotrack"
             tools:ignore="VectorDrawableCompat" />
-            <!--Action name text for the add person button-->
-            <!--Make sure that you are constraining this Text
-                 to the add Person FAB button-->
+        <!--Action name text for the add person button-->
+        <!--Make sure that you are constraining this Text
+             to the add Person FAB button-->
         <TextView
             android:id="@+id/addAudio"
             android:layout_width="wrap_content"
@@ -126,12 +126,10 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
+            android:layout_margin="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="149dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
-
-

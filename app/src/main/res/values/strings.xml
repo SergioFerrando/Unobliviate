@@ -23,4 +23,8 @@
     <string name="fab_content_desc">button</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string name="registrar">Registrar</string>
+    <string name="acceder">Acceder</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>

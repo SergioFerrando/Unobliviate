@@ -1,11 +1,13 @@
 package com.example.pis_entrega1;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,12 +27,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
 
-public class DatabaseAdapter extends Activity {
+public class DatabaseAdapter extends Activity{
 
     public static final String TAG = "DatabaseAdapter";
 
@@ -38,16 +40,26 @@ public class DatabaseAdapter extends Activity {
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser user;
+    private String email,password,opcion;
+    private AuthActivity n;
 
 
     public static vmInterface listener;
     public static DatabaseAdapter databaseAdapter;
 
-    public DatabaseAdapter(vmInterface listener){
-        this.listener = listener;
+
+    public DatabaseAdapter(String Email, String Password, String Opcion,AuthActivity t){
         databaseAdapter = this;
+        this.email = Email;
+        this.password = Password;
+        this.opcion = Opcion;
         FirebaseFirestore.setLoggingEnabled(true);
+        this.n = t;
         initFirebase();
+    }
+
+    public void setInterface(vmInterface listener){
+        this.listener = listener;
     }
 
 
@@ -56,9 +68,41 @@ public class DatabaseAdapter extends Activity {
         void setToast(String s);
     }
 
-
     public void initFirebase(){
-
+        if(opcion.equals("register")){
+            mAuth.createUserWithEmailAndPassword(this.email,this.password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInEmailPassword:success");
+                        user = mAuth.getCurrentUser();
+                        n.goToMainIntent();
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInEmailPassword:failure", task.getException());
+                        n.ErrorLogin(task.getException().toString());
+                    }
+                }
+            });
+        }else{
+            mAuth.signInWithEmailAndPassword(this.email,this.password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInEmailPassword:success");
+                        user = mAuth.getCurrentUser();
+                        n.goToMainIntent();
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInEmailPassword:failure", task.getException());
+                        n.ErrorLogin(task.getException().toString());
+                    }
+                }
+            });
+        }
+    /*
         user = mAuth.getCurrentUser();
         if(user == null) {
             mAuth.signInAnonymously()
@@ -68,7 +112,7 @@ public class DatabaseAdapter extends Activity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInAnonymously:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                user = mAuth.getCurrentUser();
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInAnonymously:failure", task.getException());
@@ -78,12 +122,28 @@ public class DatabaseAdapter extends Activity {
         }
         else{
             listener.setToast("Authentication with current user.");
-        }
+        }*/
     }
 
-
     public void getCollection(){
-        /*Log.d(TAG,"updateNotes");
+        Log.d(TAG,"updateNotes");
+        DatabaseAdapter.db.collection("Notes " + email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    ArrayList<Notes> retrieved_ac = new ArrayList<Notes>() ;
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.toString());
+                        retrieved_ac.add(new Text(document.getString("name"), document.getString("bodyText"), document.getString("url")));
+                    }
+                    listener.setCollection(retrieved_ac);
+                }
+            }
+        });
+        /*
         DatabaseAdapter.db.collection("Notes")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -100,14 +160,16 @@ public class DatabaseAdapter extends Activity {
 
                                 }
                             }
-                            listener.setCollection(retrieved_ac);
+                            if(retrieved_ac != null){
+                                setListaActual(retrieved_ac);
+                            }
+                            //listener.setCollection(retrieved_ac);
 
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
-                });
-*/
+                });*/
     }
 
 
@@ -120,7 +182,7 @@ public class DatabaseAdapter extends Activity {
 
         Log.d(TAG, "saveDocument");
         // Add a new document with a generated ID
-        db.collection("Notes")
+        db.collection("Notes " + email)
                 .add(note)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -184,7 +246,7 @@ public class DatabaseAdapter extends Activity {
 
         Log.d(TAG, "saveDocument");
         // Add a new document with a generated ID
-        db.collection("Notes")
+        db.collection("Notes "+ email)
                 .add(note)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -247,7 +309,7 @@ public class DatabaseAdapter extends Activity {
 
         Log.d(TAG, "saveDocument");
         // Add a new document with a generated ID
-        db.collection("Notes")
+        db.collection("Notes "+email)
                 .add(note)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -304,7 +366,7 @@ public class DatabaseAdapter extends Activity {
     }
 
     public HashMap<String, String> getDocuments () {
-        db.collection("Notes")
+        db.collection("Notes "+email)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

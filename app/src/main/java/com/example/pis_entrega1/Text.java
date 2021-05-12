@@ -27,14 +27,14 @@ public class Text extends Notes{
         adapter.saveTextDocumentWithFile(this.getName(), this.getText(), this.getPath());
     }
     public Text(String name, String bodyText, String Adress){
-        super(null, name);
+        super(name);
         this.setPath(Adress);
         this.setName(name);
         this.setText(bodyText);
         this.setType(R.drawable.tex);
     }
     public Text(long date, String name, String text) {
-        super(date, name);
+        super(name);
         this.setText(text);
         this.setContent("Text Note");
         this.setType(R.drawable.tex);
