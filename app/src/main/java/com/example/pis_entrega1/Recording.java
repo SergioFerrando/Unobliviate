@@ -16,7 +16,7 @@ public class Recording extends Notes {
         super();
     }
 
-    public Recording(String date, String name, String address, String Id) {
+    public Recording(String date, String name, String address) {
         super(name);
         AudioTitle = name;
         this.setDate(date);
@@ -38,10 +38,11 @@ public class Recording extends Notes {
         adapter.saveAudioDocumentWithFile(this.AudioTitle, this.address, this.getDate());
     }
 
-    public Recording(String name, String address, String id) {
+    public Recording(String name, String address, String id, String date) {
         super(name);
         AudioTitle = name;
         this.address = address;
+        this.setDate(date);
         this.id = id;
         this.setContent("Audio Note");
         this.setType(R.drawable.micro);

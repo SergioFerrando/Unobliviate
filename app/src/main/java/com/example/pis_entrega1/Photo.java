@@ -23,7 +23,7 @@ public class Photo extends Notes {
     @Override
     void saveNote() {
         Log.d("saveAudioNote", "saveAudioNote-> saveDocument");
-        adapter.savePhotoDocumentWithFile(PhotoTitle, address);
+        adapter.savePhotoDocumentWithFile(PhotoTitle, address, this.getDate());
     }
     public String getId() {
         return id;

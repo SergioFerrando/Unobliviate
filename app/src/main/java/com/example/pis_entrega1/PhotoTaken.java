@@ -24,8 +24,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class PhotoTaken extends AppCompatActivity implements View.OnClickListener{
 
@@ -82,7 +85,9 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         p.setName(title.getText().toString());
         Intent intent = new Intent();
         intent.putExtra("title_photo", this.p.getName());
-        intent.putExtra("date_audio", System.currentTimeMillis());
+        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+        String date = df.format(Calendar.getInstance().getTime());
+        intent.putExtra("date_photo", date);
         intent.putExtra("photo", image);
         setResult(RESULT_OK, intent);
         finish();

@@ -148,8 +148,7 @@ public class DatabaseAdapter extends Activity{
                             retrieved_ac.add(t);
                             Log.e("id", document.getId());
                         }if(tipo.equals("Audio")){
-                            Recording r = new Recording(document.getString("name"), document.getString("path"),document.getId());
-                            r.setDate(document.getString("date"));
+                            Recording r = new Recording(document.getString("name"), document.getString("path"),document.getId(),document.getString("date"));
                             retrieved_ac.add(r);
                             Log.e("id", document.getId());
                         }if(tipo.equals("Foto")){
@@ -320,13 +319,14 @@ public class DatabaseAdapter extends Activity{
         });
     }
 
-    public void savePhotoDocument (String id, String url) {
+    public void savePhotoDocument (String id, String url, String date) {
 
         // Create a new user with a first and last name
         Map<String, Object> note = new HashMap<>();
         note.put("tipo", "Foto");
         note.put("id", id);
         note.put("url", url);
+        note.put("date", date);
 
         Log.d(TAG, "saveDocument");
         // Add a new document with a generated ID
@@ -347,7 +347,7 @@ public class DatabaseAdapter extends Activity{
                 });
     }
 
-            public void savePhotoDocumentWithFile (String id, String path) {
+            public void savePhotoDocumentWithFile (String id, String path, String date) {
 
                 Uri file = Uri.fromFile(new File(path));
                 StorageReference storageRef = storage.getReference();
@@ -369,7 +369,7 @@ public class DatabaseAdapter extends Activity{
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
                             Uri downloadUri = task.getResult();
-                            savePhotoDocument(id, downloadUri.toString());
+                            savePhotoDocument(id, date, downloadUri.toString());
                         } else {
                             // Handle failures
                             // ...

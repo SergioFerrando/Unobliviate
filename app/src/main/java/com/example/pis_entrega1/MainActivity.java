@@ -186,11 +186,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.setTable();
 
             } else if(resultCode == 2){
-                Recording audio_temp = new Recording(intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"), intent.getStringExtra("id"));
-                Log.e("main", audio_temp.getId());
                 DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
                 String date = df.format(Calendar.getInstance().getTime());
-                audio_temp.setDate(date);
+                Recording audio_temp = new Recording(intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"), intent.getStringExtra("id"),date);
+                Log.e("main", audio_temp.getId());
                 this.viewModel.modifyAudioNote(audio_temp, intent.getIntExtra("positionAudio", -1));
                 this.setTable();
             }

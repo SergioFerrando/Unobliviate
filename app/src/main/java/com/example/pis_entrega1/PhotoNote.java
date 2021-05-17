@@ -97,7 +97,7 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         } if (requestCode == 1){
             if (resultCode == RESULT_OK) {
                 String nameTemp = data.getStringExtra("title_photo");
-                long dateTemp = data.getLongExtra("date_photo", 0);
+                String dateTemp = data.getStringExtra("date_photo");
                 byte[] byteImage = data.getByteArrayExtra("photo");
                 Intent i = new Intent();
                 i.putExtra("title_photo_main", nameTemp);
