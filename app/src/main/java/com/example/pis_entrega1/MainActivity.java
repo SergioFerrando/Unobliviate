@@ -3,6 +3,7 @@ package com.example.pis_entrega1;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -171,6 +172,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (intent.getIntExtra("positionDelete", -1) != -1){
                     //this.viewModel.deleteNote(intent.getIntExtra("positionDelete", -1));
                 }
+            } else if(resultCode == 5){
+                Text text_temp = new Text(intent.getStringExtra("title"), intent.getStringExtra("text"), intent.getStringExtra("path"), intent.getStringExtra("id"));
+                Log.e("main", text_temp.getId());
+                this.viewModel.modifyTextNote(text_temp, intent.getIntExtra("positionText", -1));
+                this.setTable();
+            } else if(resultCode == 2){
+                Recording audio_temp = new Recording(intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"), intent.getStringExtra("id"));
+                Log.e("main", audio_temp.getId());
+                this.viewModel.modifyAudioNote(audio_temp, intent.getIntExtra("positionAudio", -1));
+                this.setTable();
             }
         }
     }
@@ -201,8 +212,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (R.id.CameraButton == v.getId()) {
             goToCameraNote();
         }
+        if (R.id.LogOut == v.getId()){
+            LogOut();
+        }
     }
-    /*
+
+    private void LogOut() {
+        viewModel.LogOut();
+        Intent n = new Intent(this, AuthActivity.class);
+        startActivity(n);
+    }
+
     void setTable () {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -221,12 +241,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         recyclerView.setAdapter(mAdapter);
-    }*/
+    }
 
     void passDataText (Text text, int position) {
         Intent i = new Intent(this, TextNote.class);
         i.putExtra("newTitleText", text.getName());
         i.putExtra("newTextText", text.getText());
+        i.putExtra("url", text.getPath());
+        i.putExtra("id", text.getId());
         i.putExtra("positionText", position);
         startActivityForResult(i, 1);
     }
@@ -235,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent n1 = new Intent(this, AudioRecorded.class);
         n1.putExtra("newTitleAudio", recording.getName());
         n1.putExtra("Adress", recording.getAddress());
+        n1.putExtra("id", recording.getId());
         n1.putExtra("positionAudio", position);
         startActivityForResult(n1, 1);
     }

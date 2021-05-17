@@ -33,6 +33,8 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
             content = this.findViewById(R.id.editTextTextNote);
             this.text.setName(getIntent().getStringExtra("newTitleText"));
             this.text.setText(getIntent().getStringExtra("newTextText"));
+            this.path = getIntent().getStringExtra("url");
+            this.text.setId(getIntent().getStringExtra("id"));
             this.position = getIntent().getIntExtra("positionText", 0);
             title.setText(this.text.getName());
             content.setText(this.text.getText());
@@ -86,43 +88,55 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
         if (R.id.TextSaveButton == v.getId()){
             title = this.findViewById(R.id.editTextTitleTextNote);
-            if (title.getText() != null){
+            if (title.getText() != null) {
                 this.text.setName(title.getText().toString());
-            }else{
+            } else {
                 this.text.setName("");
             }
             content = this.findViewById(R.id.editTextTextNote);
-            if (content.getText() != null){
+            if (content.getText() != null) {
                 this.text.setText(content.getText().toString());
-            }else{
+            } else {
                 this.text.setText("");
             }
-            FileOutputStream fileOutputStream = null;
+            if(path == null) {
+                FileOutputStream fileOutputStream = null;
 
-            try {
-                fileOutputStream = openFileOutput(title.getText().toString(), MODE_PRIVATE);
-                fileOutputStream.write(text.getText().toString().getBytes());
-                this.path = getFilesDir() + "/" + title.getText().toString();
-                Log.d("TAG1", "Fichero Salvado en: " + getFilesDir() + "/" + title.getText().toString());
-            }catch (Exception e){
-                e.printStackTrace();
-            }finally {
-                if(fileOutputStream != null){
-                    try{
-                        fileOutputStream.close();
-                    }catch (Exception e){
-                        e.printStackTrace();
+                try {
+                    fileOutputStream = openFileOutput(title.getText().toString(), MODE_PRIVATE);
+                    fileOutputStream.write(text.getText().toString().getBytes());
+                    this.path = getFilesDir() + "/" + title.getText().toString();
+                    Log.d("TAG1", "Fichero Salvado en: " + getFilesDir() + "/" + title.getText().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (fileOutputStream != null) {
+                        try {
+                            fileOutputStream.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
+                Intent intent = new Intent();
+                intent.putExtra("title", this.text.getName());
+                intent.putExtra("text", this.text.getText());
+                intent.putExtra("date", System.currentTimeMillis());
+                intent.putExtra("positionText", this.position);
+                intent.putExtra("path", this.path);
+                setResult(RESULT_OK, intent);
+                finish();
+            }else{
+                Intent intent = new Intent();
+                intent.putExtra("title", this.text.getName());
+                intent.putExtra("text", this.text.getText());
+                intent.putExtra("date", System.currentTimeMillis());
+                intent.putExtra("id", this.text.getId());
+                intent.putExtra("positionText", this.position);
+                intent.putExtra("path", this.path);
+                setResult(5, intent);
+                finish();
             }
-            Intent intent = new Intent();
-            intent.putExtra("title", this.text.getName());
-            intent.putExtra("text", this.text.getText());
-            intent.putExtra("date", System.currentTimeMillis());
-            intent.putExtra("positionText", this.position);
-            intent.putExtra("path", this.path);
-            setResult(RESULT_OK, intent);
-            finish();
         }
         if (R.id.TextCheckList == v.getId()){
             CheckList();

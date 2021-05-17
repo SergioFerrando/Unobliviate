@@ -30,11 +30,14 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
         name = this.findViewById(R.id.editTextAudioRecordedNote);
         goFromAudioRecord();
     }
+
     public void goFromAudioRecord(){
         if (getIntent().getStringExtra("newTitleAudio") != null){
             this.rec.setName(getIntent().getStringExtra("newTitleAudio"));
             name.setText(this.rec.getName());
-            this.position = getIntent().getIntExtra("positionAudio", -1);
+            this.rec.setAddress(getIntent().getStringExtra("Adress"));
+            this.rec.setId(getIntent().getStringExtra("id"));
+            this.position = getIntent().getIntExtra("positionAudio", 0);
         } else{
             rec.setAddress(getIntent().getExtras().get("Adress").toString());
             rec.setName(getIntent().getStringExtra("titleAudio"));
@@ -67,13 +70,25 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
             finish();
         }
         if(R.id.AudioSaveButton == v.getId()){
-            this.rec.setName(name.getText().toString());
-            Intent intent = new Intent();
-            intent.putExtra("title_audio", this.rec.getName());
-            intent.putExtra("date_audio", System.currentTimeMillis());
-            intent.putExtra("Adress", this.rec.getAddress());
-            setResult(RESULT_OK, intent);
-            finish();
+            if(rec.getId() == null) {
+                this.rec.setName(name.getText().toString());
+                Intent intent = new Intent();
+                intent.putExtra("title_audio", this.rec.getName());
+                intent.putExtra("date_audio", System.currentTimeMillis());
+                intent.putExtra("Adress", this.rec.getAddress());
+                setResult(RESULT_OK, intent);
+                finish();
+            } else{
+                Log.e("error", "e");
+                this.rec.setName(name.getText().toString());
+                Intent intent = new Intent();
+                intent.putExtra("title_audio", this.rec.getName());
+                intent.putExtra("Adress", this.rec.getAddress());
+                intent.putExtra("id", this.rec.getId());
+                intent.putExtra("positionAudio", this.position);
+                setResult(2, intent);
+                finish();
+            }
         }
         if(R.id.AudioShareButton == v.getId()){
             goToShareIntent();

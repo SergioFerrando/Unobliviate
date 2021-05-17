@@ -11,4 +11,8 @@
         android:id="@+id/sortNotes"
         android:title="Sort Notes" />
 
+    <item
+        android:id="@+id/LogOut"
+        android:title="Log Out" />
+
 </menu>

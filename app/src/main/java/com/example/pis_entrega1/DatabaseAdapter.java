@@ -62,12 +62,16 @@ public class DatabaseAdapter extends Activity{
         this.listener = listener;
     }
 
+    public void logOut() {
+        mAuth.signOut();
+    }
+
 
     public interface vmInterface{
+
         void setCollection(ArrayList<Notes> ac);
         void setToast(String s);
     }
-
     public void initFirebase(){
         if(opcion.equals("register")){
             mAuth.createUserWithEmailAndPassword(this.email,this.password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -136,49 +140,32 @@ public class DatabaseAdapter extends Activity{
                 else {
                     ArrayList<Notes> retrieved_ac = new ArrayList<Notes>() ;
                     for (QueryDocumentSnapshot document : task.getResult()) {
+                        String tipo = document.getString("tipo");
+                        if (tipo.equals("Texto")){
+                            retrieved_ac.add(new Text(document.getString("name"), document.getString("bodytext"), document.getString("url"), document.getId()));
+                            Log.e("id", document.getId());
+                        }if(tipo.equals("Audio")){
+                            retrieved_ac.add(new Recording(document.getString("name"), document.getString("path"),document.getId()));
+                            Log.e("id", document.getId());
+                        }if(tipo.equals("Foto")){
+                            retrieved_ac.add(new Photo(document.getString("id"), document.getString("url"),document.getId()));
+                        }
                         Log.d(TAG, document.toString());
-                        retrieved_ac.add(new Text(document.getString("name"), document.getString("bodyText"), document.getString("url")));
                     }
                     listener.setCollection(retrieved_ac);
                 }
             }
         });
-        /*
-        DatabaseAdapter.db.collection("Notes")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-
-                            ArrayList<Notes> retrieved_ac = new ArrayList<Notes>() ;
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                if(document.getData().size() == 3){
-                                    retrieved_ac.add(new Text(document.getString("name"), document.getString("bodyText"), document.getString("url")));
-                                }else{
-
-                                }
-                            }
-                            if(retrieved_ac != null){
-                                setListaActual(retrieved_ac);
-                            }
-                            //listener.setCollection(retrieved_ac);
-
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });*/
     }
 
 
-    public void saveAudioDocument (String id, String url) {
+    public void saveAudioDocument (String name, String Path, String url) {
 
         // Create a new user with a first and last name
         Map<String, Object> note = new HashMap<>();
-        note.put("id", id);
-        note.put("url", url);
+        note.put("tipo", "Audio");
+        note.put("name", name);
+        note.put("path", Path);
 
         Log.d(TAG, "saveDocument");
         // Add a new document with a generated ID
@@ -188,6 +175,7 @@ public class DatabaseAdapter extends Activity{
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        getCollection();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -220,7 +208,7 @@ public class DatabaseAdapter extends Activity{
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    saveAudioDocument(name, downloadUri.toString());
+                    saveAudioDocument(name, path, downloadUri.toString());
                 } else {
                     // Handle failures
                     // ...
@@ -240,6 +228,7 @@ public class DatabaseAdapter extends Activity{
 
         // Create a new user with a first and last name
         Map<String, Object> note = new HashMap<>();
+        note.put("tipo", "Texto");
         note.put("name", name);
         note.put("bodytext", text);
         note.put("url", url);
@@ -252,6 +241,7 @@ public class DatabaseAdapter extends Activity{
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        getCollection();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -260,6 +250,25 @@ public class DatabaseAdapter extends Activity{
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+    }
+
+    public void actualizarAudioNote(String name, String address, String id) {
+        Map<String, Object> note = new HashMap<>();
+        note.put("tipo", "Audio");
+        note.put("name", name);
+        note.put("path", address);
+
+        db.collection("Notes "+ email).document(id).update(note);
+    }
+
+    public void actualizarTextNote(String name, String text, String path, String id){
+        Map<String, Object> note = new HashMap<>();
+        note.put("tipo", "Texto");
+        note.put("name", name);
+        note.put("bodytext", text);
+        note.put("url", path);
+
+        db.collection("Notes "+ email).document(id).update(note);
     }
 
     public void saveTextDocumentWithFile (String name, String text, String path) {
@@ -304,6 +313,7 @@ public class DatabaseAdapter extends Activity{
 
         // Create a new user with a first and last name
         Map<String, Object> note = new HashMap<>();
+        note.put("tipo", "Foto");
         note.put("id", id);
         note.put("url", url);
 
@@ -315,6 +325,7 @@ public class DatabaseAdapter extends Activity{
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        getCollection();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

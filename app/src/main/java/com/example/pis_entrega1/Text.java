@@ -15,10 +15,15 @@ public class Text extends Notes{
 
     private String text;
     private String path;
+    private String id;
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
 
     public Text(){
         super();
+    }
+
+    void modify(){
+        adapter.actualizarTextNote(this.getName(), this.getText(), this.path, this.id);
     }
 
     @Override
@@ -26,8 +31,18 @@ public class Text extends Notes{
         Log.d("saveTextNote", "saveTextNote-> saveDocument");
         adapter.saveTextDocumentWithFile(this.getName(), this.getText(), this.getPath());
     }
-    public Text(String name, String bodyText, String Adress){
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Text(String name, String bodyText, String Adress, String id){
         super(name);
+        this.setId(id);
         this.setPath(Adress);
         this.setName(name);
         this.setText(bodyText);

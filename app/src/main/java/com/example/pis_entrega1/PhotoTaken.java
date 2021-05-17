@@ -55,13 +55,14 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         p.setAddress(path);
         p.setName(getIntent().getStringExtra("titlePhoto"));
         title.setText(p.getName());
-        Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-        miniatura.post(new Runnable() {
+        //Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
+        miniatura.setImageURI(Uri.parse(path));
+        /*miniatura.post(new Runnable() {
             @Override
             public void run() {
                 miniatura.setImageBitmap(Bitmap.createScaledBitmap(bmp, miniatura.getWidth(), miniatura.getHeight(), false));
             }
-        });
+        });*/
         if (getIntent().getStringExtra("newTitlePhoto") != null){
             p.setName(getIntent().getStringExtra("newTitlePhoto"));
             title.setText(p.getName());

@@ -8,9 +8,24 @@ public class Recording extends Notes {
     private String AudioTitle;
     private String address;
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
+    private String id;
 
     public Recording(){
         super();
+    }
+    public Recording(Long Date, String name, String address) {
+        super(name);
+        AudioTitle = name;
+        this.address = address;
+        this.setContent("Audio Note");
+        this.setType(R.drawable.micro);
+    }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
@@ -19,10 +34,11 @@ public class Recording extends Notes {
         adapter.saveAudioDocumentWithFile(AudioTitle, address);
     }
 
-    public Recording(Long date, String name, String address) {
+    public Recording(String name, String address, String id) {
         super(name);
         AudioTitle = name;
         this.address = address;
+        this.id = id;
         this.setContent("Audio Note");
         this.setType(R.drawable.micro);
     }
@@ -40,4 +56,8 @@ public class Recording extends Notes {
     }
 
     public void setAddress(String Adress){this.address = Adress;}
+
+    public void modify() {
+        adapter.actualizarAudioNote(this.getName(), this.address, this.id);
+    }
 }

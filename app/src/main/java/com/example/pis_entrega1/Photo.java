@@ -14,6 +14,7 @@ public class Photo extends Notes {
     private String address;
     public byte[] miniatura;
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
+    private String id;
 
     public Photo(){
         super();
@@ -24,7 +25,21 @@ public class Photo extends Notes {
         Log.d("saveAudioNote", "saveAudioNote-> saveDocument");
         adapter.savePhotoDocumentWithFile(PhotoTitle, address);
     }
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+    public Photo(String name, String Adress, String id) {
+        super(name);
+        this.PhotoTitle = name;
+        this.address = Adress;
+        this.id = id;
+        this.setContent("Photo Note");
+        this.setType(R.drawable.camara);
+    }
     public Photo(long date, String name, byte[] image) {
         super(name);
         this.setMiniatura(image);

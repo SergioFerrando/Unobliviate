@@ -16,6 +16,10 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
 
     public static final String TAG = "ViewModel";
 
+    public void LogOut(){
+        da.logOut();
+    }
+
     //Constructor
     public MainActivityViewModel(){
         ArrayList<Notes> n = new ArrayList<>();
@@ -38,6 +42,17 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
 
     public Notes getNotesById(int idx){
         return mNotes.getValue().get(idx);
+    }
+
+    public void modifyAudioNote(Recording a, int position) {
+        this.mNotes.getValue().get(position).setName(a.getName());
+        a.modify();
+    }
+
+    void modifyTextNote(Text t, int position){
+        ((Text) this.mNotes.getValue().get(position)).setText(t.getText());
+        this.mNotes.getValue().get(position).setName(t.getName());
+        t.modify();
     }
 
     void addTextNote(Text t, int position) {
@@ -71,8 +86,8 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
     public LiveData<String> getToast(){
         return mToast;
     }
-
     //communicates user inputs and updates the result in the viewModel
+
     @Override
     public void setCollection(ArrayList<Notes> ac) {
         this.mNotes.setValue(ac);
