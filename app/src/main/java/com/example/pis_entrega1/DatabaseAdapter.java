@@ -29,6 +29,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -142,13 +143,19 @@ public class DatabaseAdapter extends Activity{
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String tipo = document.getString("tipo");
                         if (tipo.equals("Texto")){
-                            retrieved_ac.add(new Text(document.getString("name"), document.getString("bodytext"), document.getString("url"), document.getId()));
+                            Text t = new Text(document.getString("name"), document.getString("bodytext"), document.getString("url"), document.getId());
+                            t.setDate(document.getString("date"));
+                            retrieved_ac.add(t);
                             Log.e("id", document.getId());
                         }if(tipo.equals("Audio")){
-                            retrieved_ac.add(new Recording(document.getString("name"), document.getString("path"),document.getId()));
+                            Recording r = new Recording(document.getString("name"), document.getString("path"),document.getId());
+                            r.setDate(document.getString("date"));
+                            retrieved_ac.add(r);
                             Log.e("id", document.getId());
                         }if(tipo.equals("Foto")){
-                            retrieved_ac.add(new Photo(document.getString("id"), document.getString("url"),document.getId()));
+                            Photo f = new Photo(document.getString("id"), document.getString("url"),document.getId());
+                            f.setDate(document.getString("date"));
+                            retrieved_ac.add(f);
                         }
                         Log.d(TAG, document.toString());
                     }
@@ -159,13 +166,14 @@ public class DatabaseAdapter extends Activity{
     }
 
 
-    public void saveAudioDocument (String name, String Path, String url) {
+    public void saveAudioDocument (String name, String Path, String date, String url) {
 
         // Create a new user with a first and last name
         Map<String, Object> note = new HashMap<>();
         note.put("tipo", "Audio");
         note.put("name", name);
         note.put("path", Path);
+        note.put("date", date);
 
         Log.d(TAG, "saveDocument");
         // Add a new document with a generated ID
@@ -186,7 +194,7 @@ public class DatabaseAdapter extends Activity{
                 });
     }
 
-    public void saveAudioDocumentWithFile (String name, String path) {
+    public void saveAudioDocumentWithFile (String name, String path, String date) {
 
         Uri file = Uri.fromFile(new File(path));
         StorageReference storageRef = storage.getReference();
@@ -208,7 +216,7 @@ public class DatabaseAdapter extends Activity{
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    saveAudioDocument(name, path, downloadUri.toString());
+                    saveAudioDocument(name, path, date, downloadUri.toString());
                 } else {
                     // Handle failures
                     // ...
@@ -224,13 +232,14 @@ public class DatabaseAdapter extends Activity{
         });
     }
 
-    public void saveTextDocument (String name, String text, String url) {
+    public void saveTextDocument (String name, String text, String data, String url) {
 
         // Create a new user with a first and last name
         Map<String, Object> note = new HashMap<>();
         note.put("tipo", "Texto");
         note.put("name", name);
         note.put("bodytext", text);
+        note.put("date", data);
         note.put("url", url);
 
         Log.d(TAG, "saveDocument");
@@ -252,26 +261,28 @@ public class DatabaseAdapter extends Activity{
                 });
     }
 
-    public void actualizarAudioNote(String name, String address, String id) {
+    public void actualizarAudioNote(String name, String address, String id, String date) {
         Map<String, Object> note = new HashMap<>();
         note.put("tipo", "Audio");
         note.put("name", name);
         note.put("path", address);
+        note.put("date", date);
 
         db.collection("Notes "+ email).document(id).update(note);
     }
 
-    public void actualizarTextNote(String name, String text, String path, String id){
+    public void actualizarTextNote(String name, String text, String data, String path, String id){
         Map<String, Object> note = new HashMap<>();
         note.put("tipo", "Texto");
         note.put("name", name);
         note.put("bodytext", text);
+        note.put("date", data);
         note.put("url", path);
 
         db.collection("Notes "+ email).document(id).update(note);
     }
 
-    public void saveTextDocumentWithFile (String name, String text, String path) {
+    public void saveTextDocumentWithFile (String name, String text, String path, String data) {
 
         Uri file = Uri.fromFile(new File(path));
         StorageReference storageRef = storage.getReference();
@@ -293,7 +304,7 @@ public class DatabaseAdapter extends Activity{
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    saveTextDocument(name, text, downloadUri.toString());
+                    saveTextDocument(name, text, data, downloadUri.toString());
                 } else {
                     // Handle failures
                     // ...

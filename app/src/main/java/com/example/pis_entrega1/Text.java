@@ -7,6 +7,7 @@ import android.widget.EditText;
 
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -23,13 +24,13 @@ public class Text extends Notes{
     }
 
     void modify(){
-        adapter.actualizarTextNote(this.getName(), this.getText(), this.path, this.id);
+        adapter.actualizarTextNote(this.getName(), this.getText(),this.getDate(), this.path, this.id);
     }
 
     @Override
     void saveNote() {
         Log.d("saveTextNote", "saveTextNote-> saveDocument");
-        adapter.saveTextDocumentWithFile(this.getName(), this.getText(), this.getPath());
+        adapter.saveTextDocumentWithFile(this.getName(), this.getText(), this.getPath(), this.getDate());
     }
 
     public String getId() {
@@ -48,9 +49,10 @@ public class Text extends Notes{
         this.setText(bodyText);
         this.setType(R.drawable.tex);
     }
-    public Text(long date, String name, String text) {
+    public Text(String date, String name, String text) {
         super(name);
         this.setText(text);
+        this.setDate(date);
         this.setContent("Text Note");
         this.setType(R.drawable.tex);
     }

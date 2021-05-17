@@ -7,7 +7,7 @@ import android.widget.EditText;
 import java.util.Date;
 
 public abstract class Notes {
-    private Date date;
+    private String date;
     private String name;
     private Date deathLine;
     private String content;
@@ -15,20 +15,19 @@ public abstract class Notes {
 
     public Notes(){
         this.name = "";
-        this.date = null;
     }
 
     public Notes(String name) {
         this.name = name;
+        this.date = date;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(long date) {
-        Date d = new Date(date * 1000);
-        this.date = d;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     abstract void saveNote();

@@ -12,6 +12,10 @@ import android.view.View;
 import android.widget.EditText;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class AudioRecorded extends AppCompatActivity implements View.OnClickListener{
     public Recording rec = new Recording();
@@ -74,7 +78,9 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
                 this.rec.setName(name.getText().toString());
                 Intent intent = new Intent();
                 intent.putExtra("title_audio", this.rec.getName());
-                intent.putExtra("date_audio", System.currentTimeMillis());
+                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+                String date = df.format(Calendar.getInstance().getTime());
+                intent.putExtra("date_audio", date);
                 intent.putExtra("Adress", this.rec.getAddress());
                 setResult(RESULT_OK, intent);
                 finish();

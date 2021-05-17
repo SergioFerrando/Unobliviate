@@ -32,6 +32,7 @@ public class Photo extends Notes {
     public void setId(String id) {
         this.id = id;
     }
+
     public Photo(String name, String Adress, String id) {
         super(name);
         this.PhotoTitle = name;
@@ -40,9 +41,11 @@ public class Photo extends Notes {
         this.setContent("Photo Note");
         this.setType(R.drawable.camara);
     }
-    public Photo(long date, String name, byte[] image) {
+
+    public Photo(String date, String name, byte[] image) {
         super(name);
         this.setMiniatura(image);
+        this.setDate(date);
         this.PhotoTitle = name;
         this.setContent("Photo Note");
         this.setType(R.drawable.camara);

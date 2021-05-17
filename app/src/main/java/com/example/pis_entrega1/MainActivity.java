@@ -22,8 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -158,14 +162,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 if (intent.getStringExtra("title") != null) {
-                    Text text_temp = new Text(intent.getLongExtra("date", 0), intent.getStringExtra("title"), intent.getStringExtra("text"));
+                    Text text_temp = new Text(intent.getStringExtra("date"), intent.getStringExtra("title"), intent.getStringExtra("text"));
                     text_temp.setPath(intent.getStringExtra("path"));
                     this.viewModel.addTextNote(text_temp, intent.getIntExtra("positionText", -1));
                 } else if (intent.getStringExtra("title_audio_main") != null) {
-                    Recording recordingTemp = new Recording(intent.getLongExtra("date_audio_main", 0), intent.getStringExtra("title_audio_main"), intent.getStringExtra("Adress_main"));
+                    Recording recordingTemp = new Recording(intent.getStringExtra("date_audio_main"), intent.getStringExtra("title_audio_main"), intent.getStringExtra("Adress_main"));
                     this.viewModel.addAudioNote(recordingTemp, intent.getIntExtra("positionAudio", -1));
                 } else if (intent.getStringExtra("title_photo_main") != null) {
-                    Photo photoTemp = new Photo(intent.getLongExtra("date_photo_main", 0), intent.getStringExtra("title_photo_main"), intent.getByteArrayExtra("byteImage_main"));
+                    Photo photoTemp = new Photo(intent.getStringExtra("date_photo_main"), intent.getStringExtra("title_photo_main"), intent.getByteArrayExtra("byteImage_main"));
                     this.viewModel.addPhotoNote(photoTemp);
                 }
             } else if (resultCode == RESULT_CANCELED) {
@@ -174,12 +178,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             } else if(resultCode == 5){
                 Text text_temp = new Text(intent.getStringExtra("title"), intent.getStringExtra("text"), intent.getStringExtra("path"), intent.getStringExtra("id"));
+                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+                String date = df.format(Calendar.getInstance().getTime());
+                text_temp.setDate(date);
                 Log.e("main", text_temp.getId());
                 this.viewModel.modifyTextNote(text_temp, intent.getIntExtra("positionText", -1));
                 this.setTable();
+
             } else if(resultCode == 2){
                 Recording audio_temp = new Recording(intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"), intent.getStringExtra("id"));
                 Log.e("main", audio_temp.getId());
+                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+                String date = df.format(Calendar.getInstance().getTime());
+                audio_temp.setDate(date);
                 this.viewModel.modifyAudioNote(audio_temp, intent.getIntExtra("positionAudio", -1));
                 this.setTable();
             }

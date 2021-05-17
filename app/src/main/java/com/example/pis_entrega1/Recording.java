@@ -3,6 +3,8 @@ package com.example.pis_entrega1;
 import android.util.Log;
 import android.widget.EditText;
 
+import java.util.Date;
+
 public class Recording extends Notes {
 
     private String AudioTitle;
@@ -13,9 +15,11 @@ public class Recording extends Notes {
     public Recording(){
         super();
     }
-    public Recording(Long Date, String name, String address) {
+
+    public Recording(String date, String name, String address, String Id) {
         super(name);
         AudioTitle = name;
+        this.setDate(date);
         this.address = address;
         this.setContent("Audio Note");
         this.setType(R.drawable.micro);
@@ -31,7 +35,7 @@ public class Recording extends Notes {
     @Override
     void saveNote() {
         Log.d("saveAudioNote", "saveAudioNote-> saveDocument");
-        adapter.saveAudioDocumentWithFile(AudioTitle, address);
+        adapter.saveAudioDocumentWithFile(this.AudioTitle, this.address, this.getDate());
     }
 
     public Recording(String name, String address, String id) {
@@ -58,6 +62,6 @@ public class Recording extends Notes {
     public void setAddress(String Adress){this.address = Adress;}
 
     public void modify() {
-        adapter.actualizarAudioNote(this.getName(), this.address, this.id);
+        adapter.actualizarAudioNote(this.getName(), this.address, this.id, this.getDate());
     }
 }

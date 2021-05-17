@@ -22,6 +22,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 
@@ -70,9 +71,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             holder.item.setImageResource(R.drawable.camara);
         }
         if (nota.getDate() != null){
-            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
-            String date = df.format(Calendar.getInstance().getTime());
-            holder.Date.setText(date);
+            holder.Date.setText(nota.getDate());
         }
     }
 

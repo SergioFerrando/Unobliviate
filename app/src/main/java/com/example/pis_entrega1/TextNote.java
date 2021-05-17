@@ -11,6 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
     Text text = new Text();
@@ -121,7 +126,9 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
                 Intent intent = new Intent();
                 intent.putExtra("title", this.text.getName());
                 intent.putExtra("text", this.text.getText());
-                intent.putExtra("date", System.currentTimeMillis());
+                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+                String date = df.format(Calendar.getInstance().getTime());
+                intent.putExtra("date", date);
                 intent.putExtra("positionText", this.position);
                 intent.putExtra("path", this.path);
                 setResult(RESULT_OK, intent);
@@ -130,7 +137,9 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
                 Intent intent = new Intent();
                 intent.putExtra("title", this.text.getName());
                 intent.putExtra("text", this.text.getText());
-                intent.putExtra("date", System.currentTimeMillis());
+                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+                String date = df.format(Calendar.getInstance().getTime());
+                intent.putExtra("date", date);
                 intent.putExtra("id", this.text.getId());
                 intent.putExtra("positionText", this.position);
                 intent.putExtra("path", this.path);

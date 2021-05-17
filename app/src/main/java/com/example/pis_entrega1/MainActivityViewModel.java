@@ -46,12 +46,14 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
 
     public void modifyAudioNote(Recording a, int position) {
         this.mNotes.getValue().get(position).setName(a.getName());
+        this.mNotes.getValue().get(position).setDate(a.getDate());
         a.modify();
     }
 
     void modifyTextNote(Text t, int position){
         ((Text) this.mNotes.getValue().get(position)).setText(t.getText());
         this.mNotes.getValue().get(position).setName(t.getName());
+        this.mNotes.getValue().get(position).setDate(t.getDate());
         t.modify();
     }
 
