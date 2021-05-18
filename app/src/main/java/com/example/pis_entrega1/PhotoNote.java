@@ -25,11 +25,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
+
 public class PhotoNote extends AppCompatActivity implements View.OnClickListener {
-    private Photo photo = new Photo();
-    ImageView prueba;
+
+    private Photo photo;
     EditText title;
     String path;
+    static final int REQUEST_IMAGE_CAPTURE = 2;
 
     public PhotoNote(){}
 
@@ -39,7 +42,7 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_photo_note);
         findViewById(R.id.photoDirectButton).setOnClickListener(this);
         findViewById(R.id.photoDeleteButton).setOnClickListener(this);
-        prueba = findViewById(R.id.Foto);
+        photo = new Photo();
         title = findViewById(R.id.editTextTitlePhotoNote);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         != PackageManager.PERMISSION_GRANTED){
@@ -66,46 +69,66 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         if(v.getId() == R.id.photoDeleteButton){
             goToMainIntent();
         }if(v.getId() == R.id.photoDirectButton){
-            sacarFoto();
+            dispatchTakePictureIntent();
         }
     }
 
-    public void sacarFoto(){
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, 50);
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File photoFile = null;
+        try{
+            photoFile = createImageFile();
+        }catch(IOException ex){
+
+        }if(photoFile != null){
+            Uri photoURI = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        this.path = image.getAbsolutePath();
+        return image;
+    }
+
+
+        @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 50){
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,90, stream);
-            byte[] image = stream.toByteArray();
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                photo.setName(title.getText().toString());
+                photo.setAddress(this.path);
 
-            photo.setName(title.getText().toString());
-            photo.setAddress(this.path);
-
-            Intent n = new Intent(this, PhotoTaken.class);
-            n.putExtra("photo", image);
-            n.putExtra("path", photo.getAddress());
-            n.putExtra("titlePhoto", photo.getName());
-            startActivityForResult(n, 1);
-        } if (requestCode == 1){
-            if (resultCode == RESULT_OK) {
-                String nameTemp = data.getStringExtra("title_photo");
-                String dateTemp = data.getStringExtra("date_photo");
-                byte[] byteImage = data.getByteArrayExtra("photo");
-                Intent i = new Intent();
-                i.putExtra("title_photo_main", nameTemp);
-                i.putExtra("date_photo_main", dateTemp);
-                i.putExtra("byteImage_main", byteImage);
-                setResult(RESULT_OK, i);
-                finish();
+                Intent n = new Intent(this, PhotoTaken.class);
+                n.putExtra("path", photo.getAddress());
+                n.putExtra("titlePhoto", photo.getName());
+                startActivityForResult(n, 1);
             }
-        }
+            if (requestCode == 1) {
+                if (resultCode == RESULT_OK) {
+                    String nameTemp = data.getStringExtra("title_photo");
+                    String dateTemp = data.getStringExtra("date_photo");
+                    String path = data.getStringExtra("path");
+                    Intent i = new Intent();
+                    i.putExtra("title_photo_main", nameTemp);
+                    i.putExtra("date_photo_main", dateTemp);
+                    i.putExtra("Adress_main", path);
+                    setResult(RESULT_OK, i);
+                    finish();
+                }
+            }
     }
 }

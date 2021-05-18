@@ -11,15 +11,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <EditText
             android:id="@+id/PhotoTitleNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:inputType="textPersonName"
+            android:text="@string/photo" />
 
         <ImageView
             android:id="@+id/Foto"
-            android:layout_width="match_parent"
+            android:layout_width="400dp"
             android:layout_height="565dp"
             app:srcCompat="@android:drawable/ic_menu_crop" />
 

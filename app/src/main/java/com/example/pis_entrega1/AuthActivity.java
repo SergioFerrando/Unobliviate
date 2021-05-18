@@ -22,6 +22,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         email = findViewById(R.id.EmailAdress);
         Password = findViewById(R.id.Password);
         error = findViewById(R.id.ErrorMessaje);
+        findViewById(R.id.ForgotPassword).setOnClickListener(this);
         findViewById(R.id.buttonAcceder).setOnClickListener(this);
         findViewById(R.id.buttonRegistrer).setOnClickListener(this);
     }
@@ -46,12 +47,32 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if(requestCode == 1){
+            if(resultCode == RESULT_OK){
+                DatabaseAdapter da = new DatabaseAdapter();
+                da.ForgotPassword(intent.getStringExtra("email"));
+                error.setText("Forgoten email sent successfully");
+            }if(resultCode == RESULT_CANCELED){
+
+            }
+        }
+    }
+
+    public void goToForgetPassword(){
+        Intent n1 = new Intent(this, ForgotPassword.class);
+        startActivityForResult(n1,1);
+    }
+
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.buttonRegistrer){
             register();
         }if(v.getId() == R.id.buttonAcceder){
             logIn();
+        }if(v.getId() == R.id.ForgotPassword){
+            goToForgetPassword();
         }
     }
 }

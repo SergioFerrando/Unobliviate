@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PIS_Entrega1</string>
+    <string name="app_name">Unobliviate</string>
     <string name="title_photo_note">Title Photo Note</string>
     <string name="save_button">Save Button</string>
     <string name="remember_button">Remember Button</string>
@@ -28,4 +28,17 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="action_sign_in_short">Password</string>
+    <string name="photo">Photo</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="title_activity_forgot_password">ForgotPassword</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="we_will_send_you_an_email_to_recover_your_password">We will send you an email to recover your password</string>
 </resources>

@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Recording recordingTemp = new Recording(intent.getStringExtra("date_audio_main"), intent.getStringExtra("title_audio_main"), intent.getStringExtra("Adress_main"));
                     this.viewModel.addAudioNote(recordingTemp, intent.getIntExtra("positionAudio", -1));
                 } else if (intent.getStringExtra("title_photo_main") != null) {
-                    Photo photoTemp = new Photo(intent.getStringExtra("date_photo_main"), intent.getStringExtra("title_photo_main"), intent.getByteArrayExtra("byteImage_main"));
+                    Photo photoTemp = new Photo(intent.getStringExtra("date_photo_main"), intent.getStringExtra("title_photo_main"), intent.getStringExtra("Adress_main"));
                     this.viewModel.addPhotoNote(photoTemp);
                 }
             } else if (resultCode == RESULT_CANCELED) {
@@ -189,8 +189,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
                 String date = df.format(Calendar.getInstance().getTime());
                 Recording audio_temp = new Recording(intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"), intent.getStringExtra("id"),date);
-                Log.e("main", audio_temp.getId());
                 this.viewModel.modifyAudioNote(audio_temp, intent.getIntExtra("positionAudio", -1));
+                this.setTable();
+            } else if(resultCode == 3){
+                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+                String date = df.format(Calendar.getInstance().getTime());
+                Photo photo_temp = new Photo(intent.getStringExtra("title_photo"), intent.getStringExtra("path"), intent.getStringExtra("id"),date);
+                this.viewModel.modifyPhotoNote(photo_temp, intent.getIntExtra("positionPhoto", -1));
                 this.setTable();
             }
         }
@@ -275,7 +280,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void passDataPhoto (Photo photo, int position){
         Intent n = new Intent(this, PhotoTaken.class);
         n.putExtra("newTitlePhoto", photo.getName());
-        n.putExtra("photo", photo.miniatura);
+        n.putExtra("path", photo.getAddress());
+        n.putExtra("id", photo.getId());
         n.putExtra("positionPhoto", position);
         startActivityForResult(n, 1);
     }

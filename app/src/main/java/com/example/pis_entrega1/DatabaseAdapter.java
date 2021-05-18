@@ -47,7 +47,7 @@ public class DatabaseAdapter extends Activity{
 
     public static vmInterface listener;
     public static DatabaseAdapter databaseAdapter;
-
+    public DatabaseAdapter(){}
 
     public DatabaseAdapter(String Email, String Password, String Opcion,AuthActivity t){
         databaseAdapter = this;
@@ -152,8 +152,7 @@ public class DatabaseAdapter extends Activity{
                             retrieved_ac.add(r);
                             Log.e("id", document.getId());
                         }if(tipo.equals("Foto")){
-                            Photo f = new Photo(document.getString("id"), document.getString("url"),document.getId());
-                            f.setDate(document.getString("date"));
+                            Photo f = new Photo(document.getString("name"), document.getString("path"),document.getId(), document.getString("date"));
                             retrieved_ac.add(f);
                         }
                         Log.d(TAG, document.toString());
@@ -259,6 +258,15 @@ public class DatabaseAdapter extends Activity{
                     }
                 });
     }
+    public void actualizarPhotoNote(String name, String address, String id, String date) {
+        Map<String, Object> note = new HashMap<>();
+        note.put("tipo", "Foto");
+        note.put("name", name);
+        note.put("path", address);
+        note.put("date", date);
+
+        db.collection("Notes "+ email).document(id).update(note);
+    }
 
     public void actualizarAudioNote(String name, String address, String id, String date) {
         Map<String, Object> note = new HashMap<>();
@@ -319,14 +327,14 @@ public class DatabaseAdapter extends Activity{
         });
     }
 
-    public void savePhotoDocument (String id, String url, String date) {
+    public void savePhotoDocument (String name, String date, String url) {
 
         // Create a new user with a first and last name
         Map<String, Object> note = new HashMap<>();
         note.put("tipo", "Foto");
-        note.put("id", id);
-        note.put("url", url);
+        note.put("name", name);
         note.put("date", date);
+        note.put("path", url);
 
         Log.d(TAG, "saveDocument");
         // Add a new document with a generated ID
@@ -369,7 +377,7 @@ public class DatabaseAdapter extends Activity{
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
                             Uri downloadUri = task.getResult();
-                            savePhotoDocument(id, date, downloadUri.toString());
+                            savePhotoDocument(id, date, path);
                         } else {
                             // Handle failures
                             // ...
@@ -404,6 +412,18 @@ public class DatabaseAdapter extends Activity{
                 });
 
         return new HashMap<>();
+    }
+
+    public void ForgotPassword(String email){
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                        }
+                    }
+                });
     }
 
 }

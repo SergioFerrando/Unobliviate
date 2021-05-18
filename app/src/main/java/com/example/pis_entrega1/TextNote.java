@@ -84,9 +84,8 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void CheckList(){
-        text.setText(this.findViewById(R.id.editTextTextNote).toString());
-        String temp = text.getText() + "\n -";
-        text.setText(temp);
+        String temp = (content.getText() + "\n -");
+        content.setText(temp);
     }
 
     @Override

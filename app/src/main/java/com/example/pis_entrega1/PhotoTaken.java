@@ -35,7 +35,6 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
     Photo p = new Photo();
     ImageView miniatura;
     TextView title;
-    byte[] image;
     int position = -1;
     String path;
 
@@ -53,24 +52,33 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
     }
 
     public void goFromPhotoNote(){
-        image = ((byte[]) getIntent().getExtras().get("photo"));
-        path = getIntent().getStringExtra("path");
-        p.setAddress(path);
-        p.setName(getIntent().getStringExtra("titlePhoto"));
-        title.setText(p.getName());
-        //Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
-        miniatura.setImageURI(Uri.parse(path));
-        /*miniatura.post(new Runnable() {
-            @Override
-            public void run() {
-                miniatura.setImageBitmap(Bitmap.createScaledBitmap(bmp, miniatura.getWidth(), miniatura.getHeight(), false));
-            }
-        });*/
         if (getIntent().getStringExtra("newTitlePhoto") != null){
             p.setName(getIntent().getStringExtra("newTitlePhoto"));
             title.setText(p.getName());
-            this.position = getIntent().getIntExtra("positionPhoto", -1);
+            p.setAddress(getIntent().getStringExtra("path"));
+            setPic();
+            p.setId(getIntent().getStringExtra("id"));
+            this.position = getIntent().getIntExtra("positionPhoto", 0);
+        }else {
+            path = getIntent().getStringExtra("path");
+            p.setAddress(path);
+            p.setName(getIntent().getStringExtra("titlePhoto"));
+            title.setText(p.getName());
+            setPic();
         }
+    }
+
+    private void setPic() {
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(p.getAddress(), bmOptions);
+        miniatura.setImageBitmap(bitmap);
     }
 
     public void goToMainIntentNoSave(){
@@ -81,16 +89,28 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
     }
 
     public void goToMainIntentSave(){
-        p.setMiniatura(image);
-        p.setName(title.getText().toString());
-        Intent intent = new Intent();
-        intent.putExtra("title_photo", this.p.getName());
-        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
-        String date = df.format(Calendar.getInstance().getTime());
-        intent.putExtra("date_photo", date);
-        intent.putExtra("photo", image);
-        setResult(RESULT_OK, intent);
-        finish();
+        if(p.getId() == null) {
+            p.setName(title.getText().toString());
+            Intent intent = new Intent();
+            intent.putExtra("title_photo", this.p.getName());
+            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+            String date = df.format(Calendar.getInstance().getTime());
+            intent.putExtra("date_photo", date);
+            intent.putExtra("path", p.getAddress());
+            setResult(RESULT_OK, intent);
+            finish();
+        }else{
+            p.setName(title.getText().toString());
+            Intent intent = new Intent();
+            intent.putExtra("title_photo", this.p.getName());
+            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+            String date = df.format(Calendar.getInstance().getTime());
+            intent.putExtra("id", p.getId());
+            intent.putExtra("path", p.getAddress());
+            intent.putExtra("positionPhoto", this.position);
+            setResult(3, intent);
+            finish();
+        }
     }
 
     @Override

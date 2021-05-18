@@ -85,7 +85,6 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
                 setResult(RESULT_OK, intent);
                 finish();
             } else{
-                Log.e("error", "e");
                 this.rec.setName(name.getText().toString());
                 Intent intent = new Intent();
                 intent.putExtra("title_audio", this.rec.getName());

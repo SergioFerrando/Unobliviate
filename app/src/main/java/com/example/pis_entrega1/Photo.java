@@ -9,10 +9,8 @@ import android.widget.ImageView;
 import java.util.Date;
 
 public class Photo extends Notes {
-    private Image photo;
     private String PhotoTitle;
     private String address;
-    public byte[] miniatura;
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
     private String id;
 
@@ -25,6 +23,11 @@ public class Photo extends Notes {
         Log.d("saveAudioNote", "saveAudioNote-> saveDocument");
         adapter.savePhotoDocumentWithFile(PhotoTitle, address, this.getDate());
     }
+
+    public void modify() {
+        adapter.actualizarPhotoNote(this.getName(), this.address, this.id, this.getDate());
+    }
+
     public String getId() {
         return id;
     }
@@ -33,30 +36,23 @@ public class Photo extends Notes {
         this.id = id;
     }
 
-    public Photo(String name, String Adress, String id) {
+    public Photo(String name, String Adress, String id, String date) {
         super(name);
         this.PhotoTitle = name;
         this.address = Adress;
         this.id = id;
+        this.setDate(date);
         this.setContent("Photo Note");
         this.setType(R.drawable.camara);
     }
 
-    public Photo(String date, String name, byte[] image) {
+    public Photo(String date, String name, String path) {
         super(name);
-        this.setMiniatura(image);
         this.setDate(date);
+        this.setAddress(path);
         this.PhotoTitle = name;
         this.setContent("Photo Note");
         this.setType(R.drawable.camara);
-    }
-
-    public byte[] getMiniatura() {
-        return miniatura;
-    }
-
-    public void setMiniatura(byte[] miniatura) {
-        this.miniatura = miniatura;
     }
 
     public String getPhotoTitle() {
@@ -73,11 +69,4 @@ public class Photo extends Notes {
 
     public void setAddress(String Adress){this.address = Adress;}
 
-    public Image getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Image photo) {
-        this.photo = photo;
-    }
 }

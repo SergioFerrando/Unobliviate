@@ -50,6 +50,13 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
         a.modify();
     }
 
+    public void modifyPhotoNote(Photo p, int position) {
+        this.mNotes.getValue().get(position).setName(p.getName());
+        this.mNotes.getValue().get(position).setDate(p.getDate());
+        p.modify();
+    }
+
+
     void modifyTextNote(Text t, int position){
         ((Text) this.mNotes.getValue().get(position)).setText(t.getText());
         this.mNotes.getValue().get(position).setName(t.getName());
