@@ -70,10 +70,7 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void goToRememberIntent(){
-        DatePickerFragment calendar = new DatePickerFragment();
-        calendar.show(getSupportFragmentManager(),"DatePicker");
-        TimePickerFragment hour = new TimePickerFragment();
-        hour.show(getSupportFragmentManager(),"HOUR");
+
     }
 
     public void goToMainIntent(){

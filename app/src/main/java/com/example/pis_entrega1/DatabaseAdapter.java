@@ -107,27 +107,6 @@ public class DatabaseAdapter extends Activity{
                 }
             });
         }
-    /*
-        user = mAuth.getCurrentUser();
-        if(user == null) {
-            mAuth.signInAnonymously()
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "signInAnonymously:success");
-                                user = mAuth.getCurrentUser();
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "signInAnonymously:failure", task.getException());
-                            }
-                        }
-                    });
-        }
-        else{
-            listener.setToast("Authentication with current user.");
-        }*/
     }
 
     public void getCollection(){
@@ -172,6 +151,7 @@ public class DatabaseAdapter extends Activity{
         note.put("name", name);
         note.put("path", Path);
         note.put("date", date);
+        note.put("url", url);
 
         Log.d(TAG, "saveDocument");
         // Add a new document with a generated ID

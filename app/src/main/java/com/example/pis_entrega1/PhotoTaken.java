@@ -122,6 +122,7 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         }if(v.getId() == R.id.PhotoShareButton){
             goToShareIntent();
         }if(v.getId() == R.id.PhotoRememberButton){
+
         }
     }
 
