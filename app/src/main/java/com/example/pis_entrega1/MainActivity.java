@@ -1,9 +1,11 @@
 package com.example.pis_entrega1;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -15,12 +17,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -44,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
+
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +126,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         setLiveDataObservers();
+        navigationView = (NavigationView) findViewById(R.id.navigationView);
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @SuppressLint("NonConstantResourceId")
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch ( item.getItemId() ){
+                        case R.id.nav_delete:
+                            System.out.println("pene");
+                        case R.id.nav_sort:
+
+                        case R.id.nav_logout:
+                    }
+                    return true;
+                }
+            });
+        }
     }
 
     public void setLiveDataObservers() {
@@ -227,9 +251,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (R.id.CameraButton == v.getId()) {
             goToCameraNote();
         }
-        if (R.id.LogOut == v.getId()){
+        /*if (R.id.LogOut == v.getId()){
             LogOut();
-        }
+        }*/
     }
 
     private void LogOut() {
@@ -330,4 +354,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewModel.deleteNote(fromPosition);
         viewModel.getListNotes().getValue().set(toPosition,temp);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.navigation_menu, menu);
+        return true;
+    }
+
 }
