@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView mRecyclerView;
 
     private MyAdapter mAdapter;
+    private MyAdapterDelete myAdapterDelete;
 
     public Context parentContext;
     private MainActivityViewModel viewModel;
@@ -127,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setLayoutManager(layoutManager);
         setLiveDataObservers();
         navigationView = (NavigationView) findViewById(R.id.navigationView);
+        navigationView.bringToFront();
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @SuppressLint("NonConstantResourceId")
@@ -134,15 +138,60 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch ( item.getItemId() ){
                         case R.id.nav_delete:
-                            System.out.println("pene");
+                            toDeleteMode();
+                            setContentView(R.layout.activity_delete_note);
                         case R.id.nav_sort:
 
                         case R.id.nav_logout:
+                            break;
+                        default:
                     }
                     return true;
                 }
             });
         }
+    }
+
+    private void toDeleteMode() {
+        setContentView(R.layout.activity_delete_note);
+        Button button_cancel = findViewById(R.id.cancelButton);
+        Button button_delete = findViewById(R.id.deleteButton);
+        myAdapterDelete = new MyAdapterDelete(this, mAdapter.getLocalDataSet());
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+        recyclerView.setAdapter(myAdapterDelete);
+
+        myAdapterDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myAdapterDelete.addPosition(recyclerView.getChildAdapterPosition(view));
+            }
+        });
+
+        button_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (myAdapterDelete.getSelected().size() > 0){
+                    for (int i = 0; i < myAdapterDelete.getSelected().size(); i++){
+                        viewModel.deleteNote(myAdapterDelete.getSelected().get(i));
+                    }
+                }
+                fromDeleteMode();
+            }
+        });
+
+        button_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fromDeleteMode();
+            }
+        });
+
+    }
+
+    private void fromDeleteMode() {
+        setContentView(R.layout.activity_main);
+
     }
 
     public void setLiveDataObservers() {
@@ -198,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 if (intent.getIntExtra("positionDelete", -1) != -1){
-                    //this.viewModel.deleteNote(intent.getIntExtra("positionDelete", -1));
+                    this.viewModel.deleteNote(intent.getIntExtra("positionDelete", -1));
                 }
             } else if(resultCode == 5){
                 Text text_temp = new Text(intent.getStringExtra("title"), intent.getStringExtra("text"), intent.getStringExtra("path"), intent.getStringExtra("id"));

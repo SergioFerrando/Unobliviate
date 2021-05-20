@@ -47,4 +47,5 @@
     <string name="title_app">UNOBLIVIATE</string>
     <string name="nav_header_subtitle">STOP obliviating the important things</string>
     <string name="nav_header_desc">logo</string>
+    <string name="title_activity_delete_note">DeleteNoteActivity</string>
 </resources>
