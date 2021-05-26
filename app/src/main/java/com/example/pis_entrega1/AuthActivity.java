@@ -36,13 +36,13 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void register(){
-        if(email.getTextSize() != 0 && Password.getTextSize() != 0){
+        if(email.getText().length() != 0 && Password.getText().length() != 0){
             DatabaseAdapter da = new DatabaseAdapter(email.getText().toString(),Password.getText().toString(),"register",this);
         }
     }
 
     public void logIn(){
-        if(email.getTextSize() != 0 && Password.getTextSize() != 0){
+        if(email.getText().length() != 0 && Password.getText().length() != 0){
             DatabaseAdapter da= new DatabaseAdapter(email.getText().toString(),Password.getText().toString(),"logIn",this);
         }
     }

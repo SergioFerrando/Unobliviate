@@ -48,6 +48,7 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
             name.setText(this.rec.getName());
             this.rec.setAddress(getIntent().getStringExtra("Adress"));
             this.rec.setId(getIntent().getStringExtra("id"));
+            this.rec.setUrl(getIntent().getStringExtra("url"));
             this.position = getIntent().getIntExtra("positionAudio", 0);
         } else{
             rec.setAddress(getIntent().getExtras().get("Adress").toString());
@@ -120,6 +121,7 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
                 intent.putExtra("title_audio", this.rec.getName());
                 intent.putExtra("Adress", this.rec.getAddress());
                 intent.putExtra("id", this.rec.getId());
+                intent.putExtra("url", this.rec.getUrl());
                 intent.putExtra("positionAudio", this.position);
                 setResult(2, intent);
                 finish();

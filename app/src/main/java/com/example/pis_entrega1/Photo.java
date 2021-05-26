@@ -6,16 +6,27 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 public class Photo extends Notes {
     private String PhotoTitle;
     private String address;
+    private String url;
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
     private String id;
 
     public Photo(){
         super();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override
@@ -25,7 +36,7 @@ public class Photo extends Notes {
     }
 
     public void modify() {
-        adapter.actualizarPhotoNote(this.getName(), this.address, this.id, this.getDate());
+        adapter.actualizarPhotoNote(this.getName(), this.address, this.id, this.getDate(), this.url);
     }
 
     public String getId() {
@@ -36,10 +47,16 @@ public class Photo extends Notes {
         this.id = id;
     }
 
-    public Photo(String name, String Adress, String id, String date) {
+    public Photo(String name, String Adress, String id, String date, String url) {
         super(name);
         this.PhotoTitle = name;
-        this.address = Adress;
+        this.url = url;
+        File file = new File(Adress);
+        if(!file.exists()){
+            this.address = adapter.descargarPhotoDatabase(url);
+        }else{
+            this.address = Adress;
+        }
         this.id = id;
         this.setDate(date);
         this.setContent("Photo Note");

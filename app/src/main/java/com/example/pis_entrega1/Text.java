@@ -49,6 +49,7 @@ public class Text extends Notes{
         this.setText(bodyText);
         this.setType(R.drawable.tex);
     }
+
     public Text(String date, String name, String text) {
         super(name);
         this.setText(text);

@@ -26,7 +26,7 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
             setResult(RESULT_CANCELED,n);
             finish();
         }if(v.getId() == R.id.ConfirmButton){
-            if(email.getTextSize() == 0){
+            if(email.getText().length() == 0){
                 email.setText("Introduce un email para confirmar");
             }else{
                 Intent n = new Intent();

@@ -3,6 +3,7 @@ package com.example.pis_entrega1;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.util.Log;
 
@@ -21,16 +22,22 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.android.gms.tasks.Continuation;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class DatabaseAdapter extends Activity{
@@ -127,11 +134,11 @@ public class DatabaseAdapter extends Activity{
                             retrieved_ac.add(t);
                             Log.e("id", document.getId());
                         }if(tipo.equals("Audio")){
-                            Recording r = new Recording(document.getString("name"), document.getString("path"),document.getId(),document.getString("date"));
+                            Recording r = new Recording(document.getString("name"), document.getString("path"),document.getId(),document.getString("date"), document.getString("url"));
                             retrieved_ac.add(r);
                             Log.e("id", document.getId());
                         }if(tipo.equals("Foto")){
-                            Photo f = new Photo(document.getString("name"), document.getString("path"),document.getId(), document.getString("date"));
+                            Photo f = new Photo(document.getString("name"), document.getString("path"),document.getId(), document.getString("date"), document.getString("url"));
                             retrieved_ac.add(f);
                         }
                         Log.d(TAG, document.toString());
@@ -238,22 +245,24 @@ public class DatabaseAdapter extends Activity{
                     }
                 });
     }
-    public void actualizarPhotoNote(String name, String address, String id, String date) {
+    public void actualizarPhotoNote(String name, String address, String id, String date, String url) {
         Map<String, Object> note = new HashMap<>();
         note.put("tipo", "Foto");
         note.put("name", name);
         note.put("path", address);
         note.put("date", date);
+        note.put("url", url);
 
         db.collection("Notes "+ email).document(id).update(note);
     }
 
-    public void actualizarAudioNote(String name, String address, String id, String date) {
+    public void actualizarAudioNote(String name, String address, String id, String date, String url) {
         Map<String, Object> note = new HashMap<>();
         note.put("tipo", "Audio");
         note.put("name", name);
         note.put("path", address);
         note.put("date", date);
+        note.put("url", url);
 
         db.collection("Notes "+ email).document(id).update(note);
     }
@@ -307,14 +316,15 @@ public class DatabaseAdapter extends Activity{
         });
     }
 
-    public void savePhotoDocument (String name, String date, String url) {
+    public void savePhotoDocument (String name, String date, String path, String url) {
 
         // Create a new user with a first and last name
         Map<String, Object> note = new HashMap<>();
         note.put("tipo", "Foto");
         note.put("name", name);
         note.put("date", date);
-        note.put("path", url);
+        note.put("path", path);
+        note.put("url", url);
 
         Log.d(TAG, "saveDocument");
         // Add a new document with a generated ID
@@ -357,7 +367,7 @@ public class DatabaseAdapter extends Activity{
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
                             Uri downloadUri = task.getResult();
-                            savePhotoDocument(id, date, path);
+                            savePhotoDocument(id, date, path, downloadUri.toString());
                         } else {
                             // Handle failures
                             // ...
@@ -404,6 +414,50 @@ public class DatabaseAdapter extends Activity{
                         }
                     }
                 });
+    }
+
+    public String descargarAudioDatabase(String url){
+        StorageReference urlArchivo = storage.getReferenceFromUrl(url);
+        File localFile = null;
+        try {
+            localFile = File.createTempFile("music", "mp3");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        urlArchivo.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                Log.d("download", "archivo descargado");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("download", "error");
+            }
+        });
+        return localFile.getAbsolutePath();
+    }
+
+    public String descargarPhotoDatabase(String url){
+        StorageReference urlArchivo = storage.getReferenceFromUrl(url);
+        File localFile = null;
+        try {
+            localFile = File.createTempFile("image", "jpg");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        urlArchivo.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                Log.d("download", "archivo descargado");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("download", "error");
+            }
+        });
+        return localFile.getAbsolutePath();
     }
 
 }

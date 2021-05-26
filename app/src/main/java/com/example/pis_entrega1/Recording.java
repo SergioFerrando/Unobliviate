@@ -1,8 +1,12 @@
 package com.example.pis_entrega1;
 
+import android.os.Environment;
 import android.util.Log;
-import android.widget.EditText;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Recording extends Notes {
@@ -11,6 +15,15 @@ public class Recording extends Notes {
     private String address;
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
     private String id;
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public Recording(){
         super();
@@ -38,10 +51,16 @@ public class Recording extends Notes {
         adapter.saveAudioDocumentWithFile(this.AudioTitle, this.address, this.getDate());
     }
 
-    public Recording(String name, String address, String id, String date) {
+    public Recording(String name, String address, String id, String date, String url) {
         super(name);
         AudioTitle = name;
-        this.address = address;
+        this.url = url;
+        File file = new File(address);
+        if(!file.exists()){
+            this.address = adapter.descargarAudioDatabase(url);
+        }else{
+            this.address = address;
+        }
         this.setDate(date);
         this.id = id;
         this.setContent("Audio Note");
@@ -63,6 +82,6 @@ public class Recording extends Notes {
     public void setAddress(String Adress){this.address = Adress;}
 
     public void modify() {
-        adapter.actualizarAudioNote(this.getName(), this.address, this.id, this.getDate());
+        adapter.actualizarAudioNote(this.getName(), this.address, this.id, this.getDate(), this.url);
     }
 }

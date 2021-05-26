@@ -188,13 +188,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else if(resultCode == 2){
                 DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
                 String date = df.format(Calendar.getInstance().getTime());
-                Recording audio_temp = new Recording(intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"), intent.getStringExtra("id"),date);
+                Recording audio_temp = new Recording(intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"), intent.getStringExtra("id"),date,intent.getStringExtra("url"));
                 this.viewModel.modifyAudioNote(audio_temp, intent.getIntExtra("positionAudio", -1));
                 this.setTable();
             } else if(resultCode == 3){
                 DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
                 String date = df.format(Calendar.getInstance().getTime());
-                Photo photo_temp = new Photo(intent.getStringExtra("title_photo"), intent.getStringExtra("path"), intent.getStringExtra("id"),date);
+                Photo photo_temp = new Photo(intent.getStringExtra("title_photo"), intent.getStringExtra("path"), intent.getStringExtra("id"),date,intent.getStringExtra("url"));
                 this.viewModel.modifyPhotoNote(photo_temp, intent.getIntExtra("positionPhoto", -1));
                 this.setTable();
             }
@@ -273,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         n1.putExtra("newTitleAudio", recording.getName());
         n1.putExtra("Adress", recording.getAddress());
         n1.putExtra("id", recording.getId());
+        n1.putExtra("url", recording.getUrl());
         n1.putExtra("positionAudio", position);
         startActivityForResult(n1, 1);
     }
@@ -282,6 +283,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         n.putExtra("newTitlePhoto", photo.getName());
         n.putExtra("path", photo.getAddress());
         n.putExtra("id", photo.getId());
+        n.putExtra("url", photo.getUrl());
         n.putExtra("positionPhoto", position);
         startActivityForResult(n, 1);
     }

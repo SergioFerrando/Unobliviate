@@ -58,6 +58,7 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
             p.setAddress(getIntent().getStringExtra("path"));
             setPic();
             p.setId(getIntent().getStringExtra("id"));
+            p.setUrl(getIntent().getStringExtra("url"));
             this.position = getIntent().getIntExtra("positionPhoto", 0);
         }else {
             path = getIntent().getStringExtra("path");
@@ -107,6 +108,7 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
             String date = df.format(Calendar.getInstance().getTime());
             intent.putExtra("id", p.getId());
             intent.putExtra("path", p.getAddress());
+            intent.putExtra("url", p.getUrl());
             intent.putExtra("positionPhoto", this.position);
             setResult(3, intent);
             finish();
