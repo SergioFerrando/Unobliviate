@@ -48,4 +48,6 @@
     <string name="nav_header_subtitle">STOP obliviating the important things</string>
     <string name="nav_header_desc">logo</string>
     <string name="title_activity_delete_note">DeleteNoteActivity</string>
+    <string name="Delete">Delete</string>
+    <string name="Cancel">Cancel</string>
 </resources>

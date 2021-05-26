@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView mRecyclerView;
 
     private MyAdapter mAdapter;
-    private MyAdapterDelete myAdapterDelete;
+    //private MyAdapterDelete myAdapterDelete;
 
     public Context parentContext;
     private MainActivityViewModel viewModel;
@@ -150,23 +150,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
         }
+
+
+
     }
 
     private void toDeleteMode() {
         setContentView(R.layout.activity_delete_note);
         Button button_cancel = findViewById(R.id.cancelButton);
         Button button_delete = findViewById(R.id.deleteButton);
-        myAdapterDelete = new MyAdapterDelete(this, mAdapter.getLocalDataSet());
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-
-        recyclerView.setAdapter(myAdapterDelete);
+        RecyclerView recyclerViewDelete = findViewById(R.id.recyclerViewDelete);
+        recyclerViewDelete.setLayoutManager(new LinearLayoutManager(this));
+        MyAdapterDelete myAdapterDelete = new MyAdapterDelete(this, viewModel.getListNotes().getValue());
 
         myAdapterDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myAdapterDelete.addPosition(recyclerView.getChildAdapterPosition(view));
+                myAdapterDelete.addPosition(recyclerViewDelete.getChildAdapterPosition(view));
             }
         });
+
+        recyclerViewDelete.setAdapter(myAdapterDelete);
 
         button_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,8 +194,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void fromDeleteMode() {
+        System.out.println("fromDeleteMode");
         setContentView(R.layout.activity_main);
-
+        setTable();
     }
 
     public void setLiveDataObservers() {

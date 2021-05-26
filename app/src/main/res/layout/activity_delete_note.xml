@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
-        android:text="Button"
+        android:text="@string/Delete"
         app:layout_constraintBottom_toBottomOf="@+id/cancelButton"
         app:layout_constraintEnd_toStartOf="@+id/cancelButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,14 +24,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Button"
+        android:text="@string/Cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.83"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerViewDelete"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"

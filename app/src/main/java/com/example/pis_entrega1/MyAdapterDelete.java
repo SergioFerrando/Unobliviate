@@ -55,5 +55,4 @@ public class MyAdapterDelete extends MyAdapter {
     public void addPosition (int i){
         toDelete.add(i);
     }
-
 }
