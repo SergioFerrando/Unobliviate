@@ -42,7 +42,7 @@ import java.util.Collections;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView mRecyclerView;
 
     private MyAdapter mAdapter;
@@ -141,10 +141,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         addNote.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        LinearLayout layout_loading = findViewById(R.id.layout_loading);
-
-        layout_loading.setVisibility(View.INVISIBLE);
-
         setLiveDataObservers();
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         navigationView.bringToFront();
@@ -153,10 +149,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @SuppressLint("NonConstantResourceId")
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch ( item.getItemId() ){
+                    switch (item.getItemId()) {
                         case R.id.nav_delete:
                             toDeleteMode();
-                            //setContentView(R.layout.activity_delete_note);
                             break;
                         case R.id.nav_sort:
 
@@ -169,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
         }
-
 
 
     }
@@ -193,8 +187,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (myAdapterDelete.getSelected().size() > 0){
-                    for (int i = 0; i < myAdapterDelete.getSelected().size(); i++){
+                if (myAdapterDelete.getSelected().size() > 0) {
+                    for (int i = 0; i < myAdapterDelete.getSelected().size(); i++) {
                         viewModel.deleteNote(myAdapterDelete.getSelected().get(i));
                     }
                 }
@@ -214,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void fromDeleteMode() {
         System.out.println("fromDeleteMode");
         setContentView(R.layout.activity_main);
-        setTable();
+        this.setTable();
     }
 
     public void setLiveDataObservers() {
@@ -228,14 +222,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 newAdapter.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)) instanceof Text){
+                        if (viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)) instanceof Text) {
                             passDataText((Text) viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)), mRecyclerView.getChildAdapterPosition(v));
-                        }else if(viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)) instanceof Recording){
+                        } else if (viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)) instanceof Recording) {
                             passDataAudio((Recording) viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)), mRecyclerView.getChildAdapterPosition(v));
-                        }else{
+                        } else {
                             passDataPhoto((Photo) viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)), mRecyclerView.getChildAdapterPosition(v));
                         }
-                        Toast.makeText(getApplicationContext(),"Selección: "+ viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)).getName(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Selección: " + viewModel.getNotesById(mRecyclerView.getChildAdapterPosition(v)).getName(), Toast.LENGTH_SHORT).show();
                     }
                 });
                 mRecyclerView.swapAdapter(newAdapter, false);
@@ -268,32 +262,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Photo photoTemp = new Photo(intent.getStringExtra("date_photo_main"), intent.getStringExtra("title_photo_main"), intent.getStringExtra("Adress_main"));
                     this.viewModel.addPhotoNote(photoTemp);
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                if (intent.getIntExtra("positionDelete", -1) != -1){
-                    this.viewModel.deleteNote(intent.getIntExtra("positionDelete", -1));
-                }
-            } else if(resultCode == 5){
-                Text text_temp = new Text(intent.getStringExtra("title"), intent.getStringExtra("text"), intent.getStringExtra("path"), intent.getStringExtra("id"));
-                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
-                String date = df.format(Calendar.getInstance().getTime());
-                text_temp.setDate(date);
-                Log.e("main", text_temp.getID());
-                this.viewModel.modifyTextNote(text_temp, intent.getIntExtra("positionText", -1));
-                this.setTable();
-
-            } else if(resultCode == 2){
-                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
-                String date = df.format(Calendar.getInstance().getTime());
-                Recording audio_temp = new Recording(intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"), intent.getStringExtra("id"),date,intent.getStringExtra("url"));
-                this.viewModel.modifyAudioNote(audio_temp, intent.getIntExtra("positionAudio", -1));
-                this.setTable();
-            } else if(resultCode == 3){
-                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
-                String date = df.format(Calendar.getInstance().getTime());
-                Photo photo_temp = new Photo(intent.getStringExtra("title_photo"), intent.getStringExtra("path"), intent.getStringExtra("id"),date,intent.getStringExtra("url"));
-                this.viewModel.modifyPhotoNote(photo_temp, intent.getIntExtra("positionPhoto", -1));
-                this.setTable();
             }
+        } else if (resultCode == 5) {
+            Text text_temp = new Text(intent.getStringExtra("title"), intent.getStringExtra("text"), intent.getStringExtra("path"), intent.getStringExtra("id"));
+            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+            String date = df.format(Calendar.getInstance().getTime());
+            text_temp.setDate(date);
+            Log.e("main", text_temp.getID());
+            this.viewModel.modifyTextNote(text_temp, intent.getIntExtra("positionText", -1));
+            this.setTable();
+
+        } else if (resultCode == 2) {
+            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+            String date = df.format(Calendar.getInstance().getTime());
+            Recording audio_temp = new Recording(intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"), intent.getStringExtra("id"), date, intent.getStringExtra("url"));
+            this.viewModel.modifyAudioNote(audio_temp, intent.getIntExtra("positionAudio", -1));
+            this.setTable();
+        } else if (resultCode == 3) {
+            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+            String date = df.format(Calendar.getInstance().getTime());
+            Photo photo_temp = new Photo(intent.getStringExtra("title_photo"), intent.getStringExtra("path"), intent.getStringExtra("id"), date, intent.getStringExtra("url"));
+            this.viewModel.modifyPhotoNote(photo_temp, intent.getIntExtra("positionPhoto", -1));
+            this.setTable();
         }
     }
 
@@ -334,27 +324,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(n);
     }
 
-    void setTable () {
+    void setTable() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MyAdapter(this, viewModel.getListNotes().getValue());
         mAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)) instanceof Text){
+                if (viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)) instanceof Text) {
                     passDataText((Text) viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
-                }else if(viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)) instanceof Recording){
+                } else if (viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)) instanceof Recording) {
                     passDataAudio((Recording) viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
-                }else{
+                } else {
                     passDataPhoto((Photo) viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)), recyclerView.getChildAdapterPosition(v));
                 }
-                Toast.makeText(getApplicationContext(),"Selección: "+ viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)).getName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Selección: " + viewModel.getNotesById(recyclerView.getChildAdapterPosition(v)).getName(), Toast.LENGTH_SHORT).show();
             }
         });
         recyclerView.setAdapter(mAdapter);
     }
 
-    void passDataText (Text text, int position) {
+    void passDataText(Text text, int position) {
         Intent i = new Intent(this, TextNote.class);
         i.putExtra("newTitleText", text.getName());
         i.putExtra("newTextText", text.getText());
@@ -364,7 +354,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(i, 1);
     }
 
-    void passDataAudio (Recording recording, int position){
+    void passDataAudio(Recording recording, int position) {
         Intent n1 = new Intent(this, AudioRecorded.class);
         n1.putExtra("newTitleAudio", recording.getName());
         n1.putExtra("Adress", recording.getAddress());
@@ -374,7 +364,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(n1, 1);
     }
 
-    void passDataPhoto (Photo photo, int position){
+    void passDataPhoto(Photo photo, int position) {
         Intent n = new Intent(this, PhotoTaken.class);
         n.putExtra("newTitlePhoto", photo.getName());
         n.putExtra("path", photo.getAddress());
@@ -383,8 +373,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         n.putExtra("positionPhoto", position);
         startActivityForResult(n, 1);
     }
+
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -425,7 +416,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void notifyItemMoved(int fromPosition, int toPosition) {
         Notes temp = viewModel.getNotesById(fromPosition);
-        viewModel.deleteNote(fromPosition);
+        //viewModel.deleteNote(fromPosition);
         viewModel.getListNotes().getValue().set(toPosition,temp);
     }
 
@@ -434,5 +425,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getMenuInflater().inflate(R.menu.navigation_menu, menu);
         return true;
     }
-
 }

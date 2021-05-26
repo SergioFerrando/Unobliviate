@@ -38,6 +38,10 @@ public class Recording extends Notes {
     }
 
     @Override
+    public void delete() {
+        adapter.delete(this.getID());
+    }
+    @Override
     void saveNote() {
         Log.d("saveAudioNote", "saveAudioNote-> saveDocument");
         adapter.saveAudioDocumentWithFile(this.AudioTitle, this.address, this.getDate());

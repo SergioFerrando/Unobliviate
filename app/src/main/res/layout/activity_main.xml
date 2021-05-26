@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-
+        <!--
         <LinearLayout
             android:id="@+id/layout_loading"
             android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
 
             </ProgressBar>
 
-        </LinearLayout>
+        </LinearLayout> -->
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/add_fab"

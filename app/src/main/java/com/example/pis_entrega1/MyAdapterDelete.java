@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHolderToDelete> implements View.OnClickListener {
 
-    ArrayList<Integer> toDelete;
+    ArrayList<Notes> toDelete;
     private LayoutInflater mInflater;
     private View.OnClickListener listener;
     private ArrayList<Notes> localDataSet = new ArrayList<Notes>();
@@ -62,7 +62,6 @@ public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHo
         if (nota.getDate() != null){
             holder.Date.setText(nota.getDate());
         }
-        holder.item.setBackgroundColor(nota.isChecked() ? Color.GRAY : Color.WHITE);
     }
 
     @Override
@@ -96,12 +95,16 @@ public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHo
         }
     }
 
-    public ArrayList<Integer> getSelected () {
+    public ArrayList<Notes> getSelected () {
         return toDelete;
     }
 
     public void addPosition (int i){
-        toDelete.add(i);
+        if(localDataSet.get(i).isChecked()){
+            toDelete.remove(localDataSet.get(i));
+        }else {
+            toDelete.add(localDataSet.get(i));
+        }
         localDataSet.get(i).setChecked(!localDataSet.get(i).isChecked());
     }
 }

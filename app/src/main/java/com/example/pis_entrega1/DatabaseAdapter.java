@@ -74,6 +74,10 @@ public class DatabaseAdapter extends Activity{
         mAuth.signOut();
     }
 
+    public void delete(String id) {
+        DatabaseAdapter.db.collection("Notes " + email).document(id).delete();
+    }
+
 
     public interface vmInterface{
 

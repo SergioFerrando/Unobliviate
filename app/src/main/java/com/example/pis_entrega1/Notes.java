@@ -86,4 +86,6 @@ public abstract class Notes {
     public void setType(int type) {
         this.type = type;
     }
+
+    public abstract void delete();
 }

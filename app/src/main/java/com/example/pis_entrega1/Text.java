@@ -32,6 +32,11 @@ public class Text extends Notes{
         adapter.saveTextDocumentWithFile(this.getName(), this.getText(), this.getPath(), this.getDate());
     }
 
+    @Override
+    public void delete() {
+        adapter.delete(this.getID());
+    }
+
     public Text(String name, String bodyText, String Adress, String id){
         super(name, id);
         this.setPath(Adress);

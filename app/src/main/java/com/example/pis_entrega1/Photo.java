@@ -33,6 +33,11 @@ public class Photo extends Notes {
         adapter.savePhotoDocumentWithFile(PhotoTitle, address, this.getDate());
     }
 
+    @Override
+    public void delete() {
+        adapter.delete(this.getID());
+    }
+
     public void modify() {
         adapter.actualizarPhotoNote(this.getName(), this.address, this.getID(), this.getDate(), this.url);
     }
