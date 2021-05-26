@@ -23,6 +23,37 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
+        <LinearLayout
+            android:id="@+id/layout_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loading..."
+                android:textSize="30sp"
+                android:layout_gravity="center">
+
+            </TextView>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_gravity="center">
+
+            </ProgressBar>
+
+        </LinearLayout>
+
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/add_fab"
             android:layout_width="wrap_content"
@@ -52,7 +83,8 @@
             app:layout_constraintBottom_toTopOf="@+id/add_fab"
             app:layout_constraintEnd_toEndOf="@+id/add_fab"
             app:srcCompat="@drawable/ic_text"
-            tools:ignore="VectorDrawableCompat" />
+            tools:ignore="VectorDrawableCompat"
+            android:contentDescription="TextButton" />
 
         <!--Action name text for the add alarm button-->
         <!--Make sure that you are constraining this
@@ -85,7 +117,8 @@
             app:layout_constraintEnd_toEndOf="@+id/TextButton"
             app:layout_constraintStart_toStartOf="@+id/TextButton"
             app:srcCompat="@drawable/ic_audiotrack"
-            tools:ignore="VectorDrawableCompat" />
+            tools:ignore="VectorDrawableCompat"
+            android:contentDescription="AudioButton" />
         <!--Action name text for the add person button-->
         <!--Make sure that you are constraining this Text
              to the add Person FAB button-->
@@ -110,10 +143,8 @@
             app:layout_constraintEnd_toEndOf="@+id/AudioButton"
             app:layout_constraintStart_toStartOf="@+id/AudioButton"
             app:srcCompat="@drawable/ic_camera"
-            tools:ignore="VectorDrawableCompat" />
-        <!--Action name text for the add person button-->
-        <!--Make sure that you are constraining this Text
-             to the add Person FAB button-->
+            tools:ignore="VectorDrawableCompat"
+            android:contentDescription="ImageButton" />
         <TextView
             android:id="@+id/addPhoto"
             android:layout_width="wrap_content"

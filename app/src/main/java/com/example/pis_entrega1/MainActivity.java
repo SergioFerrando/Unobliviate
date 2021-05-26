@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView mRecyclerView;
 
     private MyAdapter mAdapter;
-    //private MyAdapterDelete myAdapterDelete;
+    private MyAdapterDelete myAdapterDelete;
 
     public Context parentContext;
     private MainActivityViewModel viewModel;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parentContext = this.getBaseContext();
-        viewModel = new MainActivityViewModel();
+
         setContentView(R.layout.activity_main);
         addNote = findViewById(R.id.add_fab);
 
@@ -128,6 +129,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
+
+        addNote.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
+
+        viewModel = new MainActivityViewModel();
+
+        addNote.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        LinearLayout layout_loading = findViewById(R.id.layout_loading);
+
+        layout_loading.setVisibility(View.INVISIBLE);
+
         setLiveDataObservers();
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         navigationView.bringToFront();
@@ -139,10 +152,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     switch ( item.getItemId() ){
                         case R.id.nav_delete:
                             toDeleteMode();
-                            setContentView(R.layout.activity_delete_note);
+                            //setContentView(R.layout.activity_delete_note);
+                            break;
                         case R.id.nav_sort:
 
                         case R.id.nav_logout:
+                            LogOut();
                             break;
                         default:
                     }
