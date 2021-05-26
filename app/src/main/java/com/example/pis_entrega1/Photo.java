@@ -15,8 +15,6 @@ public class Photo extends Notes {
     private String address;
     private String url;
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
-    private String id;
-
     public Photo(){
         super();
     }
@@ -36,19 +34,11 @@ public class Photo extends Notes {
     }
 
     public void modify() {
-        adapter.actualizarPhotoNote(this.getName(), this.address, this.id, this.getDate(), this.url);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        adapter.actualizarPhotoNote(this.getName(), this.address, this.getID(), this.getDate(), this.url);
     }
 
     public Photo(String name, String Adress, String id, String date, String url) {
-        super(name);
+        super(name, id);
         this.PhotoTitle = name;
         this.url = url;
         File file = new File(Adress);
@@ -57,7 +47,6 @@ public class Photo extends Notes {
         }else{
             this.address = Adress;
         }
-        this.id = id;
         this.setDate(date);
         this.setContent("Photo Note");
         this.setType(R.drawable.camara);

@@ -39,7 +39,7 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
             this.text.setName(getIntent().getStringExtra("newTitleText"));
             this.text.setText(getIntent().getStringExtra("newTextText"));
             this.path = getIntent().getStringExtra("url");
-            this.text.setId(getIntent().getStringExtra("id"));
+            this.text.setID(getIntent().getStringExtra("id"));
             this.position = getIntent().getIntExtra("positionText", 0);
             title.setText(this.text.getName());
             content.setText(this.text.getText());
@@ -136,7 +136,7 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
                 DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
                 String date = df.format(Calendar.getInstance().getTime());
                 intent.putExtra("date", date);
-                intent.putExtra("id", this.text.getId());
+                intent.putExtra("id", this.text.getID());
                 intent.putExtra("positionText", this.position);
                 intent.putExtra("path", this.path);
                 setResult(5, intent);

@@ -1,5 +1,10 @@
 package com.example.pis_entrega1;
 
+import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.CountDownTimer;
+
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +36,7 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
         da.getCollection();
     }
 
-    void deleteNote(ArrayList<Integer> id){
+    void deleteNote(int id){
 
         this.mNotes.getValue().remove(id);
     }

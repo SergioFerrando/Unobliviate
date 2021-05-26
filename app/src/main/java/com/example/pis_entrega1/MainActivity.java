@@ -1,9 +1,13 @@
 package com.example.pis_entrega1;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
@@ -177,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         RecyclerView recyclerViewDelete = findViewById(R.id.recyclerViewDelete);
         recyclerViewDelete.setLayoutManager(new LinearLayoutManager(this));
         MyAdapterDelete myAdapterDelete = new MyAdapterDelete(this, viewModel.getListNotes().getValue());
+        recyclerViewDelete.setAdapter(myAdapterDelete);
 
         myAdapterDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,8 +189,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 myAdapterDelete.addPosition(recyclerViewDelete.getChildAdapterPosition(view));
             }
         });
-
-        recyclerViewDelete.setAdapter(myAdapterDelete);
 
         button_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
                 String date = df.format(Calendar.getInstance().getTime());
                 text_temp.setDate(date);
-                Log.e("main", text_temp.getId());
+                Log.e("main", text_temp.getID());
                 this.viewModel.modifyTextNote(text_temp, intent.getIntExtra("positionText", -1));
                 this.setTable();
 
@@ -356,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         i.putExtra("newTitleText", text.getName());
         i.putExtra("newTextText", text.getText());
         i.putExtra("url", text.getPath());
-        i.putExtra("id", text.getId());
+        i.putExtra("id", text.getID());
         i.putExtra("positionText", position);
         startActivityForResult(i, 1);
     }
@@ -365,7 +368,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent n1 = new Intent(this, AudioRecorded.class);
         n1.putExtra("newTitleAudio", recording.getName());
         n1.putExtra("Adress", recording.getAddress());
-        n1.putExtra("id", recording.getId());
+        n1.putExtra("id", recording.getID());
         n1.putExtra("url", recording.getUrl());
         n1.putExtra("positionAudio", position);
         startActivityForResult(n1, 1);
@@ -375,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent n = new Intent(this, PhotoTaken.class);
         n.putExtra("newTitlePhoto", photo.getName());
         n.putExtra("path", photo.getAddress());
-        n.putExtra("id", photo.getId());
+        n.putExtra("id", photo.getID());
         n.putExtra("url", photo.getUrl());
         n.putExtra("positionPhoto", position);
         startActivityForResult(n, 1);

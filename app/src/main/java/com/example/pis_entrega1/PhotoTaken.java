@@ -57,7 +57,7 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
             title.setText(p.getName());
             p.setAddress(getIntent().getStringExtra("path"));
             setPic();
-            p.setId(getIntent().getStringExtra("id"));
+            p.setID(getIntent().getStringExtra("id"));
             p.setUrl(getIntent().getStringExtra("url"));
             this.position = getIntent().getIntExtra("positionPhoto", 0);
         }else {
@@ -90,7 +90,7 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
     }
 
     public void goToMainIntentSave(){
-        if(p.getId() == null) {
+        if(p.getID() == null) {
             p.setName(title.getText().toString());
             Intent intent = new Intent();
             intent.putExtra("title_photo", this.p.getName());
@@ -106,7 +106,7 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
             intent.putExtra("title_photo", this.p.getName());
             DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
             String date = df.format(Calendar.getInstance().getTime());
-            intent.putExtra("id", p.getId());
+            intent.putExtra("id", p.getID());
             intent.putExtra("path", p.getAddress());
             intent.putExtra("url", p.getUrl());
             intent.putExtra("positionPhoto", this.position);

@@ -11,6 +11,7 @@ public abstract class Notes {
     private String name;
     private Date deathLine;
     private String content;
+    private String id;
     private int type;
     private boolean checked;
 
@@ -20,7 +21,20 @@ public abstract class Notes {
 
     public Notes(String name) {
         this.name = name;
-        this.date = date;
+    }
+
+
+    public Notes(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    public String getID() {
+        return id;
+    }
+
+    public void setID(String id) {
+        this.id = id;
     }
 
     public boolean isChecked() {

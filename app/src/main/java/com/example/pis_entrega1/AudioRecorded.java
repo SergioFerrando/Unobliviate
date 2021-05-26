@@ -47,7 +47,7 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
             this.rec.setName(getIntent().getStringExtra("newTitleAudio"));
             name.setText(this.rec.getName());
             this.rec.setAddress(getIntent().getStringExtra("Adress"));
-            this.rec.setId(getIntent().getStringExtra("id"));
+            this.rec.setID(getIntent().getStringExtra("id"));
             this.rec.setUrl(getIntent().getStringExtra("url"));
             this.position = getIntent().getIntExtra("positionAudio", 0);
         } else{
@@ -105,7 +105,7 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
             finish();
         }
         if(R.id.AudioSaveButton == v.getId()){
-            if(rec.getId() == null) {
+            if(rec.getID() == null) {
                 this.rec.setName(name.getText().toString());
                 Intent intent = new Intent();
                 intent.putExtra("title_audio", this.rec.getName());
@@ -120,7 +120,7 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent();
                 intent.putExtra("title_audio", this.rec.getName());
                 intent.putExtra("Adress", this.rec.getAddress());
-                intent.putExtra("id", this.rec.getId());
+                intent.putExtra("id", this.rec.getID());
                 intent.putExtra("url", this.rec.getUrl());
                 intent.putExtra("positionAudio", this.position);
                 setResult(2, intent);
