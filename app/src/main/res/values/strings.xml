@@ -41,4 +41,11 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="confirm">CONFIRM</string>
     <string name="we_will_send_you_an_email_to_recover_your_password">We will send you an email to recover your password</string>
+    <string name="delete">Delete</string>
+    <string name="sort">Sort</string>
+    <string name="log_out">logOut</string>
+    <string name="title_app">UNOBLIVIATE</string>
+    <string name="nav_header_subtitle">STOP obliviating the important things</string>
+    <string name="nav_header_desc">logo</string>
+    <string name="title_activity_delete_note">DeleteNoteActivity</string>
 </resources>

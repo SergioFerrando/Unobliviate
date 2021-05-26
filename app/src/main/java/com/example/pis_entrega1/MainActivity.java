@@ -1,11 +1,15 @@
 package com.example.pis_entrega1;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,12 +19,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView mRecyclerView;
 
     private MyAdapter mAdapter;
+    private MyAdapterDelete myAdapterDelete;
 
     public Context parentContext;
     private MainActivityViewModel viewModel;
@@ -44,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
+
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +129,69 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         setLiveDataObservers();
+        navigationView = (NavigationView) findViewById(R.id.navigationView);
+        navigationView.bringToFront();
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @SuppressLint("NonConstantResourceId")
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch ( item.getItemId() ){
+                        case R.id.nav_delete:
+                            toDeleteMode();
+                            setContentView(R.layout.activity_delete_note);
+                        case R.id.nav_sort:
+
+                        case R.id.nav_logout:
+                            break;
+                        default:
+                    }
+                    return true;
+                }
+            });
+        }
+    }
+
+    private void toDeleteMode() {
+        setContentView(R.layout.activity_delete_note);
+        Button button_cancel = findViewById(R.id.cancelButton);
+        Button button_delete = findViewById(R.id.deleteButton);
+        myAdapterDelete = new MyAdapterDelete(this, mAdapter.getLocalDataSet());
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+        recyclerView.setAdapter(myAdapterDelete);
+
+        myAdapterDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myAdapterDelete.addPosition(recyclerView.getChildAdapterPosition(view));
+            }
+        });
+
+        button_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (myAdapterDelete.getSelected().size() > 0){
+                    for (int i = 0; i < myAdapterDelete.getSelected().size(); i++){
+                        viewModel.deleteNote(myAdapterDelete.getSelected().get(i));
+                    }
+                }
+                fromDeleteMode();
+            }
+        });
+
+        button_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fromDeleteMode();
+            }
+        });
+
+    }
+
+    private void fromDeleteMode() {
+        setContentView(R.layout.activity_main);
+
     }
 
     public void setLiveDataObservers() {
@@ -174,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 if (intent.getIntExtra("positionDelete", -1) != -1){
-                    //this.viewModel.deleteNote(intent.getIntExtra("positionDelete", -1));
+                    this.viewModel.deleteNote(intent.getIntExtra("positionDelete", -1));
                 }
             } else if(resultCode == 5){
                 Text text_temp = new Text(intent.getStringExtra("title"), intent.getStringExtra("text"), intent.getStringExtra("path"), intent.getStringExtra("id"));
@@ -227,9 +300,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (R.id.CameraButton == v.getId()) {
             goToCameraNote();
         }
-        if (R.id.LogOut == v.getId()){
+        /*if (R.id.LogOut == v.getId()){
             LogOut();
-        }
+        }*/
     }
 
     private void LogOut() {
@@ -332,4 +405,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewModel.deleteNote(fromPosition);
         viewModel.getListNotes().getValue().set(toPosition,temp);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.navigation_menu, menu);
+        return true;
+    }
+
 }

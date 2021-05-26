@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="HardcodedText">
+    tools:showIn="navigation_view">
 
-    <item
-        android:id="@+id/deleteNotes"
-        android:title="Delete Notes" />
-
-    <item
-        android:id="@+id/sortNotes"
-        android:title="Sort Notes" />
-
-    <item
-        android:id="@+id/LogOut"
-        android:title="Log Out" />
-
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_delete"
+            android:icon="@drawable/ic_baseline_delete_24"
+            android:title="@string/delete" />
+        <item
+            android:id="@+id/nav_sort"
+            android:icon="@drawable/ic_baseline_sort_24"
+            android:title="@string/sort" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_baseline_exit_to_app_24"
+            android:title="@string/log_out" />
+    </group>
 </menu>
