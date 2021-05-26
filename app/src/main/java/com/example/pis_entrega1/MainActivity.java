@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 if (intent.getIntExtra("positionDelete", -1) != -1){
-                    this.viewModel.deleteNote(intent.getIntExtra("positionDelete", -1));
+                    this.viewModel.deleteNote(intent.getStringExtra("positionDelete"));
                 }
             } else if(resultCode == 5){
                 Text text_temp = new Text(intent.getStringExtra("title"), intent.getStringExtra("text"), intent.getStringExtra("path"), intent.getStringExtra("id"));
@@ -391,7 +391,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+    /*ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
         @Override
         public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
             int dragFrlg = ItemTouchHelper.UP|ItemTouchHelper.DOWN;
@@ -433,6 +433,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.navigation_menu, menu);
         return true;
-    }
+    }*/
 
 }

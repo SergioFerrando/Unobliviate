@@ -36,9 +36,13 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
         da.getCollection();
     }
 
-    void deleteNote(int id){
-
-        this.mNotes.getValue().remove(id);
+    void deleteNote(String id){
+        for (int i = 0; i < mNotes.getValue().size(); i ++){
+            if (mNotes.getValue().get(i).getID().equals(id)){
+                mNotes.getValue().remove(i);
+                break;
+            }
+        }
     }
 
     //public getter. Not mutable , read-only

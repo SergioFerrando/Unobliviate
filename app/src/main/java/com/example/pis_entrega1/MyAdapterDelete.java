@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHolderToDelete> implements View.OnClickListener {
 
-    ArrayList<Integer> toDelete;
+    ArrayList<String> toDelete;
     private LayoutInflater mInflater;
     private View.OnClickListener listener;
     private ArrayList<Notes> localDataSet = new ArrayList<Notes>();
@@ -96,12 +96,20 @@ public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHo
         }
     }
 
-    public ArrayList<Integer> getSelected () {
+    public ArrayList<String> getSelected () {
         return toDelete;
     }
 
     public void addPosition (int i){
-        toDelete.add(i);
+        if (!localDataSet.get(i).isChecked()){
+            toDelete.add(localDataSet.get(i).getID());
+        }else{
+            for (int j = 0; j < localDataSet.size(); j++){
+                if (toDelete.get(j).equals(localDataSet.get(i).getID())){
+                    toDelete.remove(j);
+                }
+            }
+        }
         localDataSet.get(i).setChecked(!localDataSet.get(i).isChecked());
     }
 }
