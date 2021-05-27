@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
@@ -62,6 +63,18 @@ public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHo
         if (nota.getDate() != null){
             holder.Date.setText(nota.getDate());
         }
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nota.setChecked(!nota.isChecked());
+                notifyDataSetChanged();
+            }
+        });
+        if (nota.isChecked()){
+            holder.linearLayout.setBackgroundColor(Color.parseColor("#CCCCCC"));
+        } else {
+            holder.linearLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
     }
 
     @Override
@@ -85,9 +98,11 @@ public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHo
         TextView Type;
         TextView Date;
         ImageView item;
+        LinearLayout linearLayout;
 
         public ViewHolderToDelete(View itemView) {
             super(itemView);
+            linearLayout = itemView.findViewById(R.id.linearLayout);
             Title = itemView.findViewById(R.id.titleView);
             Type = itemView.findViewById(R.id.typeView);
             Date = itemView.findViewById(R.id.dateView);

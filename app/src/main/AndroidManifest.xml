@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PIS_Entrega1">
-
+        <activity android:name=".VentanaFlotante" />
         <activity android:name=".AudioRecorded" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".MainActivity" />
