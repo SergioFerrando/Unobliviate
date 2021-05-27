@@ -1,6 +1,7 @@
 package com.example.pis_entrega1;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -63,9 +65,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         parentContext = this.getBaseContext();
 
         setContentView(R.layout.activity_main);
+
+        setFloatingActionButtons();
+
+        setMenu();
+
+    }
+
+    private void setFloatingActionButtons () {
         addNote = findViewById(R.id.add_fab);
 
         fabText = findViewById(R.id.TextButton);
@@ -120,7 +131,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fabText.setOnClickListener(this);
         fabAudio.setOnClickListener(this);
         fabPhoto.setOnClickListener(this);
+    }
 
+    private void setMenu () {
         drawerLayout = findViewById(R.id.my_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 
@@ -141,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         addNote.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
+
         setLiveDataObservers();
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         navigationView.bringToFront();
@@ -164,8 +178,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
         }
-
-
     }
 
     private void toDeleteMode() {
@@ -209,6 +221,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         System.out.println("fromDeleteMode");
         setContentView(R.layout.activity_main);
         this.setTable();
+        setFloatingActionButtons();
+        setMenu();
     }
 
     public void setLiveDataObservers() {
@@ -423,6 +437,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.navigation_menu, menu);
-        return true;
+        return false;
     }
 }

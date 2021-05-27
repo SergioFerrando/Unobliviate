@@ -50,4 +50,5 @@
     <string name="title_activity_delete_note">DeleteNoteActivity</string>
     <string name="Delete">Delete</string>
     <string name="Cancel">Cancel</string>
+    <string name="RememberMe">Remember Me</string>
 </resources>
