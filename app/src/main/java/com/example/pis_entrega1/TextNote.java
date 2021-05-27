@@ -4,17 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
@@ -30,7 +27,6 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_text_note);
         findViewById(R.id.TextSaveButton).setOnClickListener(this);
         findViewById(R.id.TextCheckList).setOnClickListener(this);
-        findViewById(R.id.TextRememberButton).setOnClickListener(this);
         findViewById(R.id.TextShareButton).setOnClickListener(this);
         findViewById(R.id.TextDeleteButton).setOnClickListener(this);
         if (getIntent().getStringExtra("newTitleText") != null){
@@ -67,10 +63,6 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         intent.putExtra(Intent.EXTRA_SUBJECT, "Text Note");
         intent.putExtra(Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(intent,"Share using... "));*/
-    }
-
-    public void goToRememberIntent(){
-
     }
 
     public void goToMainIntent(){
@@ -145,9 +137,6 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         }
         if (R.id.TextCheckList == v.getId()){
             CheckList();
-        }
-        if (R.id.TextRememberButton == v.getId()){
-            goToRememberIntent();
         }
         if (R.id.TextShareButton == v.getId()){
             goToShareIntent();

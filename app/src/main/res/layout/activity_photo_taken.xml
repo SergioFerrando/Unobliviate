@@ -43,17 +43,6 @@
                 app:srcCompat="@drawable/disquete" />
 
             <ImageButton
-                android:id="@+id/PhotoRememberButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/remember_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/campana" />
-
-            <ImageButton
                 android:id="@+id/PhotoShareButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
