@@ -63,13 +63,7 @@ public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHo
         if (nota.getDate() != null){
             holder.Date.setText(nota.getDate());
         }
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                nota.setChecked(!nota.isChecked());
-                notifyDataSetChanged();
-            }
-        });
+
         if (nota.isChecked()){
             holder.linearLayout.setBackgroundColor(Color.parseColor("#CCCCCC"));
         } else {
@@ -120,6 +114,7 @@ public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHo
         }else {
             toDelete.add(localDataSet.get(i));
         }
+        notifyDataSetChanged();
         localDataSet.get(i).setChecked(!localDataSet.get(i).isChecked());
     }
 }
