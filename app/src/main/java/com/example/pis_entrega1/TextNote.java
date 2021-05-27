@@ -29,9 +29,9 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         findViewById(R.id.TextCheckList).setOnClickListener(this);
         findViewById(R.id.TextShareButton).setOnClickListener(this);
         findViewById(R.id.TextDeleteButton).setOnClickListener(this);
+        title = this.findViewById(R.id.editTextTitleTextNote);
+        content = this.findViewById(R.id.editTextTextNote);
         if (getIntent().getStringExtra("newTitleText") != null){
-            title = this.findViewById(R.id.editTextTitleTextNote);
-            content = this.findViewById(R.id.editTextTextNote);
             this.text.setName(getIntent().getStringExtra("newTitleText"));
             this.text.setText(getIntent().getStringExtra("newTextText"));
             this.path = getIntent().getStringExtra("url");
@@ -57,12 +57,12 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void goToShareIntent(){
-        /*Intent intent = new Intent(Intent.ACTION_SEND);
-        String shareBody = ContactsContract.CommonDataKinds.Note.getText().toString();
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, content.getText().toString());
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Text Note");
-        intent.putExtra(Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(intent,"Share using... "));*/
+        Intent shareIntent = Intent.createChooser(intent,text.getName());
+        startActivity(shareIntent);
     }
 
     public void goToMainIntent(){
@@ -80,14 +80,12 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if (R.id.TextSaveButton == v.getId()){
-            title = this.findViewById(R.id.editTextTitleTextNote);
-            if (title.getText() != null) {
+            if (title.getText().toString() != null) {
                 this.text.setName(title.getText().toString());
             } else {
                 this.text.setName("");
             }
-            content = this.findViewById(R.id.editTextTextNote);
-            if (content.getText() != null) {
+            if (content.getText().toString() != null) {
                 this.text.setText(content.getText().toString());
             } else {
                 this.text.setText("");
@@ -99,7 +97,7 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
                     fileOutputStream = openFileOutput(title.getText().toString(), MODE_PRIVATE);
                     fileOutputStream.write(text.getText().toString().getBytes());
                     this.path = getFilesDir() + "/" + title.getText().toString();
-                    Log.d("TAG1", "Fichero Salvado en: " + getFilesDir() + "/" + title.getText().toString());
+                    Log.d("TAG1", "Fichero Salvado en: " + getFilesDir() + "/" + title.getText()+ ".txt");
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -125,9 +123,6 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
                 Intent intent = new Intent();
                 intent.putExtra("title", this.text.getName());
                 intent.putExtra("text", this.text.getText());
-                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
-                String date = df.format(Calendar.getInstance().getTime());
-                intent.putExtra("date", date);
                 intent.putExtra("id", this.text.getID());
                 intent.putExtra("positionText", this.position);
                 intent.putExtra("path", this.path);
