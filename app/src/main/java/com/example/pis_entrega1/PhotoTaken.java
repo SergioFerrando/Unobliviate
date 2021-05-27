@@ -3,7 +3,10 @@ package com.example.pis_entrega1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,10 +14,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,10 +28,10 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-public class PhotoTaken extends AppCompatActivity implements View.OnClickListener{
+public class PhotoTaken extends AppCompatActivity implements View.OnClickListener {
 
     Photo p = new Photo();
     ImageView miniatura;
@@ -43,7 +44,6 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_taken);
         findViewById(R.id.PhotoDeleteButton).setOnClickListener(this);
-        findViewById(R.id.PhotoRememberButton).setOnClickListener(this);
         findViewById(R.id.PhotoSaveButton).setOnClickListener(this);
         findViewById(R.id.PhotoShareButton).setOnClickListener(this);
         miniatura = findViewById(R.id.Foto);
@@ -51,8 +51,8 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         goFromPhotoNote();
     }
 
-    public void goFromPhotoNote(){
-        if (getIntent().getStringExtra("newTitlePhoto") != null){
+    public void goFromPhotoNote() {
+        if (getIntent().getStringExtra("newTitlePhoto") != null) {
             p.setName(getIntent().getStringExtra("newTitlePhoto"));
             title.setText(p.getName());
             p.setAddress(getIntent().getStringExtra("path"));
@@ -60,7 +60,7 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
             p.setID(getIntent().getStringExtra("id"));
             p.setUrl(getIntent().getStringExtra("url"));
             this.position = getIntent().getIntExtra("positionPhoto", 0);
-        }else {
+        } else {
             path = getIntent().getStringExtra("path");
             p.setAddress(path);
             p.setName(getIntent().getStringExtra("titlePhoto"));
@@ -82,15 +82,15 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         miniatura.setImageBitmap(bitmap);
     }
 
-    public void goToMainIntentNoSave(){
+    public void goToMainIntentNoSave() {
         Intent intent = new Intent();
         intent.putExtra("positionDelete", this.position);
         setResult(RESULT_CANCELED, intent);
         finish();
     }
 
-    public void goToMainIntentSave(){
-        if(p.getID() == null) {
+    public void goToMainIntentSave() {
+        if (p.getID() == null) {
             p.setName(title.getText().toString());
             Intent intent = new Intent();
             intent.putExtra("title_photo", this.p.getName());
@@ -100,7 +100,7 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
             intent.putExtra("path", p.getAddress());
             setResult(RESULT_OK, intent);
             finish();
-        }else{
+        } else {
             p.setName(title.getText().toString());
             Intent intent = new Intent();
             intent.putExtra("title_photo", this.p.getName());
@@ -117,22 +117,23 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.PhotoDeleteButton){
+        if (v.getId() == R.id.PhotoDeleteButton) {
             goToMainIntentNoSave();
-        }if(v.getId() == R.id.PhotoSaveButton){
+        }
+        if (v.getId() == R.id.PhotoSaveButton) {
             goToMainIntentSave();
-        }if(v.getId() == R.id.PhotoShareButton){
+        }
+        if (v.getId() == R.id.PhotoShareButton) {
             goToShareIntent();
-        }if(v.getId() == R.id.PhotoRememberButton){
-
         }
     }
 
     private void goToShareIntent() {
-        Drawable drawable=miniatura.getDrawable();
-        Bitmap bitmap=((BitmapDrawable)drawable).getBitmap();
+        Drawable drawable = miniatura.getDrawable();
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+
         try {
-            File file = new File(getApplicationContext().getExternalCacheDir(), File.separator + title.getText().toString() + ".jpg");
+            File file = new File(getApplicationContext().getExternalCacheDir(), File.separator + "share.jpg");
             FileOutputStream fOut = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
             fOut.flush();
@@ -140,7 +141,7 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
             file.setReadable(true, false);
             final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            Uri photoURI = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID +".provider", file);
+            Uri photoURI = FileProvider.getUriForFile(getApplicationContext(), "com.example.android.fileprovider", file);
 
             intent.putExtra(Intent.EXTRA_STREAM, photoURI);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -149,6 +150,7 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
             startActivity(Intent.createChooser(intent, "Share image via"));
         } catch (Exception e) {
             e.printStackTrace();
+
         }
     }
 }
