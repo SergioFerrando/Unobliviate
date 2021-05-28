@@ -193,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 myAdapterDelete.addPosition(recyclerViewDelete.getChildAdapterPosition(view));
+                //mAdapter.notifyDataSetChanged();
             }
         });
 

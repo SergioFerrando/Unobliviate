@@ -51,4 +51,9 @@
     <string name="Delete">Delete</string>
     <string name="Cancel">Cancel</string>
     <string name="RememberMe">Remember Me</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="confirmation_to_continue">Are you sure you want to continue?</string>
+    <string name="discard">Discard</string>
+    <string name="what_do_you_want_to_do">What do you want to do ?</string>
 </resources>

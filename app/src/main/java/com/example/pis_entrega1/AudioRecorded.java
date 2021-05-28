@@ -60,10 +60,8 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if(R.id.AudioDeleteButton == v.getId()){
-            Intent intent = new Intent();
-            intent.putExtra("positionDelete", rec.getID());
-            setResult(RESULT_CANCELED, intent);
-            finish();
+            Intent i = new Intent(this, VentanaFlotante.class);
+            startActivityForResult(i, 1);
         }
         if(R.id.AudioSaveButton == v.getId()){
             if(rec.getID() == null) {
@@ -108,4 +106,19 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
             Log.d("startPlaying", "prepare() failed");
         }
     }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                if (intent.getBooleanExtra("result_verification", false)) {
+                    Intent i = new Intent();
+                    i.putExtra("positionDelete", rec.getID());
+                    setResult(RESULT_CANCELED, i);
+                    finish();
+                }
+            }
+        }
+    }
+
 }
