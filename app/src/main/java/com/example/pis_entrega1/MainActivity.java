@@ -74,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setMenu();
 
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+
     }
 
     private void setFloatingActionButtons () {
@@ -218,6 +221,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = target.getAdapterPosition();
+            Collections.swap(viewModel.getListNotes().getValue(), fromPosition, toPosition);
+            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    };
+
     private void fromDeleteMode() {
         System.out.println("fromDeleteMode");
         setContentView(R.layout.activity_main);
@@ -277,28 +296,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Photo photoTemp = new Photo(intent.getStringExtra("date_photo_main"), intent.getStringExtra("title_photo_main"), intent.getStringExtra("Adress_main"));
                     this.viewModel.addPhotoNote(photoTemp);
                 }
-            }
-        } else if (resultCode == 5) {
-            Text text_temp = new Text(intent.getStringExtra("title"), intent.getStringExtra("text"), intent.getStringExtra("path"), intent.getStringExtra("id"));
-            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
-            String date = df.format(Calendar.getInstance().getTime());
-            text_temp.setDate(date);
-            Log.e("main", text_temp.getID());
-            this.viewModel.modifyTextNote(text_temp, intent.getIntExtra("positionText", -1));
-            this.setTable();
+            } else if (resultCode == 5) {
+                Text text_temp = new Text(intent.getStringExtra("title"), intent.getStringExtra("text"), intent.getStringExtra("path"), intent.getStringExtra("id"));
+                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+                String date = df.format(Calendar.getInstance().getTime());
+                text_temp.setDate(date);
+                Log.e("main", text_temp.getID());
+                this.viewModel.modifyTextNote(text_temp, intent.getIntExtra("positionText", -1));
+                this.setTable();
 
-        } else if (resultCode == 2) {
-            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
-            String date = df.format(Calendar.getInstance().getTime());
-            Recording audio_temp = new Recording(intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"), intent.getStringExtra("id"), date, intent.getStringExtra("url"));
-            this.viewModel.modifyAudioNote(audio_temp, intent.getIntExtra("positionAudio", -1));
-            this.setTable();
-        } else if (resultCode == 3) {
-            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
-            String date = df.format(Calendar.getInstance().getTime());
-            Photo photo_temp = new Photo(intent.getStringExtra("title_photo"), intent.getStringExtra("path"), intent.getStringExtra("id"), date, intent.getStringExtra("url"));
-            this.viewModel.modifyPhotoNote(photo_temp, intent.getIntExtra("positionPhoto", -1));
-            this.setTable();
+            } else if (resultCode == 2) {
+                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+                String date = df.format(Calendar.getInstance().getTime());
+                Recording audio_temp = new Recording(intent.getStringExtra("title_audio"), intent.getStringExtra("Adress"), intent.getStringExtra("id"), date, intent.getStringExtra("url"));
+                this.viewModel.modifyAudioNote(audio_temp, intent.getIntExtra("positionAudio", -1));
+                this.setTable();
+            } else if (resultCode == 3) {
+                DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
+                String date = df.format(Calendar.getInstance().getTime());
+                Photo photo_temp = new Photo(intent.getStringExtra("title_photo"), intent.getStringExtra("path"), intent.getStringExtra("id"), date, intent.getStringExtra("url"));
+                this.viewModel.modifyPhotoNote(photo_temp, intent.getIntExtra("positionPhoto", -1));
+                this.setTable();
+            }
         }
     }
 
@@ -395,44 +414,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
-        @Override
-        public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-            int dragFrlg = ItemTouchHelper.UP|ItemTouchHelper.DOWN;
-            return makeMovementFlags(dragFrlg, 0);
-        }
-
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            int fromPosition = viewHolder.getAdapterPosition();
-            // Obtenga el viewHolder del elemento arrastrado actualmente
-            int toPosition = target.getAdapterPosition();
-            if (fromPosition < toPosition) {
-                for (int i = fromPosition; i < toPosition; i++) {
-                    Collections.swap(viewModel.getListNotes().getValue(), i, i + 1);
-                }
-            } else {
-                for (int i = fromPosition; i > toPosition; i--) {
-                    Collections.swap(viewModel.getListNotes().getValue(), i, i - 1);
-                }
-            }
-            notifyItemMoved(fromPosition, toPosition);
-            mAdapter.setLocalDataSet(viewModel.getListNotes().getValue());
-            return true;
-        }
-
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-        }
-    });
-
-    public void notifyItemMoved(int fromPosition, int toPosition) {
-        Notes temp = viewModel.getNotesById(fromPosition);
-        //viewModel.deleteNote(fromPosition);
-        viewModel.getListNotes().getValue().set(toPosition,temp);
     }
 
     @Override

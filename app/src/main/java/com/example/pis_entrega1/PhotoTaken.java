@@ -147,7 +147,16 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.setType("image/jpg");
 
-            startActivity(Intent.createChooser(intent, "Share image via"));
+            Intent chooser = Intent.createChooser(intent, "Share...");
+
+            List<ResolveInfo> resInfoList = this.getPackageManager().queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY);
+
+            for (ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                this.grantUriPermission(packageName, photoURI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+
+            startActivity(chooser);
         } catch (Exception e) {
             e.printStackTrace();
 

@@ -35,14 +35,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     // data is passed into the constructor
 
     MyAdapter(Context context, ArrayList<Notes> data) {
-        this.mInflater = LayoutInflater.from(context);
+        mInflater = LayoutInflater.from(context);
         this.localDataSet = data;
     }
     // inflates the row layout from xml when needed
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.row_item, parent, false);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.row_item, parent, false);
         view.setOnClickListener(this);
         return new ViewHolder(view);
     }
