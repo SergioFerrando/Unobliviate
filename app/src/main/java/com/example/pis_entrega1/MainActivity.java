@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -173,7 +174,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         case R.id.nav_sort:
 
                         case R.id.nav_logout:
-                            LogOut();
+                            SharedPreferences preferences = getSharedPreferences("checkbox", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("checkbox_clicked", "true");
+                            editor.putString("saved_username", "");
+                            editor.putString("saved_password", "");
+
+                            editor.commit();
+
+                            finish();
+
+                            //LogOut();
+
                             break;
                         default:
                     }

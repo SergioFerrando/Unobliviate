@@ -1,11 +1,15 @@
 package com.example.pis_entrega1;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.CheckBox;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +44,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.google.android.material.internal.ContextUtils.getActivity;
+
 public class DatabaseAdapter extends Activity{
 
     public static final String TAG = "DatabaseAdapter";
@@ -71,6 +77,7 @@ public class DatabaseAdapter extends Activity{
     }
 
     public void logOut() {
+
         mAuth.signOut();
     }
 
