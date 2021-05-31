@@ -25,19 +25,18 @@
         android:id="@+id/constraintLayout">
 
 
-
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/add_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Actions"
+            android:text="New note"
             app:icon="@drawable/ic_plus_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginRight="16dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <!--Floating action button for add alarm-->
         <!--Make sure that you are constraining this
@@ -61,16 +60,6 @@
         <!--Action name text for the add alarm button-->
         <!--Make sure that you are constraining this
             Text to the add Alarm FAB button-->
-        <TextView
-            android:id="@+id/addText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Text Note"
-            app:layout_constraintBottom_toBottomOf="@+id/TextButton"
-            app:layout_constraintEnd_toStartOf="@+id/TextButton"
-            app:layout_constraintTop_toTopOf="@+id/TextButton"
-            android:layout_marginRight="8dp" />
 
         <!--Floating action button for add person-->
         <!--Make sure that you are constraining this button
@@ -94,16 +83,6 @@
         <!--Action name text for the add person button-->
         <!--Make sure that you are constraining this Text
              to the add Person FAB button-->
-        <TextView
-            android:id="@+id/addAudio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Audio Note"
-            app:layout_constraintBottom_toBottomOf="@+id/AudioButton"
-            app:layout_constraintEnd_toStartOf="@+id/AudioButton"
-            app:layout_constraintTop_toTopOf="@+id/AudioButton"
-            android:layout_marginRight="8dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/CameraButton"
@@ -117,16 +96,6 @@
             app:srcCompat="@drawable/ic_camera"
             tools:ignore="VectorDrawableCompat"
             android:contentDescription="ImageButton" />
-        <TextView
-            android:id="@+id/addPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Photo Note"
-            app:layout_constraintBottom_toBottomOf="@+id/CameraButton"
-            app:layout_constraintEnd_toStartOf="@+id/CameraButton"
-            app:layout_constraintTop_toTopOf="@+id/CameraButton"
-            android:layout_marginRight="8dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
