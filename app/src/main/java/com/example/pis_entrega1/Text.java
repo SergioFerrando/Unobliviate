@@ -8,7 +8,6 @@ import android.util.Log;
 public class Text extends Notes{
 
     private String text;
-    private String path;
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
 
     /**
@@ -22,7 +21,7 @@ public class Text extends Notes{
      * Method to refresh the data inside the "DatabaseAdapter".
      */
     void modify(){
-        adapter.actualizarTextNote(this.getName(), this.getText(),this.getDate(), this.path, this.getID());
+        adapter.actualizarTextNote(this.getName(), this.getText(),this.getDate(), this.getID());
     }
 
     /**
@@ -31,7 +30,7 @@ public class Text extends Notes{
     @Override
     void saveNote() {
         Log.d("saveTextNote", "saveTextNote-> saveDocument");
-        adapter.saveTextDocumentWithFile(this.getName(), this.getText(), this.getPath(), this.getDate());
+        adapter.saveTextDocument(this.getName(), this.getText(), this.getDate());
     }
 
     /**
@@ -46,13 +45,13 @@ public class Text extends Notes{
      * Constructor method of the class with parameters.
      * @param name String
      * @param bodyText String
-     * @param Adress String
+     * @param date String
      * @param id String
      */
-    public Text(String name, String bodyText, String Adress, String id){
+    public Text(String name, String bodyText, String date, String id){
         super(name, id);
-        this.setPath(Adress);
         this.setName(name);
+        this.setDate(date);
         this.setText(bodyText);
         this.setType(R.drawable.tex);
     }
@@ -69,22 +68,6 @@ public class Text extends Notes{
         this.setDate(date);
         this.setContent("Text Note");
         this.setType(R.drawable.tex);
-    }
-
-    /**
-     * Getter method of the attribute "path".
-     * @return "path"
-     */
-    public String getPath() {
-        return path;
-    }
-
-    /**
-     * Setter method of the attribute "path".
-     * @param path String
-     */
-    public void setPath(String path) {
-        this.path = path;
     }
 
     /**

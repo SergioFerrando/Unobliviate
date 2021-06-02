@@ -317,10 +317,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     this.viewModel.addPhotoNote(photoTemp);
                 }
             } else if (resultCode == 5) {
-                Text text_temp = new Text(intent.getStringExtra("title"), intent.getStringExtra("text"), intent.getStringExtra("path"), intent.getStringExtra("id"));
                 DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.FRANCE);
                 String date = df.format(Calendar.getInstance().getTime());
-                text_temp.setDate(date);
+                Text text_temp = new Text(intent.getStringExtra("title"), intent.getStringExtra("text"), date, intent.getStringExtra("id"));
                 Log.e("main", text_temp.getID());
                 this.viewModel.modifyTextNote(text_temp, intent.getIntExtra("positionText", -1));
                 this.setTable();
