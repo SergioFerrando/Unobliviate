@@ -20,7 +20,6 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     EditText title, content;
     int position = -1;
     boolean existente;
-    String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,6 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         if (getIntent().getStringExtra("newTitleText") != null){
             this.text.setName(getIntent().getStringExtra("newTitleText"));
             this.text.setText(getIntent().getStringExtra("newTextText"));
-            this.path = getIntent().getStringExtra("url");
             this.text.setID(getIntent().getStringExtra("id"));
             this.position = getIntent().getIntExtra("positionText", 0);
             title.setText(this.text.getName());
@@ -91,25 +89,7 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
             } else {
                 this.text.setText("");
             }
-            if(path == null) {
-                FileOutputStream fileOutputStream = null;
-
-                try {
-                    fileOutputStream = openFileOutput(title.getText().toString(), MODE_PRIVATE);
-                    fileOutputStream.write(text.getText().toString().getBytes());
-                    this.path = getFilesDir() + "/" + title.getText().toString();
-                    Log.d("TAG1", "Fichero Salvado en: " + getFilesDir() + "/" + title.getText()+ ".txt");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (fileOutputStream != null) {
-                        try {
-                            fileOutputStream.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+            if(this.text.getID() == null) {
                 Intent intent = new Intent();
                 intent.putExtra("title", this.text.getName());
                 intent.putExtra("text", this.text.getText());
@@ -117,7 +97,6 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
                 String date = df.format(Calendar.getInstance().getTime());
                 intent.putExtra("date", date);
                 intent.putExtra("positionText", this.position);
-                intent.putExtra("path", this.path);
                 setResult(RESULT_OK, intent);
                 finish();
             }else{
@@ -126,7 +105,6 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
                 intent.putExtra("text", this.text.getText());
                 intent.putExtra("id", this.text.getID());
                 intent.putExtra("positionText", this.position);
-                intent.putExtra("path", this.path);
                 setResult(5, intent);
                 finish();
             }

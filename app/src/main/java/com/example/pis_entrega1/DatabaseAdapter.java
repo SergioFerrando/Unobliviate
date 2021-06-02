@@ -29,6 +29,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+/**
+ * Class to init de database of the app
+ */
 public class DatabaseAdapter extends Activity{
 
     public static final String TAG = "DatabaseAdapter";
@@ -45,6 +49,13 @@ public class DatabaseAdapter extends Activity{
     public static DatabaseAdapter databaseAdapter;
     public DatabaseAdapter(){}
 
+    /**
+     * Construct method set variables into his values
+     * @param Email Email to log in
+     * @param Password Password of the user
+     * @param Opcion Can be: logIn or Register
+     * @param t Auth activity to show error messages or confirmation register
+     */
     public DatabaseAdapter(String Email, String Password, String Opcion,AuthActivity t){
         databaseAdapter = this;
         this.email = Email;
@@ -55,25 +66,33 @@ public class DatabaseAdapter extends Activity{
         initFirebase();
     }
 
+    /**
+     * Method to set the interface
+     * @param listener listener to set
+     */
     public void setInterface(vmInterface listener){
         this.listener = listener;
     }
 
-    public void logOut() {
-
-        mAuth.signOut();
-    }
-
+    /**
+     * Method to delete a note with his id
+     * @param id id of the note to delete
+     */
     public void delete(String id) {
         DatabaseAdapter.db.collection("Notes " + email).document(id).delete();
     }
 
-
+    /**
+     * Interface created to set the Array List of Notes
+     */
     public interface vmInterface{
-
         void setCollection(ArrayList<Notes> ac);
-        void setToast(String s);
     }
+
+    /**
+     * Method to initialize the firebase with the user given by the client
+     * 2 possible function register or log in
+     */
     public void initFirebase(){
         if(opcion.equals("register")){
             mAuth.createUserWithEmailAndPassword(this.email,this.password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -110,6 +129,10 @@ public class DatabaseAdapter extends Activity{
         }
     }
 
+    /**
+     * Method to get the user's current note collection in the firebase and set it in the viewModel
+     * arrayList by the interface
+     */
     public void getCollection(){
         Log.d(TAG,"updateNotes");
         DatabaseAdapter.db.collection("Notes " + email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -123,8 +146,7 @@ public class DatabaseAdapter extends Activity{
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String tipo = document.getString("tipo");
                         if (tipo.equals("Texto")){
-                            Text t = new Text(document.getString("name"), document.getString("bodytext"), document.getString("url"), document.getId());
-                            t.setDate(document.getString("date"));
+                            Text t = new Text(document.getString("name"), document.getString("bodytext"), document.getString("date"), document.getId());
                             retrieved_ac.add(t);
                             Log.e("id", document.getId());
                         }if(tipo.equals("Audio")){
@@ -143,7 +165,13 @@ public class DatabaseAdapter extends Activity{
         });
     }
 
-
+    /**
+     * Method to save an audio document in the firebase user collection
+     * @param name Title of the AudioNote
+     * @param Path Local Path to the Audio note
+     * @param date Date of the Audio Note
+     * @param url Address access to the audio note from inside the firebase storage
+     */
     public void saveAudioDocument (String name, String Path, String date, String url) {
 
         // Create a new user with a first and last name
@@ -173,11 +201,18 @@ public class DatabaseAdapter extends Activity{
                 });
     }
 
+    /**
+     * Method to safe the Audio File in firebase Storage
+     * firebase Audio saved on folder audio/
+     * @param name Title of the AudioNote
+     * @param path Local Path to the Audio Note
+     * @param date Date of the Audio Note
+     */
     public void saveAudioDocumentWithFile (String name, String path, String date) {
 
         Uri file = Uri.fromFile(new File(path));
         StorageReference storageRef = storage.getReference();
-        StorageReference audioRef = storageRef.child("audio"+File.separator+file.getLastPathSegment());
+        StorageReference audioRef = storageRef.child("audio"+File.separator);
         UploadTask uploadTask = audioRef.putFile(file);
 
         Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -211,7 +246,13 @@ public class DatabaseAdapter extends Activity{
         });
     }
 
-    public void saveTextDocument (String name, String text, String data, String url) {
+    /**
+     *  Method to save a text Note in the firebase user collection
+     * @param name Title of the Text Note
+     * @param text Text of the Text Note
+     * @param data Date of the Text Note
+     */
+    public void saveTextDocument (String name, String text, String data) {
 
         // Create a new user with a first and last name
         Map<String, Object> note = new HashMap<>();
@@ -219,7 +260,6 @@ public class DatabaseAdapter extends Activity{
         note.put("name", name);
         note.put("bodytext", text);
         note.put("date", data);
-        note.put("url", url);
 
         Log.d(TAG, "saveDocument");
         // Add a new document with a generated ID
@@ -239,6 +279,15 @@ public class DatabaseAdapter extends Activity{
                     }
                 });
     }
+
+    /**
+     * Method to update changes in a Photo Note
+     * @param name Title of the Photo Note
+     * @param address Local Address of the Photo Note
+     * @param id Identifier of the note inside the firebase collection
+     * @param date Date of the modification
+     * @param url Address access to the Photo Note from inside the firebase storage
+     */
     public void actualizarPhotoNote(String name, String address, String id, String date, String url) {
         Map<String, Object> note = new HashMap<>();
         note.put("tipo", "Foto");
@@ -250,6 +299,14 @@ public class DatabaseAdapter extends Activity{
         db.collection("Notes "+ email).document(id).update(note);
     }
 
+    /**
+     * Method to update changes in a Audio Note
+     * @param name Title of the Audio Note
+     * @param address Local Address of the Audio Note
+     * @param id Identifier of the note inside the firebase collection
+     * @param date Date of the modification
+     * @param url Address access to the Audio Note from inside the firebase storage
+     */
     public void actualizarAudioNote(String name, String address, String id, String date, String url) {
         Map<String, Object> note = new HashMap<>();
         note.put("tipo", "Audio");
@@ -261,55 +318,30 @@ public class DatabaseAdapter extends Activity{
         db.collection("Notes "+ email).document(id).update(note);
     }
 
-    public void actualizarTextNote(String name, String text, String data, String path, String id){
+    /**
+     * Method to update changes in a Text Note
+     * @param name Title of the Text Note
+     * @param text Text of the Text Note
+     * @param data Data of the modification
+     * @param id Identifier of the note inside the firebase collection
+     */
+    public void actualizarTextNote(String name, String text, String data, String id){
         Map<String, Object> note = new HashMap<>();
         note.put("tipo", "Texto");
         note.put("name", name);
         note.put("bodytext", text);
         note.put("date", data);
-        note.put("url", path);
 
         db.collection("Notes "+ email).document(id).update(note);
     }
 
-    public void saveTextDocumentWithFile (String name, String text, String path, String data) {
-
-        Uri file = Uri.fromFile(new File(path));
-        StorageReference storageRef = storage.getReference();
-        StorageReference textRef = storageRef.child("text"+File.separator+file.getLastPathSegment());
-        UploadTask uploadTask = textRef.putFile(file);
-
-        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
-                }
-
-                // Continue with the task to get the download URL
-                return textRef.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                    saveTextDocument(name, text, data, downloadUri.toString());
-                } else {
-                    // Handle failures
-                    // ...
-                }
-            }
-        });
-        uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                Log.d(TAG, "Upload is " + progress + "% done");
-            }
-        });
-    }
-
+    /**
+     * Method to save a Photo Note in firebase user collection
+     * @param name Name of the Photo Note
+     * @param date Creation date of the Photo Note
+     * @param path Local path to the Photo
+     * @param url Address access to the Photo Note from inside the firebase storage
+     */
     public void savePhotoDocument (String name, String date, String path, String url) {
 
         // Create a new user with a first and last name
@@ -339,36 +371,42 @@ public class DatabaseAdapter extends Activity{
                 });
     }
 
-            public void savePhotoDocumentWithFile (String id, String path, String date) {
+    /**
+     * Method to safe the Photo File in firebase Storage
+     * firebase Audio saved on folder photo/
+     * @param name Title of the Photo Note
+     * @param path Local Path to the Photo Note
+     * @param date Date of the Photo Note
+     */
+    public void savePhotoDocumentWithFile (String name, String path, String date) {
 
-                Uri file = Uri.fromFile(new File(path));
-                StorageReference storageRef = storage.getReference();
-                StorageReference photoRef = storageRef.child("photo"+File.separator+file.getLastPathSegment());
-                UploadTask uploadTask = photoRef.putFile(file);
+        Uri file = Uri.fromFile(new File(path));
+        StorageReference storageRef = storage.getReference();
+        StorageReference photoRef = storageRef.child("photo"+File.separator);
+        UploadTask uploadTask = photoRef.putFile(file);
 
-                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if (!task.isSuccessful()) {
-                            throw task.getException();
-                        }
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
 
-                        // Continue with the task to get the download URL
-                        return photoRef.getDownloadUrl();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if (task.isSuccessful()) {
-                            Uri downloadUri = task.getResult();
-                            savePhotoDocument(id, date, path, downloadUri.toString());
-                        } else {
-                            // Handle failures
-                            // ...
-                        }
-                    }
-                });
-
+                // Continue with the task to get the download URL
+                return photoRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    savePhotoDocument(name, date, path, downloadUri.toString());
+                } else {
+                    // Handle failures
+                    // ...
+                }
+            }
+        });
 
         uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -379,25 +417,10 @@ public class DatabaseAdapter extends Activity{
         });
     }
 
-    public HashMap<String, String> getDocuments () {
-        db.collection("Notes "+email)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-
-        return new HashMap<>();
-    }
-
+    /**
+     * Method to send an email to the user for password recovery
+     * @param email Email to send te recovery password
+     */
     public void ForgotPassword(String email){
         mAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -410,6 +433,11 @@ public class DatabaseAdapter extends Activity{
                 });
     }
 
+    /**
+     * Method to download an Audio Record from the firebase storage
+     * @param url Address access to the Audio from inside the firebase storage
+     * @return Local path where audio has downloaded
+     */
     public String descargarAudioDatabase(String url){
         StorageReference urlArchivo = storage.getReferenceFromUrl(url);
         File localFile = null;
@@ -432,6 +460,11 @@ public class DatabaseAdapter extends Activity{
         return localFile.getAbsolutePath();
     }
 
+    /**
+     * Method to download a Photo from the firebase storage
+     * @param url Address access to the Photo from inside the firebase storage
+     * @return Local path where audio has downloaded
+     */
     public String descargarPhotoDatabase(String url){
         StorageReference urlArchivo = storage.getReferenceFromUrl(url);
         File localFile = null;

@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Log in class
+ */
 public class AuthActivity extends AppCompatActivity implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener{
 
     EditText email, Password;
@@ -21,6 +24,10 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
+    /**
+     * Method for setting all layout attributes and the Click Listeners of the buttons
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +48,9 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         loadPreferences();
     }
 
+    /**
+     *
+     */
     private void loadPreferences() {
         String checkbox = preferences.getString("checkbox_clicked", "");
 
@@ -58,21 +68,35 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Method to go Main Activity (The home page of the app)
+     */
     public void goToMainIntent(){
         Intent n = new Intent(this,MainActivity.class);
         startActivity(n);
     }
 
+    /**
+     * Method to set the possible error login in
+     * @param Error error to show on the view
+     */
     public void ErrorLogin(String Error){
         error.setText(Error);
     }
 
+    /**
+     * Method to register new user in the firebase, only register the user if the TextEdit are not empty
+     */
     public void register(){
         if(email.getText().length() != 0 && Password.getText().length() != 0){
             DatabaseAdapter da = new DatabaseAdapter(email.getText().toString(),Password.getText().toString(),"register",this);
         }
     }
 
+    /**
+     * Method to log in with email and password in the firebase, only register the user
+     * if the TextEdit are not empty
+     */
     public void logIn(){
         if(email.getText().length() != 0 && Password.getText().length() != 0){
 
@@ -84,6 +108,12 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Method used when the password have been recovered
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if(requestCode == 1){
@@ -97,6 +127,9 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Method to go to ForgetPassword view
+     */
     public void goToForgetPassword(){
         Intent n1 = new Intent(this, ForgotPassword.class);
         startActivityForResult(n1,1);

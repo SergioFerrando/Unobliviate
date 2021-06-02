@@ -7,8 +7,16 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Class that contains view From Forgot Password
+ */
 public class ForgotPassword extends AppCompatActivity implements View.OnClickListener{
     EditText email;
+
+    /**
+     * Set all contents of the view and the on click listeners
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +26,12 @@ public class ForgotPassword extends AppCompatActivity implements View.OnClickLis
         email = findViewById(R.id.TextEmail);
     }
 
+    /**
+     * Method that captures all the on click listeners
+     * if we press cancel button we go to auth activity without changes
+     * if we press confirm button and email text view isn't empty we pass the email to Auth activity
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.CancelButton){

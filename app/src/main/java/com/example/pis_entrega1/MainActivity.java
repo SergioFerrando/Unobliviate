@@ -44,7 +44,9 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
 
-
+/**
+ * Class hosting the home page of the App
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView mRecyclerView;
 
@@ -60,7 +62,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public ActionBarDrawerToggle actionBarDrawerToggle;
 
     NavigationView navigationView;
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = target.getAdapterPosition();
+            Collections.swap(viewModel.getListNotes().getValue(), fromPosition, toPosition);
+            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+            return false;
+        }
 
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    };
+
+
+    /**
+     * Method to set all the widgets of the layout
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * Method to set on the Floating Button
+     */
     private void setFloatingActionButtons () {
         addNote = findViewById(R.id.add_fab);
 
@@ -123,6 +148,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fabPhoto.setOnClickListener(this);
     }
 
+    /**
+     * Method to set the menu and set the recycler view
+     */
     private void setMenu () {
         drawerLayout = findViewById(R.id.my_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
@@ -167,9 +195,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             editor.commit();
 
                             finish();
-
-                            //LogOut();
-
                             break;
                         default:
                     }
@@ -179,6 +204,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Method to go to delete view and delete notes from the collection
+     */
     private void toDeleteMode() {
         setContentView(R.layout.activity_delete_note);
         Button button_cancel = findViewById(R.id.cancelButton);
@@ -216,22 +244,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            int fromPosition = viewHolder.getAdapterPosition();
-            int toPosition = target.getAdapterPosition();
-            Collections.swap(viewModel.getListNotes().getValue(), fromPosition, toPosition);
-            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
-            return false;
-        }
-
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-        }
-    };
-
+    /**
+     * Method to return to Home page from the delete view
+     */
     private void fromDeleteMode() {
         System.out.println("fromDeleteMode");
         setContentView(R.layout.activity_main);
@@ -240,6 +255,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setMenu();
     }
 
+    /**
+     * Method to set the ArrayList of notes observable, and set the recycler view when data changed
+     */
     public void setLiveDataObservers() {
 
         final Observer<ArrayList<Notes>> observer = new Observer<ArrayList<Notes>>() {
@@ -274,17 +292,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewModel.getToast().observe(this, observerToast);
     }
 
+    /**
+     * Method to take all the possible Results of Activities
+     * If(Result code == RESULT_OK): we come from save of one of the notes
+     * else if (resultCode == 5): we come from Text Note to modify any attribute of the note
+     * else if (resultCode == 2): we come from Audio Note to modify any attribute of the note
+     * else if (resultCode == 3): we come from Photo Note to modify any attribute of the note
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 if (intent.getStringExtra("title") != null) {
                     Text text_temp = new Text(intent.getStringExtra("date"), intent.getStringExtra("title"), intent.getStringExtra("text"));
-                    text_temp.setPath(intent.getStringExtra("path"));
-                    this.viewModel.addTextNote(text_temp, intent.getIntExtra("positionText", -1));
+                    this.viewModel.addTextNote(text_temp);
                 } else if (intent.getStringExtra("title_audio_main") != null) {
                     Recording recordingTemp = new Recording(intent.getStringExtra("date_audio_main"), intent.getStringExtra("title_audio_main"), intent.getStringExtra("Adress_main"));
-                    this.viewModel.addAudioNote(recordingTemp, intent.getIntExtra("positionAudio", -1));
+                    this.viewModel.addAudioNote(recordingTemp);
                 } else if (intent.getStringExtra("title_photo_main") != null) {
                     Photo photoTemp = new Photo(intent.getStringExtra("date_photo_main"), intent.getStringExtra("title_photo_main"), intent.getStringExtra("Adress_main"));
                     this.viewModel.addPhotoNote(photoTemp);
@@ -314,21 +341,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Methd to go to Text Note (new Note)
+     */
     public void goToTextNote() {
         Intent i = new Intent(this, TextNote.class);
         startActivityForResult(i, 1);
     }
 
+    /**
+     * Method to go to Audio Note (new Note)
+     */
     public void goTOAudioNote() {
         Intent i = new Intent(this, AudioNote.class);
         startActivityForResult(i, 1);
     }
 
+    /**
+     * Method to go to Photo Note (new Note)
+     */
     public void goToCameraNote() {
         Intent i = new Intent(this, PhotoNote.class);
         startActivityForResult(i, 1);
     }
 
+    /**
+     * Method to control the on click listeners of the view
+     * If we press text button, we go to Text Note
+     * If we press Audio button, we go to Audio Note
+     * If we press Photo button, we go to Photo Note
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         if (R.id.TextButton == v.getId()) {
@@ -361,17 +404,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             clicked = false;
         }
-        /*if (R.id.LogOut == v.getId()){
-            LogOut();
-        }*/
     }
 
-    private void LogOut() {
-        viewModel.LogOut();
-        Intent n = new Intent(this, AuthActivity.class);
-        startActivity(n);
-    }
-
+    /**
+     * Method to set manually the list of notes on recycler view
+     */
     void setTable() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -392,6 +429,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(mAdapter);
     }
 
+    /**
+     * Method to open a Text Note
+     * @param text Text to open
+     * @param position Position of the note selected
+     */
     void passDataText(Text text, int position) {
         fabText.hide();
         fabAudio.hide();
@@ -403,12 +445,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent i = new Intent(this, TextNote.class);
         i.putExtra("newTitleText", text.getName());
         i.putExtra("newTextText", text.getText());
-        i.putExtra("url", text.getPath());
         i.putExtra("id", text.getID());
         i.putExtra("positionText", position);
         startActivityForResult(i, 1);
     }
 
+    /**
+     * Method to open a Audio Note
+     * @param recording Audio to open
+     * @param position Position of the note selected
+     */
     void passDataAudio(Recording recording, int position) {
         fabText.hide();
         fabAudio.hide();
@@ -426,6 +472,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(n1, 1);
     }
 
+    /**
+     * Method to open Photo Note
+     * @param photo Photo to open
+     * @param position Position of the note selected
+     */
     void passDataPhoto(Photo photo, int position) {
         fabText.hide();
         fabAudio.hide();

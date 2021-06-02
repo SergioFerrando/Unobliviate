@@ -89,7 +89,10 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
 
     /**
      * Method to control all the click listeners of the view
-     *
+     * - If delete button is clicked go to VentanaFlotante Class
+     * - If Save Button is clicked, go to Audio Note passing the information of the audio
+     * - If Share button is clicked go to method goToShareIntent()
+     * - If play button is clicked go to startPlaying()
      * @param v
      */
     @Override

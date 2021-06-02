@@ -5,7 +5,6 @@ import android.util.Log;
 public class Text extends Notes{
 
     private String text;
-    private String path;
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
 
     public Text(){
@@ -13,13 +12,13 @@ public class Text extends Notes{
     }
 
     void modify(){
-        adapter.actualizarTextNote(this.getName(), this.getText(),this.getDate(), this.path, this.getID());
+        adapter.actualizarTextNote(this.getName(), this.getText(),this.getDate(), this.getID());
     }
 
     @Override
     void saveNote() {
         Log.d("saveTextNote", "saveTextNote-> saveDocument");
-        adapter.saveTextDocumentWithFile(this.getName(), this.getText(), this.getPath(), this.getDate());
+        adapter.saveTextDocument(this.getName(), this.getText(), this.getDate());
     }
 
     @Override
@@ -27,10 +26,10 @@ public class Text extends Notes{
         adapter.delete(this.getID());
     }
 
-    public Text(String name, String bodyText, String Adress, String id){
+    public Text(String name, String bodyText,String Date, String id){
         super(name, id);
-        this.setPath(Adress);
         this.setName(name);
+        this.setDate(Date);
         this.setText(bodyText);
         this.setType(R.drawable.tex);
     }
@@ -41,14 +40,6 @@ public class Text extends Notes{
         this.setDate(date);
         this.setContent("Text Note");
         this.setType(R.drawable.tex);
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public String getText() {

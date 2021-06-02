@@ -10,13 +10,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 
-
+/**
+ * Class that generates an Adapter to the recycler view
+ */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements View.OnClickListener{
 
     private LayoutInflater mInflater;
     private View.OnClickListener listener;
     private ArrayList<Notes> localDataSet = new ArrayList<Notes>();
 
+    /**
+     * Constructor f the class
+     * @param context apliication context
+     * @param data List of notes to set
+     */
     MyAdapter(Context context, ArrayList<Notes> data) {
         mInflater = LayoutInflater.from(context);
         this.localDataSet = data;
