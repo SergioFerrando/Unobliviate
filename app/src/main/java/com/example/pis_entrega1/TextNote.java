@@ -14,6 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * Activity to show the text notes
+ */
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
 
     Text text = new Text();
@@ -21,6 +24,12 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
     int position = -1;
     boolean existente;
 
+    /**
+     * OnCreate method to initialize the layout components and get the data of the note if it has
+     * already been created and you want to open it.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +64,10 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
+    /**
+     * Method to open the share mode, in which one the user can share the note. The necessary data
+     * is sent to the activity through the Intent used to open it.
+     */
     public void goToShareIntent(){
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
@@ -64,6 +77,10 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         startActivity(shareIntent);
     }
 
+    /**
+     * Method to go back to the Main activity, using an Intent to send the necessary data and
+     * establishing it as the result of the current activity.
+     */
     public void goToMainIntent(){
         Intent intent = new Intent();
         intent.putExtra("positionDelete", this.position);
@@ -71,11 +88,18 @@ public class TextNote extends AppCompatActivity implements View.OnClickListener{
         finish();
     }
 
+    /**
+     * Method to add a new "check" item to the text note.
+     */
     public void CheckList(){
         String temp = (content.getText() + "\n -");
         content.setText(temp);
     }
 
+    /**
+     * OnClick method to add action to each button inside the activity.
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         if (R.id.TextSaveButton == v.getId()){

@@ -4,6 +4,9 @@ import android.util.Log;
 
 import java.io.File;
 
+/**
+ * Class to store the data of an audio note and interact with it inheriting from the "Notes" class.
+ */
 public class Recording extends Notes {
 
     private String AudioTitle;
@@ -11,18 +14,35 @@ public class Recording extends Notes {
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
     private String url;
 
+    /**
+     * Getter method of the attribute "url".
+     * @return url
+     */
     public String getUrl() {
         return url;
     }
 
+    /**
+     * Setter method of the attribute "url".
+     * @param url String
+     */
     public void setUrl(String url) {
         this.url = url;
     }
 
+    /**
+     * Constructor method of the class.
+     */
     public Recording(){
         super();
     }
 
+    /**
+     * Constructor method of the class with parameters.
+     * @param date String
+     * @param name String
+     * @param address String
+     */
     public Recording(String date, String name, String address) {
         super(name);
         AudioTitle = name;
@@ -32,6 +52,9 @@ public class Recording extends Notes {
         this.setType(R.drawable.micro);
     }
 
+    /**
+     *
+     */
     @Override
     public void delete() {
         adapter.delete(this.getID());
