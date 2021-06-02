@@ -1,6 +1,5 @@
 package com.example.pis_entrega1;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -9,23 +8,17 @@ import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 public class PhotoNote extends AppCompatActivity implements View.OnClickListener {
 
@@ -79,7 +72,6 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         try{
             photoFile = createImageFile();
         }catch(IOException ex){
-
         }if(photoFile != null){
             Uri photoURI = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
@@ -87,19 +79,16 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-
     private File createImageFile() throws IOException {
-        // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                imageFileName,
+                ".jpg",
+                storageDir
         );
 
-        // Save a file: path for use with ACTION_VIEW intents
         this.path = image.getAbsolutePath();
         return image;
     }

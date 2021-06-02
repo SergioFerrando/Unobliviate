@@ -1,15 +1,10 @@
 package com.example.pis_entrega1;
 
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.widget.EditText;
-
 import java.util.Date;
 
 public abstract class Notes {
     private String date;
     private String name;
-    private Date deathLine;
     private String content;
     private String id;
     private int type;
@@ -63,24 +58,12 @@ public abstract class Notes {
         this.name = name;
     }
 
-    public Date getDeathLine() {
-        return deathLine;
-    }
-
-    public void setDeathLine(Date deathLine) {
-        this.deathLine = deathLine;
-    }
-
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public int getType() {
-        return type;
     }
 
     public void setType(int type) {

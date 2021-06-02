@@ -1,13 +1,8 @@
 package com.example.pis_entrega1;
 
-import android.os.Environment;
 import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Recording extends Notes {
 
@@ -62,16 +57,8 @@ public class Recording extends Notes {
         this.setType(R.drawable.micro);
     }
 
-    public String getAudioTitle() {
-        return AudioTitle;
-    }
-
     public String getAddress() {
         return address;
-    }
-
-    public void setAudioTitle(String audioTitle) {
-        AudioTitle = audioTitle;
     }
 
     public void setAddress(String Adress){this.address = Adress;}

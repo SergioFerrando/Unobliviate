@@ -15,8 +15,18 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class VentanaFlotante extends AppCompatActivity {
+
+    /**
+     * Buttons in the class
+     */
     Button yes, no;
 
+    /**
+     * OnCreate method that initialize the buttons, sets the width and height of
+     * the window and set the OnClickListener of each button to return the selected
+     * one to the intent
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

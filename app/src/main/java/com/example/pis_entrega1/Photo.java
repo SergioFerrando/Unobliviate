@@ -1,14 +1,8 @@
 package com.example.pis_entrega1;
 
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Date;
 
 public class Photo extends Notes {
     private String PhotoTitle;
@@ -66,16 +60,8 @@ public class Photo extends Notes {
         this.setType(R.drawable.camara);
     }
 
-    public String getPhotoTitle() {
-        return PhotoTitle;
-    }
-
     public String getAddress() {
         return address;
-    }
-
-    public void setPhotoTitle(String photoTitle) {
-        PhotoTitle = photoTitle;
     }
 
     public void setAddress(String Adress){this.address = Adress;}

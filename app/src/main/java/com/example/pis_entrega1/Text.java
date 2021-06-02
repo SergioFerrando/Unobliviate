@@ -1,16 +1,6 @@
 package com.example.pis_entrega1;
 
-import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.widget.EditText;
-
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class Text extends Notes{
 

@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class TextNote extends AppCompatActivity implements View.OnClickListener{
+
     Text text = new Text();
     EditText title, content;
     int position = -1;
