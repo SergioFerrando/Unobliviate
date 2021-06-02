@@ -87,16 +87,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fabAudio = findViewById(R.id.AudioButton);
         fabPhoto = findViewById(R.id.CameraButton);
 
-        addText = findViewById(R.id.addText);
-        addAudio = findViewById(R.id.addAudio);
-        addPhoto = findViewById(R.id.addPhoto);
 
         fabText.setVisibility(View.GONE);
         fabAudio.setVisibility(View.GONE);
         fabPhoto.setVisibility(View.GONE);
-        addText.setVisibility(View.GONE);
-        addAudio.setVisibility(View.GONE);
-        addPhoto.setVisibility(View.GONE);
 
         clicked = false;
 
@@ -110,9 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     fabText.show();
                     fabAudio.show();
                     fabPhoto.show();
-                    addText.setVisibility(View.VISIBLE);
-                    addAudio.setVisibility(View.VISIBLE);
-                    addPhoto.setVisibility(View.VISIBLE);
 
                     addNote.extend();
 
@@ -121,9 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     fabText.hide();
                     fabAudio.hide();
                     fabPhoto.hide();
-                    addText.setVisibility(View.GONE);
-                    addAudio.setVisibility(View.GONE);
-                    addPhoto.setVisibility(View.GONE);
 
                     addNote.shrink();
 
@@ -171,8 +159,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         case R.id.nav_delete:
                             toDeleteMode();
                             break;
-                        case R.id.nav_sort:
-
                         case R.id.nav_logout:
                             SharedPreferences preferences = getSharedPreferences("checkbox", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
@@ -352,12 +338,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (R.id.TextButton == v.getId()) {
             goToTextNote();
+            fabText.hide();
+            fabAudio.hide();
+            fabPhoto.hide();
+
+            addNote.shrink();
+
+            clicked = false;
         }
         if (R.id.AudioButton == v.getId()) {
             goTOAudioNote();
+            fabText.hide();
+            fabAudio.hide();
+            fabPhoto.hide();
+
+            addNote.shrink();
+
+            clicked = false;
         }
         if (R.id.CameraButton == v.getId()) {
             goToCameraNote();
+            fabText.hide();
+            fabAudio.hide();
+            fabPhoto.hide();
+
+            addNote.shrink();
+
+            clicked = false;
         }
         /*if (R.id.LogOut == v.getId()){
             LogOut();
@@ -391,6 +398,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void passDataText(Text text, int position) {
+        fabText.hide();
+        fabAudio.hide();
+        fabPhoto.hide();
+
+        addNote.shrink();
+
+        clicked = false;
         Intent i = new Intent(this, TextNote.class);
         i.putExtra("newTitleText", text.getName());
         i.putExtra("newTextText", text.getText());
@@ -401,6 +415,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void passDataAudio(Recording recording, int position) {
+        fabText.hide();
+        fabAudio.hide();
+        fabPhoto.hide();
+
+        addNote.shrink();
+
+        clicked = false;
         Intent n1 = new Intent(this, AudioRecorded.class);
         n1.putExtra("newTitleAudio", recording.getName());
         n1.putExtra("Adress", recording.getAddress());
@@ -411,6 +432,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void passDataPhoto(Photo photo, int position) {
+        fabText.hide();
+        fabAudio.hide();
+        fabPhoto.hide();
+
+        addNote.shrink();
+
+        clicked = false;
         Intent n = new Intent(this, PhotoTaken.class);
         n.putExtra("newTitlePhoto", photo.getName());
         n.putExtra("path", photo.getAddress());
