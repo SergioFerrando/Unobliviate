@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +66,6 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         this.rec.setName(titleView.getText().toString());
         n1.putExtra("titleAudio", this.rec.getName());
         startActivityForResult(n1, 1);
-        //finish();
     }
 
     @Override

@@ -49,14 +49,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView mRecyclerView;
 
     private MyAdapter mAdapter;
-    private MyAdapterDelete myAdapterDelete;
 
     public Context parentContext;
     private MainActivityViewModel viewModel;
     boolean clicked;
     FloatingActionButton fabText, fabAudio, fabPhoto;
     ExtendedFloatingActionButton addNote;
-    TextView addText, addAudio, addPhoto;
 
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
@@ -194,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 myAdapterDelete.addPosition(recyclerViewDelete.getChildAdapterPosition(view));
-                //mAdapter.notifyDataSetChanged();
             }
         });
 
@@ -244,8 +241,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void setLiveDataObservers() {
-        //Subscribe the activity to the observable
-        //viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         final Observer<ArrayList<Notes>> observer = new Observer<ArrayList<Notes>>() {
             @Override

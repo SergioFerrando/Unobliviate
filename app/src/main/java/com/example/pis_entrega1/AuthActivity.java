@@ -1,21 +1,16 @@
 package com.example.pis_entrega1;
 
-        import androidx.appcompat.app.AppCompatActivity;
-
-        import android.annotation.SuppressLint;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.os.Bundle;
-        import android.os.Parcelable;
-        import android.view.View;
-        import android.widget.CheckBox;
-        import android.widget.CompoundButton;
-        import android.widget.EditText;
-        import android.widget.TextView;
-        import android.widget.Toast;
-
-        import java.io.Serializable;
+import androidx.appcompat.app.AppCompatActivity;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class AuthActivity extends AppCompatActivity implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener{
 
@@ -44,23 +39,6 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         editor = preferences.edit();
 
         loadPreferences();
-
-        /*checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @SuppressLint("ApplySharedPref")
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if (compoundButton.isChecked()) {
-                    editor.putString("checkbox_clicked", "true");
-
-                    editor.commit();
-                } else if ( !compoundButton.isChecked() ) {
-                    editor.putString("checkbox_clicked", "false");
-
-                    editor.commit();
-                }
-            }
-        });*/
     }
 
     private void loadPreferences() {
@@ -84,6 +62,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         Intent n = new Intent(this,MainActivity.class);
         startActivity(n);
     }
+
     public void ErrorLogin(String Error){
         error.setText(Error);
     }

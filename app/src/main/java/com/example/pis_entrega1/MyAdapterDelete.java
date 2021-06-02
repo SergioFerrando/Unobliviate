@@ -8,12 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHolderToDelete> implements View.OnClickListener {
@@ -28,15 +24,6 @@ public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHo
         this.localDataSet = data;
         toDelete = new ArrayList<>();
     }
-
-    public ArrayList<Notes> getLocalDataSet() {
-        return localDataSet;
-    }
-
-    public void setLocalDataSet(ArrayList<Notes> localDataSet) {
-        this.localDataSet = localDataSet;
-    }
-
 
     @NonNull
     @Override

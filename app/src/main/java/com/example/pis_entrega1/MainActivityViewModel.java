@@ -1,13 +1,7 @@
 package com.example.pis_entrega1;
 
-import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.CountDownTimer;
 
 import java.util.ArrayList;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -25,7 +19,6 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
         da.logOut();
     }
 
-    //Constructor
     public MainActivityViewModel(){
         ArrayList<Notes> n = new ArrayList<>();
         mNotes = new MutableLiveData<ArrayList<Notes>>();
@@ -41,7 +34,6 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
         id.delete();
     }
 
-    //public getter. Not mutable , read-only
     public LiveData<ArrayList<Notes>> getListNotes(){
         return mNotes;
     }
@@ -101,7 +93,6 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
     public LiveData<String> getToast(){
         return mToast;
     }
-    //communicates user inputs and updates the result in the viewModel
 
     @Override
     public void setCollection(ArrayList<Notes> ac) {
