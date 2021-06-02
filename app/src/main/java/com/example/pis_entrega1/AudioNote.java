@@ -20,12 +20,19 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AudioNote extends AppCompatActivity implements View.OnClickListener {
+ /**
+  * Class hosting the audio recording layout
+  */
+ public class AudioNote extends AppCompatActivity implements View.OnClickListener {
     private MediaRecorder recorder;
     private boolean isRecording = false;
     Recording rec = new Recording();
     EditText titleView;
 
+     /**
+      * Method for setting all layout attributes and the Click Listeners of the buttons
+      * @param savedInstanceState
+      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +53,17 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+     /**
+      * Method to save the audio after passing by AudioRecorder class.
+      * Transfer the info from AudioRecorded class to Main Activity class.
+      * The Intent contains:
+      * -Title of Audio Record
+      * -Date of Audio Record
+      * -Local Address of Audio Record
+      * @param requestCode
+      * @param resultCode
+      * @param intent
+      */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == 1) {
@@ -60,6 +78,12 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+     /**
+      * Method to go to AudioRecorded after recorded the audio note.
+      * In the intent we will put:
+      * -The Local Address of the AudioRecord
+      * -The title of AudioRecord
+      */
     public void goToAudioRecorded(){
         Intent n1 = new Intent(this, AudioRecorded.class);
         n1.putExtra("Adress", rec.getAddress());
@@ -68,6 +92,13 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         startActivityForResult(n1, 1);
     }
 
+     /**
+      * Method to control all the click listeners of the view
+      * - If the delete button is touched then go tho Main Activity class
+      * - If the Audio button is touched then record the audio, if the audio is
+      * recorded go to AudioRecorded
+      * @param v
+      */
     @Override
     public void onClick(View v) {
         if (R.id.TextDeleteButton == v.getId()){
@@ -86,6 +117,9 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+     /**
+      * Method to stop Recording the voice
+      */
     private void stopRecording() {
         recorder.stop();
         recorder.release();
@@ -93,6 +127,9 @@ public class AudioNote extends AppCompatActivity implements View.OnClickListener
         isRecording = false;
     }
 
+     /**
+      * Method to start recording the voice by microphone and create a file to store the recording.
+      */
     private void startRecording() {
         Log.d("startRecording", "startRecording");
 

@@ -21,11 +21,18 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Class used when the audio has already recorded
+ */
 public class AudioRecorded extends AppCompatActivity implements View.OnClickListener{
     public Recording rec = new Recording();
     EditText name;
     int position = -1;
 
+    /**
+     * Method for setting all layout attributes and the Click Listeners of the buttons
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +45,9 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
         goFromAudioRecord();
     }
 
+    /**
+     * Method to get the information of the audio recorded and show the info of it on layout.
+     */
     public void goFromAudioRecord(){
         if (getIntent().getStringExtra("newTitleAudio") != null){
             this.rec.setName(getIntent().getStringExtra("newTitleAudio"));
@@ -53,6 +63,9 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    /**
+     * Method to share the actual audio note by the android apps (extension of the file to share .mp3)
+     */
     public void goToShareIntent(){
         File file = new File(this.rec.getAddress());
         Uri path = FileProvider.getUriForFile(getApplicationContext(), "com.example.android.fileprovider", file);
@@ -74,6 +87,11 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
         startActivity(chooser);
     }
 
+    /**
+     * Method to control all the click listeners of the view
+     *
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         if(R.id.AudioDeleteButton == v.getId()){
@@ -111,6 +129,9 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    /**
+     * Method to reproduce the actual audio note
+     */
     public void startPlaying() {
 
         try {
@@ -124,6 +145,12 @@ public class AudioRecorded extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    /**
+     * Method to go to confirmation discard changes
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == 1) {
