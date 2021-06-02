@@ -1,0 +1,459 @@
+@startuml
+
+title __PIS_ENTREGA1's Class Diagram__\n
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.AudioNote {
+        ~ titleView : EditText
+        - isRecording : boolean
+        - recorder : MediaRecorder
+        + goToAudioRecorded()
+        + onActivityResult()
+        + onClick()
+        # onCreate()
+        - startRecording()
+        - stopRecording()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.AudioRecorded {
+        ~ name : EditText
+        ~ position : int
+        + goFromAudioRecord()
+        + goToShareIntent()
+        + onActivityResult()
+        + onClick()
+        + startPlaying()
+        # onCreate()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.AuthActivity {
+        ~ Password : EditText
+        ~ checkBox : CheckBox
+        ~ editor : Editor
+        ~ email : EditText
+        ~ error : TextView
+        ~ preferences : SharedPreferences
+        + ErrorLogin()
+        + goToForgetPassword()
+        + goToMainIntent()
+        + logIn()
+        + onActivityResult()
+        + onClick()
+        + onSharedPreferenceChanged()
+        + register()
+        # onCreate()
+        - loadPreferences()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.DatabaseAdapter {
+        {static} + TAG : String
+        {static} + databaseAdapter : DatabaseAdapter
+        {static} + db : FirebaseFirestore
+        {static} + listener : vmInterface
+        - email : String
+        - mAuth : FirebaseAuth
+        - opcion : String
+        - password : String
+        - storage : FirebaseStorage
+        - user : FirebaseUser
+        + DatabaseAdapter()
+        + DatabaseAdapter()
+        + ForgotPassword()
+        + actualizarAudioNote()
+        + actualizarPhotoNote()
+        + actualizarTextNote()
+        + delete()
+        + descargarAudioDatabase()
+        + descargarPhotoDatabase()
+        + getCollection()
+        + getDocuments()
+        + initFirebase()
+        + logOut()
+        + saveAudioDocument()
+        + saveAudioDocumentWithFile()
+        + savePhotoDocument()
+        + savePhotoDocumentWithFile()
+        + saveTextDocument()
+        + saveTextDocumentWithFile()
+        + setInterface()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    interface com.example.pis_entrega1.DatabaseAdapter.vmInterface {
+        {abstract} + setCollection()
+        {abstract} + setToast()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.ForgotPassword {
+        ~ email : EditText
+        + onClick()
+        + onCreate()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.MainActivity {
+        + actionBarDrawerToggle : ActionBarDrawerToggle
+        + drawerLayout : DrawerLayout
+        + parentContext : Context
+        ~ addAudio : TextView
+        ~ addNote : ExtendedFloatingActionButton
+        ~ addPhoto : TextView
+        ~ addText : TextView
+        ~ clicked : boolean
+        ~ fabAudio : FloatingActionButton
+        ~ fabPhoto : FloatingActionButton
+        ~ fabText : FloatingActionButton
+        ~ navigationView : NavigationView
+        ~ simpleCallback : SimpleCallback
+        - mRecyclerView : RecyclerView
+        + goTOAudioNote()
+        + goToCameraNote()
+        + goToTextNote()
+        + onActivityResult()
+        + onClick()
+        + onCreateOptionsMenu()
+        + onOptionsItemSelected()
+        + setLiveDataObservers()
+        # onCreate()
+        ~ passDataAudio()
+        ~ passDataPhoto()
+        ~ passDataText()
+        ~ setTable()
+        - LogOut()
+        - fromDeleteMode()
+        - setFloatingActionButtons()
+        - setMenu()
+        - toDeleteMode()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.MainActivityViewModel {
+        {static} + TAG : String
+        - mNotes : MutableLiveData<ArrayList<Notes>>
+        - mToast : MutableLiveData<String>
+        + LogOut()
+        + MainActivityViewModel()
+        + getListNotes()
+        + getNotesById()
+        + getToast()
+        + modifyAudioNote()
+        + modifyPhotoNote()
+        + setCollection()
+        + setToast()
+        ~ addAudioNote()
+        ~ addPhotoNote()
+        ~ addTextNote()
+        ~ deleteNote()
+        ~ modifyTextNote()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.MyAdapter {
+        - listener : OnClickListener
+        - localDataSet : ArrayList<Notes>
+        - mInflater : LayoutInflater
+        + getItemCount()
+        + getLocalDataSet()
+        + onBindViewHolder()
+        + onClick()
+        + onCreateViewHolder()
+        + setLocalDataSet()
+        + setOnClickListener()
+        ~ MyAdapter()
+        ~ getItem()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.MyAdapter.ViewHolder {
+        ~ Date : TextView
+        ~ Title : TextView
+        ~ Type : TextView
+        ~ item : ImageView
+        + ViewHolder()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.MyAdapterDelete {
+        ~ toDelete : ArrayList<Notes>
+        - listener : OnClickListener
+        - localDataSet : ArrayList<Notes>
+        - mInflater : LayoutInflater
+        + addPosition()
+        + getItemCount()
+        + getLocalDataSet()
+        + getSelected()
+        + onBindViewHolder()
+        + onClick()
+        + onCreateViewHolder()
+        + setLocalDataSet()
+        + setOnClickListener()
+        ~ MyAdapterDelete()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.MyAdapterDelete.ViewHolderToDelete {
+        ~ Date : TextView
+        ~ Title : TextView
+        ~ Type : TextView
+        ~ item : ImageView
+        ~ linearLayout : LinearLayout
+        + ViewHolderToDelete()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    abstract class com.example.pis_entrega1.Notes {
+        - checked : boolean
+        - content : String
+        - date : String
+        - deathLine : Date
+        - id : String
+        - name : String
+        - type : int
+        + Notes()
+        + Notes()
+        + Notes()
+        {abstract} + delete()
+        + getContent()
+        + getDate()
+        + getDeathLine()
+        + getID()
+        + getName()
+        + getType()
+        + isChecked()
+        + setChecked()
+        + setContent()
+        + setDate()
+        + setDeathLine()
+        + setID()
+        + setName()
+        + setType()
+        {abstract} ~ saveNote()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.NotesContainer {
+        {static} + CREATOR : Creator<NotesContainer>
+        ~ container : ArrayList<Notes>
+        + NotesContainer()
+        + NotesContainer()
+        + describeContents()
+        + get()
+        + getContainer()
+        + notifyItemMoved()
+        + setContainer()
+        + writeToParcel()
+        # NotesContainer()
+        ~ addAudioNote()
+        ~ addPhotoNote()
+        ~ addTextNote()
+        ~ deleteNote()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.Photo {
+        - PhotoTitle : String
+        - address : String
+        - url : String
+        + Photo()
+        + Photo()
+        + Photo()
+        + delete()
+        + getAddress()
+        + getPhotoTitle()
+        + getUrl()
+        + modify()
+        + setAddress()
+        + setPhotoTitle()
+        + setUrl()
+        ~ saveNote()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.PhotoNote {
+        {static} ~ REQUEST_IMAGE_CAPTURE : int
+        ~ path : String
+        ~ title : EditText
+        + PhotoNote()
+        + goToMainIntent()
+        + onBackPressed()
+        + onClick()
+        # onActivityResult()
+        # onCreate()
+        - createImageFile()
+        - dispatchTakePictureIntent()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.PhotoTaken {
+        ~ miniatura : ImageView
+        ~ path : String
+        ~ position : int
+        ~ title : TextView
+        + goFromPhotoNote()
+        + goToMainIntentNoSave()
+        + goToMainIntentSave()
+        + onClick()
+        # onCreate()
+        - goToShareIntent()
+        - setPic()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.Recording {
+        - AudioTitle : String
+        - address : String
+        - url : String
+        + Recording()
+        + Recording()
+        + Recording()
+        + delete()
+        + getAddress()
+        + getAudioTitle()
+        + getUrl()
+        + modify()
+        + setAddress()
+        + setAudioTitle()
+        + setUrl()
+        ~ saveNote()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.Text {
+        - path : String
+        - text : String
+        + Text()
+        + Text()
+        + Text()
+        + delete()
+        + getPath()
+        + getText()
+        + setPath()
+        + setText()
+        ~ modify()
+        ~ saveNote()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.TextNote {
+        ~ content : EditText
+        ~ existente : boolean
+        ~ path : String
+        ~ position : int
+        ~ title : EditText
+        + CheckList()
+        + goToMainIntent()
+        + goToShareIntent()
+        + onClick()
+        # onCreate()
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.VentanaFlotante {
+        ~ no : Button
+        ~ yes : Button
+        # onCreate()
+    }
+  }
+  
+
+  com.example.pis_entrega1.AudioNote .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.AudioNote -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.AudioNote o-- com.example.pis_entrega1.Recording : rec
+  com.example.pis_entrega1.AudioRecorded .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.AudioRecorded -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.AudioRecorded o-- com.example.pis_entrega1.Recording : rec
+  com.example.pis_entrega1.AuthActivity .up.|> android.content.SharedPreferences.OnSharedPreferenceChangeListener
+  com.example.pis_entrega1.AuthActivity .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.AuthActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.DatabaseAdapter -up-|> android.app.Activity
+  com.example.pis_entrega1.DatabaseAdapter o-- com.example.pis_entrega1.AuthActivity : n
+  com.example.pis_entrega1.DatabaseAdapter +-down- com.example.pis_entrega1.DatabaseAdapter.vmInterface
+  com.example.pis_entrega1.ForgotPassword .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.ForgotPassword -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.MainActivity .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.MainActivity o-- com.example.pis_entrega1.MyAdapter : mAdapter
+  com.example.pis_entrega1.MainActivity o-- com.example.pis_entrega1.MyAdapterDelete : myAdapterDelete
+  com.example.pis_entrega1.MainActivity o-- com.example.pis_entrega1.MainActivityViewModel : viewModel
+  com.example.pis_entrega1.MainActivityViewModel .up.|> com.example.pis_entrega1.DatabaseAdapter.vmInterface
+  com.example.pis_entrega1.MainActivityViewModel -up-|> androidx.lifecycle.ViewModel
+  com.example.pis_entrega1.MainActivityViewModel o-- com.example.pis_entrega1.DatabaseAdapter : da
+  com.example.pis_entrega1.MyAdapter .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.MyAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  com.example.pis_entrega1.MyAdapter +-down- com.example.pis_entrega1.MyAdapter.ViewHolder
+  com.example.pis_entrega1.MyAdapter.ViewHolder -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
+  com.example.pis_entrega1.MyAdapterDelete .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.MyAdapterDelete -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  com.example.pis_entrega1.MyAdapterDelete +-down- com.example.pis_entrega1.MyAdapterDelete.ViewHolderToDelete
+  com.example.pis_entrega1.MyAdapterDelete.ViewHolderToDelete -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
+  com.example.pis_entrega1.NotesContainer .up.|> android.os.Parcelable
+  com.example.pis_entrega1.Photo -up-|> com.example.pis_entrega1.Notes
+  com.example.pis_entrega1.Photo o-- com.example.pis_entrega1.DatabaseAdapter : adapter
+  com.example.pis_entrega1.PhotoNote .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.PhotoNote -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.PhotoNote o-- com.example.pis_entrega1.Photo : photo
+  com.example.pis_entrega1.PhotoTaken .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.PhotoTaken -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.PhotoTaken o-- com.example.pis_entrega1.Photo : p
+  com.example.pis_entrega1.Recording -up-|> com.example.pis_entrega1.Notes
+  com.example.pis_entrega1.Recording o-- com.example.pis_entrega1.DatabaseAdapter : adapter
+  com.example.pis_entrega1.Text -up-|> com.example.pis_entrega1.Notes
+  com.example.pis_entrega1.Text o-- com.example.pis_entrega1.DatabaseAdapter : adapter
+  com.example.pis_entrega1.TextNote .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.TextNote -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.TextNote o-- com.example.pis_entrega1.Text : text
+  com.example.pis_entrega1.VentanaFlotante -up-|> androidx.appcompat.app.AppCompatActivity
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
