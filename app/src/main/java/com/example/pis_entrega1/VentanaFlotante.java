@@ -14,6 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * Class to create an extra window to confirm an action.
+ */
 public class VentanaFlotante extends AppCompatActivity {
 
     /**

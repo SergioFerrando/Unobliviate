@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -20,6 +21,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Activity to show the button to activate to the camera.
+ */
 public class PhotoNote extends AppCompatActivity implements View.OnClickListener {
 
     private Photo photo;
@@ -27,8 +31,16 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
     String path;
     static final int REQUEST_IMAGE_CAPTURE = 2;
 
+    /**
+     * Constructor method of the class.
+     */
     public PhotoNote(){}
 
+    /**
+     * onCreate method to set an OnClickListener to the buttons in the layout of the class and ask
+     * for permission to the user to open the camera.
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +57,10 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    /**
+     * Method to go back to main activity, sending data through an Intent and setting it as the
+     * result of the activity itself.
+     */
     public void goToMainIntent(){
         Intent intent = new Intent();
         intent.putExtra("positionDelete", -1);
@@ -52,11 +68,19 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         finish();
     }
 
+    /**
+     * Method to set what to do when backButton is pressed. The activity finishes.
+     */
     @Override
     public void onBackPressed(){
         finish();
     }
 
+    /**
+     * Method onClick to check the button clicked and interact according to the purpose of the
+     * button.
+     * @param v View
+     */
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.photoDeleteButton){
@@ -66,6 +90,9 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    /**
+     * Method to dispatch the photo taken though an intent.
+     */
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photoFile = null;
@@ -79,8 +106,13 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    /**
+     * Method to create an image file.
+     * @return File
+     * @throws IOException error
+     */
     private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
@@ -93,8 +125,13 @@ public class PhotoNote extends AppCompatActivity implements View.OnClickListener
         return image;
     }
 
-
-        @Override
+    /**
+     * Method to catch the requested result.
+     * @param requestCode int
+     * @param resultCode int
+     * @param data intent
+     */
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
             if (requestCode == REQUEST_IMAGE_CAPTURE) {

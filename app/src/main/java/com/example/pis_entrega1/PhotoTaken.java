@@ -24,6 +24,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Activity to show a photo taken and interact with it.
+ */
 public class PhotoTaken extends AppCompatActivity implements View.OnClickListener {
 
     Photo p = new Photo();
@@ -32,6 +35,11 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
     int position = -1;
     String path;
 
+    /**
+     * onCreate method to set an "OnClickListener" to the buttons in the layout "activity_photo_taken",
+     * set the items miniatura and title and call the method "goFromPhotoNote".
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +52,9 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         goFromPhotoNote();
     }
 
+    /**
+     * Method to check if the note has already been created and get the image and title of it.
+     */
     public void goFromPhotoNote() {
         if (getIntent().getStringExtra("newTitlePhoto") != null) {
             p.setName(getIntent().getStringExtra("newTitlePhoto"));
@@ -62,6 +73,9 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    /**
+     * Method to set the image of the note to the attribute "miniatura" to can see it.
+     */
     private void setPic() {
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -75,6 +89,9 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         miniatura.setImageBitmap(bitmap);
     }
 
+    /**
+     * Method to go back to main intent without save the note.
+     */
     public void goToMainIntentNoSave() {
         Intent intent = new Intent();
         intent.putExtra("positionDelete", this.position);
@@ -82,6 +99,10 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         finish();
     }
 
+    /**
+     * Method to go back to main intent saving the note, checking if the note is new or if it has
+     * already been created, to overwrite it in the database.
+     */
     public void goToMainIntentSave() {
         if (p.getID() == null) {
             p.setName(title.getText().toString());
@@ -108,6 +129,11 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    /**
+     * Method onClick to check the button clicked and interact according to the purpose of the
+     * button.
+     * @param v View
+     */
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.PhotoDeleteButton) {
@@ -121,6 +147,9 @@ public class PhotoTaken extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    /**
+     * Method to go to share intent, in with one the user can share the note.
+     */
     private void goToShareIntent() {
         Drawable drawable = miniatura.getDrawable();
         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
