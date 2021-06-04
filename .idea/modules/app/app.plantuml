@@ -1,0 +1,196 @@
+@startuml
+
+title __PIS_ENTREGA1.APP's Class Diagram__\n
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.AudioNote {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.AudioRecorded {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.AuthActivity {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.ForgotPassword {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.MainActivity {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.PhotoNote {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.PhotoTaken {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.TextNote {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.VentanaFlotante {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    class com.example.pis_entrega1.BuildConfig {
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Model {
+      class com.example.pis_entrega1.Model.DatabaseAdapter {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Model {
+      class com.example.pis_entrega1.Model.MainActivityViewModel {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Model {
+      class com.example.pis_entrega1.Model.MyAdapter {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Model {
+      class com.example.pis_entrega1.Model.MyAdapterDelete {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Note {
+      abstract class com.example.pis_entrega1.Note.Notes {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Note {
+      class com.example.pis_entrega1.Note.Photo {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Note {
+      class com.example.pis_entrega1.Note.Recording {
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Note {
+      class com.example.pis_entrega1.Note.Text {
+      }
+    }
+  }
+  
+
+  com.example.pis_entrega1.Activities.AudioNote .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.AudioNote -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.AudioNote o-- com.example.pis_entrega1.Note.Recording : rec
+  com.example.pis_entrega1.Activities.AudioRecorded .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.AudioRecorded -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.AudioRecorded o-- com.example.pis_entrega1.Note.Recording : rec
+  com.example.pis_entrega1.Activities.AuthActivity .up.|> android.content.SharedPreferences.OnSharedPreferenceChangeListener
+  com.example.pis_entrega1.Activities.AuthActivity .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.AuthActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.ForgotPassword .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.ForgotPassword -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.MainActivity .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.MainActivity o-- com.example.pis_entrega1.Model.MyAdapter : mAdapter
+  com.example.pis_entrega1.Activities.MainActivity o-- com.example.pis_entrega1.Model.MainActivityViewModel : viewModel
+  com.example.pis_entrega1.Activities.PhotoNote .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.PhotoNote -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.PhotoNote o-- com.example.pis_entrega1.Note.Photo : photo
+  com.example.pis_entrega1.Activities.PhotoTaken .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.PhotoTaken -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.PhotoTaken o-- com.example.pis_entrega1.Note.Photo : p
+  com.example.pis_entrega1.Activities.TextNote .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.TextNote -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.TextNote o-- com.example.pis_entrega1.Note.Text : text
+  com.example.pis_entrega1.Activities.VentanaFlotante -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Model.DatabaseAdapter -up-|> android.app.Activity
+  com.example.pis_entrega1.Model.DatabaseAdapter o-- com.example.pis_entrega1.Activities.AuthActivity : n
+  com.example.pis_entrega1.Model.MainActivityViewModel .up.|> com.example.pis_entrega1.Model.DatabaseAdapter.vmInterface
+  com.example.pis_entrega1.Model.MainActivityViewModel -up-|> androidx.lifecycle.ViewModel
+  com.example.pis_entrega1.Model.MainActivityViewModel o-- com.example.pis_entrega1.Model.DatabaseAdapter : da
+  com.example.pis_entrega1.Model.MyAdapter .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Model.MyAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  com.example.pis_entrega1.Model.MyAdapterDelete .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Model.MyAdapterDelete -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  com.example.pis_entrega1.Note.Photo -up-|> com.example.pis_entrega1.Note.Notes
+  com.example.pis_entrega1.Note.Photo o-- com.example.pis_entrega1.Model.DatabaseAdapter : adapter
+  com.example.pis_entrega1.Note.Recording -up-|> com.example.pis_entrega1.Note.Notes
+  com.example.pis_entrega1.Note.Recording o-- com.example.pis_entrega1.Model.DatabaseAdapter : adapter
+  com.example.pis_entrega1.Note.Text -up-|> com.example.pis_entrega1.Note.Notes
+  com.example.pis_entrega1.Note.Text o-- com.example.pis_entrega1.Model.DatabaseAdapter : adapter
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
