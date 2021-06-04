@@ -1,14 +1,16 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import com.example.pis_entrega1.*;
 import android.view.View;
 import android.widget.EditText;
 
-import java.io.FileOutputStream;
+import com.example.pis_entrega1.Note.Text;
+import com.example.pis_entrega1.R;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

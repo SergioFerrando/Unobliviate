@@ -1,9 +1,10 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.content.Intent;
+import com.example.pis_entrega1.*;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -15,6 +16,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.pis_entrega1.Note.Photo;
+import com.example.pis_entrega1.R;
 
 import java.io.File;
 import java.io.FileOutputStream;

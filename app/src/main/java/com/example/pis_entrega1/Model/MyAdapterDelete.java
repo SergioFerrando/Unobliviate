@@ -1,4 +1,4 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Model;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,6 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.pis_entrega1.*;
+
+import com.example.pis_entrega1.Note.Notes;
+import com.example.pis_entrega1.Note.Recording;
+import com.example.pis_entrega1.Note.Text;
+import com.example.pis_entrega1.R;
+
 import java.util.ArrayList;
 
 public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHolderToDelete> implements View.OnClickListener {
@@ -19,7 +26,7 @@ public class MyAdapterDelete extends RecyclerView.Adapter<MyAdapterDelete.ViewHo
     private View.OnClickListener listener;
     private ArrayList<Notes> localDataSet = new ArrayList<Notes>();
 
-    MyAdapterDelete(Context context, ArrayList<Notes> data) {
+    public MyAdapterDelete(Context context, ArrayList<Notes> data) {
         this.mInflater = LayoutInflater.from(context);
         this.localDataSet = data;
         toDelete = new ArrayList<>();

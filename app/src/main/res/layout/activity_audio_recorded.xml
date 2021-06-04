@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Activities.MainActivity">
 
 
     <EditText
@@ -39,7 +39,7 @@
     <ImageButton
         android:id="@+id/AudioSaveButton"
         android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:adjustViewBounds="true"
         android:background="#FFFFFF"
@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/AudioShareButton"
         app:layout_constraintEnd_toStartOf="@+id/AudioShareButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/AudioShareButton"
+        app:layout_constraintTop_toBottomOf="@+id/play_button"
         app:srcCompat="@drawable/disquete" />
 
     <ImageButton
@@ -65,7 +65,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.943"
+        app:layout_constraintVertical_bias="0.976"
         app:srcCompat="@drawable/image_2021_03_08t10_27_42_655z" />
 
     <ImageButton
@@ -80,7 +80,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/AudioShareButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/AudioShareButton"
-        app:layout_constraintTop_toTopOf="@+id/AudioShareButton"
+        app:layout_constraintTop_toBottomOf="@+id/play_button"
         app:srcCompat="@drawable/basura" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@
     android:background="#BFBFBF"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".VentanaFlotante">
+    tools:context=".Activities.VentanaFlotante">
 
     <TextView
         android:id="@+id/textView3"

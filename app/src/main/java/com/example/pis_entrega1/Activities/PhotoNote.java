@@ -1,9 +1,10 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import com.example.pis_entrega1.*;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -15,6 +16,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.pis_entrega1.Note.Photo;
+import com.example.pis_entrega1.R;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,11 +1,17 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Model;
 
 import android.app.Activity;
 import android.net.Uri;
 import android.util.Log;
+import com.example.pis_entrega1.*;
 
 import androidx.annotation.NonNull;
 
+import com.example.pis_entrega1.Activities.AuthActivity;
+import com.example.pis_entrega1.Note.Notes;
+import com.example.pis_entrega1.Note.Photo;
+import com.example.pis_entrega1.Note.Recording;
+import com.example.pis_entrega1.Note.Text;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

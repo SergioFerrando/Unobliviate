@@ -1,11 +1,15 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Note;
 
 import android.util.Log;
+
+import com.example.pis_entrega1.Model.DatabaseAdapter;
+import com.example.pis_entrega1.R;
+import com.example.pis_entrega1.*;
 
 /**
  * Class to store the data of a text note and interact with it inheriting from the "Notes" class.
  */
-public class Text extends Notes{
+public class Text extends Notes {
 
     private String text;
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
@@ -20,7 +24,7 @@ public class Text extends Notes{
     /**
      * Method to refresh the data inside the "DatabaseAdapter".
      */
-    void modify(){
+    public void modify(){
         adapter.actualizarTextNote(this.getName(), this.getText(),this.getDate(), this.getID());
     }
 
@@ -28,7 +32,7 @@ public class Text extends Notes{
      * Method to save a text note inside the "DatabaseAdapter".
      */
     @Override
-    void saveNote() {
+    public void saveNote() {
         Log.d("saveTextNote", "saveTextNote-> saveDocument");
         adapter.saveTextDocument(this.getName(), this.getText(), this.getDate());
     }
@@ -53,7 +57,6 @@ public class Text extends Notes{
         this.setName(name);
         this.setDate(date);
         this.setText(bodyText);
-        this.setType(R.drawable.tex);
     }
 
     /**
@@ -66,8 +69,6 @@ public class Text extends Notes{
         super(name);
         this.setText(text);
         this.setDate(date);
-        this.setContent("Text Note");
-        this.setType(R.drawable.tex);
     }
 
     /**

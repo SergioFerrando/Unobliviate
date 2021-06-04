@@ -1,7 +1,8 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
+import com.example.pis_entrega1.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.pis_entrega1.Model.DatabaseAdapter;
+import com.example.pis_entrega1.R;
 
 /**
  * Log in class

@@ -1,0 +1,158 @@
+@startuml
+
+title __MODEL's Class Diagram__\n
+
+  namespace com.example.pis_entrega1 {
+    namespace Model {
+      class com.example.pis_entrega1.Model.DatabaseAdapter {
+          {static} + TAG : String
+          {static} + databaseAdapter : DatabaseAdapter
+          {static} + db : FirebaseFirestore
+          {static} + listener : vmInterface
+          - email : String
+          - mAuth : FirebaseAuth
+          - opcion : String
+          - password : String
+          - storage : FirebaseStorage
+          - user : FirebaseUser
+          + DatabaseAdapter()
+          + DatabaseAdapter()
+          + ForgotPassword()
+          + actualizarAudioNote()
+          + actualizarPhotoNote()
+          + actualizarTextNote()
+          + delete()
+          + descargarAudioDatabase()
+          + descargarPhotoDatabase()
+          + getCollection()
+          + initFirebase()
+          + saveAudioDocument()
+          + saveAudioDocumentWithFile()
+          + savePhotoDocument()
+          + savePhotoDocumentWithFile()
+          + saveTextDocument()
+          + setInterface()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Model {
+      interface com.example.pis_entrega1.Model.DatabaseAdapter.vmInterface {
+          {abstract} + setCollection()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Model {
+      class com.example.pis_entrega1.Model.MainActivityViewModel {
+          - mNotes : MutableLiveData<ArrayList<Notes>>
+          - mToast : MutableLiveData<String>
+          + MainActivityViewModel()
+          + addAudioNote()
+          + addPhotoNote()
+          + addTextNote()
+          + deleteNote()
+          + getListNotes()
+          + getNotesById()
+          + getToast()
+          + modifyAudioNote()
+          + modifyPhotoNote()
+          + modifyTextNote()
+          + setCollection()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Model {
+      class com.example.pis_entrega1.Model.MyAdapter {
+          - listener : OnClickListener
+          - localDataSet : ArrayList<Notes>
+          - mInflater : LayoutInflater
+          + MyAdapter()
+          + getItemCount()
+          + onBindViewHolder()
+          + onClick()
+          + onCreateViewHolder()
+          + setOnClickListener()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Model {
+      class com.example.pis_entrega1.Model.MyAdapter.ViewHolder {
+          ~ Date : TextView
+          ~ Title : TextView
+          ~ Type : TextView
+          ~ item : ImageView
+          + ViewHolder()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Model {
+      class com.example.pis_entrega1.Model.MyAdapterDelete {
+          ~ toDelete : ArrayList<Notes>
+          - listener : OnClickListener
+          - localDataSet : ArrayList<Notes>
+          - mInflater : LayoutInflater
+          + MyAdapterDelete()
+          + addPosition()
+          + getItemCount()
+          + getSelected()
+          + onBindViewHolder()
+          + onClick()
+          + onCreateViewHolder()
+          + setOnClickListener()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Model {
+      class com.example.pis_entrega1.Model.MyAdapterDelete.ViewHolderToDelete {
+          ~ Date : TextView
+          ~ Title : TextView
+          ~ Type : TextView
+          ~ item : ImageView
+          ~ linearLayout : LinearLayout
+          + ViewHolderToDelete()
+      }
+    }
+  }
+  
+
+  com.example.pis_entrega1.Model.DatabaseAdapter -up-|> android.app.Activity
+  com.example.pis_entrega1.Model.DatabaseAdapter o-- com.example.pis_entrega1.Activities.AuthActivity : n
+  com.example.pis_entrega1.Model.DatabaseAdapter +-down- com.example.pis_entrega1.Model.DatabaseAdapter.vmInterface
+  com.example.pis_entrega1.Model.MainActivityViewModel .up.|> com.example.pis_entrega1.Model.DatabaseAdapter.vmInterface
+  com.example.pis_entrega1.Model.MainActivityViewModel -up-|> androidx.lifecycle.ViewModel
+  com.example.pis_entrega1.Model.MainActivityViewModel o-- com.example.pis_entrega1.Model.DatabaseAdapter : da
+  com.example.pis_entrega1.Model.MyAdapter .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Model.MyAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  com.example.pis_entrega1.Model.MyAdapter +-down- com.example.pis_entrega1.Model.MyAdapter.ViewHolder
+  com.example.pis_entrega1.Model.MyAdapter.ViewHolder -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
+  com.example.pis_entrega1.Model.MyAdapterDelete .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Model.MyAdapterDelete -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  com.example.pis_entrega1.Model.MyAdapterDelete +-down- com.example.pis_entrega1.Model.MyAdapterDelete.ViewHolderToDelete
+  com.example.pis_entrega1.Model.MyAdapterDelete.ViewHolderToDelete -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

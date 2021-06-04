@@ -1,4 +1,4 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,12 +7,10 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import com.example.pis_entrega1.*;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+import com.example.pis_entrega1.R;
+
 
 /**
  * Class to create an extra window to confirm an action.

@@ -1,10 +1,15 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Model;
 
 
 import java.util.ArrayList;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import com.example.pis_entrega1.*;
+import com.example.pis_entrega1.Note.Notes;
+import com.example.pis_entrega1.Note.Photo;
+import com.example.pis_entrega1.Note.Recording;
+import com.example.pis_entrega1.Note.Text;
 
 /**
  * Class that contains the Array List of Notes
@@ -32,7 +37,7 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
      * Method to delete a note from the Array list of Notes
      * @param id Id of the note to delete
      */
-    void deleteNote(Notes id){
+    public void deleteNote(Notes id){
         this.mNotes.getValue().remove(id);
         id.delete();
     }
@@ -81,7 +86,7 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
      * @param t Text with the changes in the Attributes
      * @param position Position of the note to modify
      */
-    void modifyTextNote(Text t, int position){
+    public void modifyTextNote(Text t, int position){
         ((Text) this.mNotes.getValue().get(position)).setText(t.getText());
         this.mNotes.getValue().get(position).setName(t.getName());
         this.mNotes.getValue().get(position).setDate(t.getDate());
@@ -92,7 +97,7 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
      * Method to add a new Text note to the Array List
      * @param t Text to add
      */
-    void addTextNote(Text t) {
+    public void addTextNote(Text t) {
         this.mNotes.getValue().add(t);
         this.mNotes.setValue(mNotes.getValue());
         t.saveNote();
@@ -102,7 +107,7 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
      * Method to add an Audio Note
      * @param recording recording to add in Array list
      */
-    void addAudioNote(Recording recording) {
+    public void addAudioNote(Recording recording) {
         this.mNotes.getValue().add(recording);
         this.mNotes.setValue(mNotes.getValue());
         recording.saveNote();
@@ -112,7 +117,7 @@ public class MainActivityViewModel extends ViewModel implements DatabaseAdapter.
      * Method to add a Photo note
      * @param p Photo Note to Add in array list
      */
-    void addPhotoNote(Photo p) {
+    public void addPhotoNote(Photo p) {
         this.mNotes.getValue().add(p);
         this.mNotes.setValue(mNotes.getValue());
         p.saveNote();

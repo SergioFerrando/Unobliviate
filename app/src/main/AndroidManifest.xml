@@ -19,15 +19,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PIS_Entrega1">
-        <activity android:name=".VentanaFlotante" />
-        <activity android:name=".AudioRecorded" />
-        <activity android:name=".ForgotPassword" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".PhotoTaken" />
-        <activity android:name=".TextNote" />
-        <activity android:name=".PhotoNote" />
-        <activity android:name=".AudioNote" />
-        <activity android:name=".AuthActivity">
+        <activity android:name=".Activities.VentanaFlotante" />
+        <activity android:name=".Activities.AudioRecorded" />
+        <activity android:name=".Activities.ForgotPassword" />
+        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".Activities.PhotoTaken" />
+        <activity android:name=".Activities.TextNote" />
+        <activity android:name=".Activities.PhotoNote" />
+        <activity android:name=".Activities.AudioNote" />
+        <activity android:name=".Activities.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,11 +1,14 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import com.example.pis_entrega1.*;
 import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pis_entrega1.R;
 
 /**
  * Class that contains view From Forgot Password

@@ -1,0 +1,209 @@
+@startuml
+
+title __ACTIVITIES's Class Diagram__\n
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.AudioNote {
+          ~ titleView : EditText
+          - isRecording : boolean
+          - recorder : MediaRecorder
+          + goToAudioRecorded()
+          + onActivityResult()
+          + onClick()
+          # onCreate()
+          - startRecording()
+          - stopRecording()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.AudioRecorded {
+          ~ name : EditText
+          ~ position : int
+          + goFromAudioRecord()
+          + goToShareIntent()
+          + onActivityResult()
+          + onClick()
+          + startPlaying()
+          # onCreate()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.AuthActivity {
+          ~ Password : EditText
+          ~ checkBox : CheckBox
+          ~ editor : Editor
+          ~ email : EditText
+          ~ error : TextView
+          ~ preferences : SharedPreferences
+          + ErrorLogin()
+          + goToForgetPassword()
+          + goToMainIntent()
+          + logIn()
+          + onActivityResult()
+          + onClick()
+          + onSharedPreferenceChanged()
+          + register()
+          # onCreate()
+          - loadPreferences()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.ForgotPassword {
+          ~ email : EditText
+          + onClick()
+          + onCreate()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.MainActivity {
+          + actionBarDrawerToggle : ActionBarDrawerToggle
+          + drawerLayout : DrawerLayout
+          + parentContext : Context
+          ~ addNote : ExtendedFloatingActionButton
+          ~ clicked : boolean
+          ~ fabAudio : FloatingActionButton
+          ~ fabPhoto : FloatingActionButton
+          ~ fabText : FloatingActionButton
+          ~ navigationView : NavigationView
+          ~ simpleCallback : SimpleCallback
+          - mRecyclerView : RecyclerView
+          + goTOAudioNote()
+          + goToCameraNote()
+          + goToTextNote()
+          + onActivityResult()
+          + onClick()
+          + onCreateOptionsMenu()
+          + onOptionsItemSelected()
+          + setLiveDataObservers()
+          # onCreate()
+          ~ passDataAudio()
+          ~ passDataPhoto()
+          ~ passDataText()
+          ~ setTable()
+          - fromDeleteMode()
+          - setFloatingActionButtons()
+          - setMenu()
+          - toDeleteMode()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.PhotoNote {
+          {static} ~ REQUEST_IMAGE_CAPTURE : int
+          ~ path : String
+          ~ title : EditText
+          + PhotoNote()
+          + goToMainIntent()
+          + onBackPressed()
+          + onClick()
+          # onActivityResult()
+          # onCreate()
+          - createImageFile()
+          - dispatchTakePictureIntent()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.PhotoTaken {
+          ~ miniatura : ImageView
+          ~ path : String
+          ~ position : int
+          ~ title : TextView
+          + goFromPhotoNote()
+          + goToMainIntentNoSave()
+          + goToMainIntentSave()
+          + onClick()
+          # onCreate()
+          - goToShareIntent()
+          - setPic()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.TextNote {
+          ~ content : EditText
+          ~ existente : boolean
+          ~ position : int
+          ~ title : EditText
+          + CheckList()
+          + goToMainIntent()
+          + goToShareIntent()
+          + onClick()
+          # onCreate()
+      }
+    }
+  }
+  
+
+  namespace com.example.pis_entrega1 {
+    namespace Activities {
+      class com.example.pis_entrega1.Activities.VentanaFlotante {
+          ~ no : Button
+          ~ yes : Button
+          # onCreate()
+      }
+    }
+  }
+  
+
+  com.example.pis_entrega1.Activities.AudioNote .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.AudioNote -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.AudioNote o-- com.example.pis_entrega1.Note.Recording : rec
+  com.example.pis_entrega1.Activities.AudioRecorded .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.AudioRecorded -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.AudioRecorded o-- com.example.pis_entrega1.Note.Recording : rec
+  com.example.pis_entrega1.Activities.AuthActivity .up.|> android.content.SharedPreferences.OnSharedPreferenceChangeListener
+  com.example.pis_entrega1.Activities.AuthActivity .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.AuthActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.ForgotPassword .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.ForgotPassword -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.MainActivity .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.MainActivity o-- com.example.pis_entrega1.Model.MyAdapter : mAdapter
+  com.example.pis_entrega1.Activities.MainActivity o-- com.example.pis_entrega1.Model.MainActivityViewModel : viewModel
+  com.example.pis_entrega1.Activities.PhotoNote .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.PhotoNote -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.PhotoNote o-- com.example.pis_entrega1.Note.Photo : photo
+  com.example.pis_entrega1.Activities.PhotoTaken .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.PhotoTaken -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.PhotoTaken o-- com.example.pis_entrega1.Note.Photo : p
+  com.example.pis_entrega1.Activities.TextNote .up.|> android.view.View.OnClickListener
+  com.example.pis_entrega1.Activities.TextNote -up-|> androidx.appcompat.app.AppCompatActivity
+  com.example.pis_entrega1.Activities.TextNote o-- com.example.pis_entrega1.Note.Text : text
+  com.example.pis_entrega1.Activities.VentanaFlotante -up-|> androidx.appcompat.app.AppCompatActivity
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

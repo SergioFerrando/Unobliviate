@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Activities.MainActivity">
 
 
     <EditText
@@ -43,15 +43,16 @@
         android:contentDescription="@string/save_button"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="@+id/PhotoShareButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/PhotoShareButton"
-        app:layout_constraintTop_toTopOf="@+id/PhotoShareButton"
+        app:layout_constraintEnd_toStartOf="@+id/PhotoShareButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Foto"
         app:srcCompat="@drawable/disquete" />
 
     <ImageButton
         android:id="@+id/PhotoShareButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:adjustViewBounds="true"
         android:background="#FFFFFF"
@@ -75,8 +76,8 @@
         android:contentDescription="@string/trash_button"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="@+id/PhotoShareButton"
-        app:layout_constraintEnd_toStartOf="@+id/PhotoShareButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/PhotoShareButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/PhotoShareButton"
+        app:layout_constraintTop_toBottomOf="@+id/Foto"
         app:srcCompat="@drawable/basura" />
 </androidx.constraintlayout.widget.ConstraintLayout>

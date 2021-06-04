@@ -1,4 +1,4 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Model;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,9 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.example.pis_entrega1.*;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.pis_entrega1.Note.Notes;
+import com.example.pis_entrega1.Note.Recording;
+import com.example.pis_entrega1.Note.Text;
+import com.example.pis_entrega1.R;
+
 import java.util.ArrayList;
 
 
@@ -26,7 +32,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
      * @param context app context
      * @param data List of notes to set
      */
-    MyAdapter(Context context, ArrayList<Notes> data) {
+    public MyAdapter(Context context, ArrayList<Notes> data) {
         mInflater = LayoutInflater.from(context);
         this.localDataSet = data;
     }

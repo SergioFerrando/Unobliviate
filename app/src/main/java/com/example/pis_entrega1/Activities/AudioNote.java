@@ -1,4 +1,4 @@
- package com.example.pis_entrega1;
+ package com.example.pis_entrega1.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -13,7 +13,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.pis_entrega1.Note.Recording;
+import com.example.pis_entrega1.R;
+
 import java.io.File;
+import com.example.pis_entrega1.*;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

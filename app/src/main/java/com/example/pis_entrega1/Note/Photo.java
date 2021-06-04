@@ -1,15 +1,18 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Note;
 
 import android.util.Log;
 
+import com.example.pis_entrega1.Model.DatabaseAdapter;
+import com.example.pis_entrega1.R;
+
 import java.io.File;
+import com.example.pis_entrega1.*;
 
 /**
  * Method to store the data of a photo note and interact with it.
  */
 public class Photo extends Notes {
 
-    private String PhotoTitle;
     private String address;
     private String url;
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
@@ -41,9 +44,9 @@ public class Photo extends Notes {
      * Method to save a text note inside the "DatabaseAdapter".
      */
     @Override
-    void saveNote() {
+    public void saveNote() {
         Log.d("saveAudioNote", "saveAudioNote-> saveDocument");
-        adapter.savePhotoDocumentWithFile(PhotoTitle, address, this.getDate());
+        adapter.savePhotoDocumentWithFile(this.getName(), address, this.getDate());
     }
 
     /**
@@ -71,7 +74,6 @@ public class Photo extends Notes {
      */
     public Photo(String name, String Adress, String id, String date, String url) {
         super(name, id);
-        this.PhotoTitle = name;
         this.url = url;
         File file = new File(Adress);
         if(!file.exists()){
@@ -80,8 +82,6 @@ public class Photo extends Notes {
             this.address = Adress;
         }
         this.setDate(date);
-        this.setContent("Photo Note");
-        this.setType(R.drawable.camara);
     }
 
     /**
@@ -94,9 +94,6 @@ public class Photo extends Notes {
         super(name);
         this.setDate(date);
         this.setAddress(path);
-        this.PhotoTitle = name;
-        this.setContent("Photo Note");
-        this.setType(R.drawable.camara);
     }
 
     /**

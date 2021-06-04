@@ -1,6 +1,10 @@
-package com.example.pis_entrega1;
+package com.example.pis_entrega1.Note;
 
 import android.util.Log;
+
+import com.example.pis_entrega1.Model.DatabaseAdapter;
+import com.example.pis_entrega1.R;
+import com.example.pis_entrega1.*;
 
 import java.io.File;
 
@@ -9,7 +13,6 @@ import java.io.File;
  */
 public class Recording extends Notes {
 
-    private String AudioTitle;
     private String address;
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
     private String url;
@@ -45,11 +48,8 @@ public class Recording extends Notes {
      */
     public Recording(String date, String name, String address) {
         super(name);
-        AudioTitle = name;
         this.setDate(date);
         this.address = address;
-        this.setContent("Audio Note");
-        this.setType(R.drawable.micro);
     }
 
     /**
@@ -60,14 +60,13 @@ public class Recording extends Notes {
         adapter.delete(this.getID());
     }
     @Override
-    void saveNote() {
+    public void saveNote() {
         Log.d("saveAudioNote", "saveAudioNote-> saveDocument");
-        adapter.saveAudioDocumentWithFile(this.AudioTitle, this.address, this.getDate());
+        adapter.saveAudioDocumentWithFile(this.getName(), this.address, this.getDate());
     }
 
     public Recording(String name, String address, String id, String date, String url) {
         super(name, id);
-        AudioTitle = name;
         this.url = url;
         File file = new File(address);
         if(!file.exists()){
@@ -76,8 +75,6 @@ public class Recording extends Notes {
             this.address = address;
         }
         this.setDate(date);
-        this.setContent("Audio Note");
-        this.setType(R.drawable.micro);
     }
 
     public String getAddress() {
