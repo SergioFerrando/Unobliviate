@@ -17,14 +17,15 @@
         android:text="@string/title_audio_note"
         app:layout_constraintBottom_toBottomOf="@+id/AudioDeleteButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/audioDirectButton"
-        android:layout_width="411dp"
-        android:layout_height="587dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
         android:background="#FFFFFF"

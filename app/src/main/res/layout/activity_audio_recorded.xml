@@ -23,16 +23,18 @@
 
     <ImageButton
         android:id="@+id/play_button"
-        android:layout_width="80dp"
-        android:layout_height="74dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_marginTop="328dp"
+        android:background="#FFFFFF"
         android:contentDescription="@string/play_button_description"
         android:src="@android:drawable/ic_media_play"
+        app:layout_constraintBottom_toTopOf="@+id/AudioShareButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextAudioRecordedNote" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextAudioRecordedNote"
+        app:layout_constraintVertical_bias="0.059" />
 
     <ImageButton
         android:id="@+id/AudioSaveButton"
