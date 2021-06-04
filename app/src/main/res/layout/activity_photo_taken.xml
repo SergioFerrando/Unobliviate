@@ -6,64 +6,78 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
+
+    <EditText
+        android:id="@+id/PhotoTitleNote"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:inputType="textPersonName"
+        android:text="@string/photo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.007" />
 
-        <EditText
-            android:id="@+id/PhotoTitleNote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:inputType="textPersonName"
-            android:text="@string/photo" />
+    <ImageView
+        android:id="@+id/Foto"
+        android:layout_width="415dp"
+        android:layout_height="570dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PhotoTitleNote"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@android:drawable/ic_menu_crop" />
 
-        <ImageView
-            android:id="@+id/Foto"
-            android:layout_width="400dp"
-            android:layout_height="565dp"
-            app:srcCompat="@android:drawable/ic_menu_crop" />
+    <ImageButton
+        android:id="@+id/PhotoSaveButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/save_button"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@+id/PhotoShareButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/PhotoShareButton"
+        app:layout_constraintTop_toTopOf="@+id/PhotoShareButton"
+        app:srcCompat="@drawable/disquete" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <ImageButton
+        android:id="@+id/PhotoShareButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/share_button"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.933"
+        app:srcCompat="@drawable/image_2021_03_08t10_27_42_655z" />
 
-            <ImageButton
-                android:id="@+id/PhotoSaveButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/save_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/disquete" />
-
-            <ImageButton
-                android:id="@+id/PhotoShareButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/share_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/image_2021_03_08t10_27_42_655z" />
-
-            <ImageButton
-                android:id="@+id/PhotoDeleteButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/trash_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/basura" />
-        </LinearLayout>
-
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/PhotoDeleteButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/trash_button"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@+id/PhotoShareButton"
+        app:layout_constraintEnd_toStartOf="@+id/PhotoShareButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/PhotoShareButton"
+        app:srcCompat="@drawable/basura" />
 </androidx.constraintlayout.widget.ConstraintLayout>
