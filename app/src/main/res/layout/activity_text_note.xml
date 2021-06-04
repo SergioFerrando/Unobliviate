@@ -25,15 +25,15 @@
 
     <EditText
         android:id="@+id/editTextTextNote"
-        android:layout_width="match_parent"
-        android:layout_height="573dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:autofillHints=""
         android:ems="10"
         android:gravity="center_horizontal"
         android:inputType="textLongMessage|textMultiLine"
         android:text="@string/add_your_text_note"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/TextShareButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,9 +49,12 @@
         android:background="#FFFFFF"
         android:contentDescription="@string/save_button"
         android:scaleType="centerInside"
-        app:srcCompat="@drawable/disquete"
-        tools:layout_editor_absoluteX="303dp"
-        tools:layout_editor_absoluteY="641dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/TextCheckList"
+        app:layout_constraintEnd_toStartOf="@+id/TextCheckList"
+        app:layout_constraintHorizontal_bias="0.139"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/TextCheckList"
+        app:srcCompat="@drawable/disquete" />
 
     <ImageButton
         android:id="@+id/TextCheckList"
@@ -62,9 +65,12 @@
         android:background="#FFFFFF"
         android:contentDescription="@string/check_list_button"
         android:scaleType="centerInside"
-        app:srcCompat="@drawable/cl"
-        tools:layout_editor_absoluteX="209dp"
-        tools:layout_editor_absoluteY="641dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/TextShareButton"
+        app:layout_constraintEnd_toStartOf="@+id/TextShareButton"
+        app:layout_constraintHorizontal_bias="0.613"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/TextShareButton"
+        app:srcCompat="@drawable/cl" />
 
     <ImageButton
         android:id="@+id/TextShareButton"
@@ -75,9 +81,13 @@
         android:background="#FFFFFF"
         android:contentDescription="@string/share_button"
         android:scaleType="centerInside"
-        app:srcCompat="@drawable/image_2021_03_08t10_27_42_655z"
-        tools:layout_editor_absoluteX="97dp"
-        tools:layout_editor_absoluteY="641dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/TextDeleteButton"
+        app:layout_constraintHorizontal_bias="0.758"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.968"
+        app:srcCompat="@drawable/image_2021_03_08t10_27_42_655z" />
 
     <ImageButton
         android:id="@+id/TextDeleteButton"
@@ -88,7 +98,10 @@
         android:background="#FFFFFF"
         android:contentDescription="@string/trash_button"
         android:scaleType="centerInside"
-        app:srcCompat="@drawable/basura"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="641dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/TextShareButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/TextShareButton"
+        app:srcCompat="@drawable/basura" />
 </androidx.constraintlayout.widget.ConstraintLayout>

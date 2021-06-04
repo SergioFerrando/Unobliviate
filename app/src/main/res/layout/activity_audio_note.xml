@@ -6,48 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/editTextAudioNote"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:autofillHints="Title Audio Note"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:inputType="textShortMessage"
+        android:text="@string/title_audio_note"
+        app:layout_constraintBottom_toBottomOf="@+id/AudioDeleteButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
 
-        <EditText
-            android:id="@+id/editTextAudioNote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="Title Audio Note"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:inputType="textShortMessage"
-            android:text="@string/title_audio_note" />
+    <ImageButton
+        android:id="@+id/audioDirectButton"
+        android:layout_width="411dp"
+        android:layout_height="587dp"
+        android:layout_gravity="center_horizontal"
+        android:adjustViewBounds="true"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/audio_button"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/AudioDeleteButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextAudioNote"
+        app:srcCompat="@drawable/micro" />
 
-        <ImageButton
-            android:id="@+id/audioDirectButton"
-            android:layout_width="200dp"
-            android:layout_height="573dp"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:background="#FFFFFF"
-            android:contentDescription="@string/audio_button"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/micro" />
+    <ImageButton
+        android:id="@+id/AudioDeleteButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/trash_button"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
+        app:srcCompat="@drawable/basura" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/AudioDeleteButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/trash_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/basura" />
-        </LinearLayout>
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,75 +6,79 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
+
+    <EditText
+        android:id="@+id/editTextAudioRecordedNote"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:autofillHints="Title Audio Note"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:inputType="textShortMessage"
+        android:text="@string/title_audio_note"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/editTextAudioRecordedNote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="Title Audio Note"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:inputType="textShortMessage"
-            android:text="@string/title_audio_note" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="589dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+    <ImageButton
+        android:id="@+id/play_button"
+        android:layout_width="80dp"
+        android:layout_height="74dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="328dp"
+        android:contentDescription="@string/play_button_description"
+        android:src="@android:drawable/ic_media_play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editTextAudioRecordedNote" />
 
-            <ImageButton
-                android:id="@+id/play_button"
-                android:layout_width="80dp"
-                android:layout_height="74dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/play_button_description"
-                android:src="@android:drawable/ic_media_play" />
+    <ImageButton
+        android:id="@+id/AudioSaveButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/save_button"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@+id/AudioShareButton"
+        app:layout_constraintEnd_toStartOf="@+id/AudioShareButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/AudioShareButton"
+        app:srcCompat="@drawable/disquete" />
 
-        </LinearLayout>
+    <ImageButton
+        android:id="@+id/AudioShareButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/share_button"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.943"
+        app:srcCompat="@drawable/image_2021_03_08t10_27_42_655z" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <ImageButton
+        android:id="@+id/AudioDeleteButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/trash_button"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@+id/AudioShareButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/AudioShareButton"
+        app:layout_constraintTop_toTopOf="@+id/AudioShareButton"
+        app:srcCompat="@drawable/basura" />
 
-            <ImageButton
-                android:id="@+id/AudioSaveButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/save_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/disquete" />
-
-            <ImageButton
-                android:id="@+id/AudioShareButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/share_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/image_2021_03_08t10_27_42_655z" />
-
-            <ImageButton
-                android:id="@+id/AudioDeleteButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:background="#FFFFFF"
-                android:contentDescription="@string/trash_button"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/basura" />
-        </LinearLayout>
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
