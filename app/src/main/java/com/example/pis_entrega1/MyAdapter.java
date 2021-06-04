@@ -21,7 +21,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
     /**
      * Constructor f the class
-     * @param context apliication context
+     * @param context app context
      * @param data List of notes to set
      */
     MyAdapter(Context context, ArrayList<Notes> data) {
@@ -29,6 +29,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         this.localDataSet = data;
     }
 
+    /**
+     * Method to initialize the view Holder
+     * @param parent
+     * @param viewType
+     * @return new View Holder
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
@@ -37,6 +43,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         return new ViewHolder(view);
     }
 
+    /**
+     * Method to set the appearance of the holder
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Notes nota = localDataSet.get(position);
@@ -56,15 +67,27 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         }
     }
 
+    /**
+     * Method that returns size of list of notes
+     * @return
+     */
     @Override
     public int getItemCount() {
         return localDataSet.size();
     }
 
+    /**
+     * Method to set on click listener for the List
+     * @param listener
+     */
     public void setOnClickListener(View.OnClickListener listener){
         this.listener = listener;
     }
 
+    /**
+     * Method that takes every on click is clicked
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         if(listener!= null){
@@ -72,12 +95,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         }
     }
 
+    /**
+     * Class view Holder that have all elements of Row_item
+     */
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView Title;
         TextView Type;
         TextView Date;
         ImageView item;
 
+        /**
+         * Constructor of the class
+         * @param itemView
+         */
         public ViewHolder(View itemView) {
             super(itemView);
             Title = itemView.findViewById(R.id.titleView);

@@ -75,15 +75,12 @@ title __PIS_ENTREGA1's Class Diagram__\n
         + descargarAudioDatabase()
         + descargarPhotoDatabase()
         + getCollection()
-        + getDocuments()
         + initFirebase()
-        + logOut()
         + saveAudioDocument()
         + saveAudioDocumentWithFile()
         + savePhotoDocument()
         + savePhotoDocumentWithFile()
         + saveTextDocument()
-        + saveTextDocumentWithFile()
         + setInterface()
     }
   }
@@ -92,7 +89,6 @@ title __PIS_ENTREGA1's Class Diagram__\n
   namespace com.example.pis_entrega1 {
     interface com.example.pis_entrega1.DatabaseAdapter.vmInterface {
         {abstract} + setCollection()
-        {abstract} + setToast()
     }
   }
   
@@ -111,10 +107,7 @@ title __PIS_ENTREGA1's Class Diagram__\n
         + actionBarDrawerToggle : ActionBarDrawerToggle
         + drawerLayout : DrawerLayout
         + parentContext : Context
-        ~ addAudio : TextView
         ~ addNote : ExtendedFloatingActionButton
-        ~ addPhoto : TextView
-        ~ addText : TextView
         ~ clicked : boolean
         ~ fabAudio : FloatingActionButton
         ~ fabPhoto : FloatingActionButton
@@ -135,7 +128,6 @@ title __PIS_ENTREGA1's Class Diagram__\n
         ~ passDataPhoto()
         ~ passDataText()
         ~ setTable()
-        - LogOut()
         - fromDeleteMode()
         - setFloatingActionButtons()
         - setMenu()
@@ -146,10 +138,8 @@ title __PIS_ENTREGA1's Class Diagram__\n
 
   namespace com.example.pis_entrega1 {
     class com.example.pis_entrega1.MainActivityViewModel {
-        {static} + TAG : String
         - mNotes : MutableLiveData<ArrayList<Notes>>
         - mToast : MutableLiveData<String>
-        + LogOut()
         + MainActivityViewModel()
         + getListNotes()
         + getNotesById()
@@ -157,7 +147,6 @@ title __PIS_ENTREGA1's Class Diagram__\n
         + modifyAudioNote()
         + modifyPhotoNote()
         + setCollection()
-        + setToast()
         ~ addAudioNote()
         ~ addPhotoNote()
         ~ addTextNote()
@@ -173,14 +162,11 @@ title __PIS_ENTREGA1's Class Diagram__\n
         - localDataSet : ArrayList<Notes>
         - mInflater : LayoutInflater
         + getItemCount()
-        + getLocalDataSet()
         + onBindViewHolder()
         + onClick()
         + onCreateViewHolder()
-        + setLocalDataSet()
         + setOnClickListener()
         ~ MyAdapter()
-        ~ getItem()
     }
   }
   
@@ -204,12 +190,10 @@ title __PIS_ENTREGA1's Class Diagram__\n
         - mInflater : LayoutInflater
         + addPosition()
         + getItemCount()
-        + getLocalDataSet()
         + getSelected()
         + onBindViewHolder()
         + onClick()
         + onCreateViewHolder()
-        + setLocalDataSet()
         + setOnClickListener()
         ~ MyAdapterDelete()
     }
@@ -233,7 +217,6 @@ title __PIS_ENTREGA1's Class Diagram__\n
         - checked : boolean
         - content : String
         - date : String
-        - deathLine : Date
         - id : String
         - name : String
         - type : int
@@ -243,40 +226,16 @@ title __PIS_ENTREGA1's Class Diagram__\n
         {abstract} + delete()
         + getContent()
         + getDate()
-        + getDeathLine()
         + getID()
         + getName()
-        + getType()
         + isChecked()
         + setChecked()
         + setContent()
         + setDate()
-        + setDeathLine()
         + setID()
         + setName()
         + setType()
         {abstract} ~ saveNote()
-    }
-  }
-  
-
-  namespace com.example.pis_entrega1 {
-    class com.example.pis_entrega1.NotesContainer {
-        {static} + CREATOR : Creator<NotesContainer>
-        ~ container : ArrayList<Notes>
-        + NotesContainer()
-        + NotesContainer()
-        + describeContents()
-        + get()
-        + getContainer()
-        + notifyItemMoved()
-        + setContainer()
-        + writeToParcel()
-        # NotesContainer()
-        ~ addAudioNote()
-        ~ addPhotoNote()
-        ~ addTextNote()
-        ~ deleteNote()
     }
   }
   
@@ -291,11 +250,9 @@ title __PIS_ENTREGA1's Class Diagram__\n
         + Photo()
         + delete()
         + getAddress()
-        + getPhotoTitle()
         + getUrl()
         + modify()
         + setAddress()
-        + setPhotoTitle()
         + setUrl()
         ~ saveNote()
     }
@@ -346,11 +303,9 @@ title __PIS_ENTREGA1's Class Diagram__\n
         + Recording()
         + delete()
         + getAddress()
-        + getAudioTitle()
         + getUrl()
         + modify()
         + setAddress()
-        + setAudioTitle()
         + setUrl()
         ~ saveNote()
     }
@@ -359,15 +314,12 @@ title __PIS_ENTREGA1's Class Diagram__\n
 
   namespace com.example.pis_entrega1 {
     class com.example.pis_entrega1.Text {
-        - path : String
         - text : String
         + Text()
         + Text()
         + Text()
         + delete()
-        + getPath()
         + getText()
-        + setPath()
         + setText()
         ~ modify()
         ~ saveNote()
@@ -379,7 +331,6 @@ title __PIS_ENTREGA1's Class Diagram__\n
     class com.example.pis_entrega1.TextNote {
         ~ content : EditText
         ~ existente : boolean
-        ~ path : String
         ~ position : int
         ~ title : EditText
         + CheckList()
@@ -417,7 +368,6 @@ title __PIS_ENTREGA1's Class Diagram__\n
   com.example.pis_entrega1.MainActivity .up.|> android.view.View.OnClickListener
   com.example.pis_entrega1.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
   com.example.pis_entrega1.MainActivity o-- com.example.pis_entrega1.MyAdapter : mAdapter
-  com.example.pis_entrega1.MainActivity o-- com.example.pis_entrega1.MyAdapterDelete : myAdapterDelete
   com.example.pis_entrega1.MainActivity o-- com.example.pis_entrega1.MainActivityViewModel : viewModel
   com.example.pis_entrega1.MainActivityViewModel .up.|> com.example.pis_entrega1.DatabaseAdapter.vmInterface
   com.example.pis_entrega1.MainActivityViewModel -up-|> androidx.lifecycle.ViewModel
@@ -430,7 +380,6 @@ title __PIS_ENTREGA1's Class Diagram__\n
   com.example.pis_entrega1.MyAdapterDelete -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
   com.example.pis_entrega1.MyAdapterDelete +-down- com.example.pis_entrega1.MyAdapterDelete.ViewHolderToDelete
   com.example.pis_entrega1.MyAdapterDelete.ViewHolderToDelete -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
-  com.example.pis_entrega1.NotesContainer .up.|> android.os.Parcelable
   com.example.pis_entrega1.Photo -up-|> com.example.pis_entrega1.Notes
   com.example.pis_entrega1.Photo o-- com.example.pis_entrega1.DatabaseAdapter : adapter
   com.example.pis_entrega1.PhotoNote .up.|> android.view.View.OnClickListener
